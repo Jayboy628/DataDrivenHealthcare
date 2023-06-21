@@ -1,6 +1,5 @@
 # <font color=blue><center>Data Migration for Healthcare Industry </center></font>
-
- I worked for a health company that encountered a major issue with their EMR migration. Their previous EMR system, NextGen, was not a good solution for their business requirements, so they decided to migrate their health records to eClinicalWorks. My job was to create and implement a data warehouse, and from the data warehouse design reports, KPIs and build predictive models. The business owners would compare eClinicalWorks integrated reports with my reports. This was done in a dev environment and when the reports matched the eClinicalWorks reports it was then flagged to be used for production.  
+I worked for a health company that encountered a major issue with their EMR migration. Their previous EMR system, NextGen, was not a good solution for their business requirements, so they decided to migrate their health records to eClinicalWorks. My job was to create and implement a data warehouse, and from the data warehouse design reports, KPIs and build predictive models. The business owners would compare eClinicalWorks integrated reports with my reports. This was done in a dev environment and when the reports matched the eClinicalWorks reports it was then flagged to be used for production.  
 
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
 
