@@ -11,7 +11,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Extraction:
+### Extraction: Nifi, SqlServer, AWS
 </summary>
 
 <p>
@@ -35,7 +35,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Load:
+### Load: Snowflake
 </summary>
 
 <p>
@@ -60,7 +60,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Transformation, Documentation:
+### Transformation, Documentation: DBT
 </summary>
 
 <p>
@@ -89,6 +89,7 @@ My intention with this project is to replicate some of the more important aspect
 <p>
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
 </p>
+
 - Jupyter Lab
 - Data Exploring
 - Data Cleansing
