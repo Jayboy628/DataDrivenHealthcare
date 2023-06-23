@@ -13,7 +13,11 @@ My intention with this project is to replicate some of the more important aspect
     
 ### Extraction: Use Nifi
 </summary>
-    
+
+<p>
+    My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
+</p>
+
 - Goto http://localhost:2080/nifi/
 - NiFi-S3 integration
 - Push files using NiFi
