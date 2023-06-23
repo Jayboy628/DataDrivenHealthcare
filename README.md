@@ -5,13 +5,13 @@ My job was to create and implement data warehouse from these files sent by NextG
 
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
 
-## <font color=green><left>AGENDA</left></font>
+## <font color=green><left>PHASE: ONE </left></font>
 
 <details open>
     
 <summary>
     
-### Extraction: Use Nifi
+### Extraction:
 </summary>
 
 <p>
@@ -31,34 +31,72 @@ My intention with this project is to replicate some of the more important aspect
   
 </details>
 
-* Data Warehouse and SQS Setup
-    - Snowflake
-        - Warehouse/Virtual Warehouse
-        - Database and Schema
-        - Table
-        - View
-        - Stored procedure
-        - Snow Pipe
-        - Stream
-        - Task
-* Transformation, Load and Documentation
-    - DBT: Language of choice SQL
-        - Dimensions
-        - Facts
-        - SCD
-        - Type-1
-        - Type-2
-        - Reports
-            - Basic Reports connect to BI tool (eClinicalWorks uses Cognos)
+<details open>
+    
+<summary>
+    
+### Load:
+</summary>
 
-* Analyze: Language of choice Python
-    - Jupyter Lab
-        - Data Exploring
-        - Data Cleansing
-        - Healthcare Reports
-            - Revenue Reports (can use BI tools)
-            - PMI Reports (can use BI tools) 
-            - CMS Reports (can use BI tools)      
+<p>
+My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
+</p>
+- Data Warehouse and SQS Setup
+- Snowflake
+- Warehouse/Virtual Warehouse
+- Database and Schema
+- Table
+- View
+- Stored procedure
+- Snow Pipe
+ - Stream
+- Task
+
+</details>
+
+## <font color=green><left>PHASE: TWO </left></font>
+<details open>
+    
+<summary>
+    
+### Transformation, Documentation:
+</summary>
+
+<p>
+My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
+</p>
+
+- DBT: Language of choice SQL
+- Dimensions
+- Facts
+- SCD
+- Type-1
+- Type-2
+- Reports
+- Basic Reports connect to BI tool (eClinicalWorks uses Cognos)
+</details>
+
+## <font color=green><left>PHASE: THREE </left></font>
+<details open>
+    
+<summary>
+    
+### Analyze: Language of choice Python and Tableau
+</summary>
+
+<p>
+My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
+</p>
+- Jupyter Lab
+- Data Exploring
+- Data Cleansing
+- Healthcare Reports
+- Revenue Reports (can use BI tools)
+- PMI Reports (can use BI tools) 
+- CMS Reports (can use BI tools)
+
+</details>
+
 * Models
 
 ### Nifi
