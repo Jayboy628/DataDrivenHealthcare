@@ -15,19 +15,21 @@ My intention with this project is to replicate some of the more important aspect
 </summary>
 
 <p>
- For the Data Migration my architecture structure was to FTP files in a Dev environment and then use SQL Server Integration Service (SSIS) to Load and Transform However, in this illustration I decided to implement a cloud load environment. The design is as followed, use Nifi to move the file from the ftp location and load (PutFile) into a Postgres database and then again use Nifi to move files to AWS  See diagram below:  </font>
+The Extraction architecture structure was to pull the FTP files in a dev environment and then use SQL Server Integration Service (SSIS) to Load and Transform. Instead, I opted to implement a cloud load environment. The design is as follows, pull the file from the ftp location and load (PutFile) into a local database and then again use Nifi to move files to AWS. See diagram below: 
 </p>
 
-- Goto http://localhost:2080/nifi/
-- NiFi-S3 integration
-- Push files using NiFi
-- Organize and Storage
-- S3
-- Identity and Access Management (IAM)
-- Access Keys
-- Bucket
-- Folder
-- Upload Files
+- NIFI
+    - Goto http://localhost:2080/nifi/
+    - NiFi-S3 integration
+    - Push files using NiFi
+    - Organize and Storage
+- AWS
+    - S3
+    - Identity and Access Management (IAM)
+    - Access Keys
+    - Bucket
+    - Folder
+    - Upload Files
   
 </details>
 
