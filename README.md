@@ -15,7 +15,7 @@ My intention with this project is to replicate some of the more important aspect
 </summary>
 
 <p>
-    My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
+ For the Data Migration my architecture structure was to FTP files in a Dev environment and then use SQL Server Integration Service (SSIS) to Load and Transform However, in this illustration I decided to implement a cloud load environment. The design is as followed, use Nifi to move the file from the ftp location and load (PutFile) into a Postgres database and then again use Nifi to move files to AWS  See diagram below:  </font>
 </p>
 
 - Goto http://localhost:2080/nifi/
