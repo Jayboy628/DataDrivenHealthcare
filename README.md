@@ -35,7 +35,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Load: Snowflake
+### Load: Snowflake and SQL
 </summary>
 
 <p>
@@ -60,7 +60,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Transformation, Documentation: DBT
+### Transformation, Documentation: DBT and SQL
 </summary>
 
 <p>
