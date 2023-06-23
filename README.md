@@ -6,19 +6,27 @@ My job was to create and implement data warehouse from these files sent by NextG
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
 
 ## <font color=green><left>AGENDA</left></font>
+
 <details open>
+    
+<summary>
+    
 ### Extraction: Use Nifi
-    - Goto http://localhost:2080/nifi/
-    - NiFi-S3 integration
-    - Push files using NiFi
-* Organize and Storage
-    - S3
-        - Identity and Access Management (IAM)
-        - Access Keys
-        - Bucket
-        - Folder
-        - Upload Files
-</details>  
+</summary>
+    
+- Goto http://localhost:2080/nifi/
+- NiFi-S3 integration
+- Push files using NiFi
+- Organize and Storage
+- S3
+- Identity and Access Management (IAM)
+- Access Keys
+- Bucket
+- Folder
+- Upload Files
+  
+</details>
+
 * Data Warehouse and SQS Setup
     - Snowflake
         - Warehouse/Virtual Warehouse
