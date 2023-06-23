@@ -41,6 +41,7 @@ My intention with this project is to replicate some of the more important aspect
 <p>
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
 </p>
+
 - Data Warehouse and SQS Setup
 - Snowflake
 - Warehouse/Virtual Warehouse
@@ -74,6 +75,7 @@ My intention with this project is to replicate some of the more important aspect
 - Type-2
 - Reports
 - Basic Reports connect to BI tool (eClinicalWorks uses Cognos)
+  
 </details>
 
 ## <font color=green><left>PHASE: THREE </left></font>
