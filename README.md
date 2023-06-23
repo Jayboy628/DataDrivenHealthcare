@@ -44,16 +44,15 @@ My intention with this project is to replicate some of the more important aspect
 2) The next step is to populate the cloud database. Snowpipe will pull the normalized Json files from AWS into tables. I would need to create a Task (Acron)remember; the files will be sent twice a day so I will need to scheduler also I need to build a Stream (CDC) to enable triggers.
 </p>
 
-- Data Warehouse and SQS Setup
-- Snowflake
-- Warehouse/Virtual Warehouse
-- Database and Schema
-- Table
-- View
-- Stored procedure
-- Snow Pipe
- - Stream
-- Task
+- Snowflake:Data Warehouse and SQS Setup
+    - Warehouse/Virtual Warehouse
+    - Database and Schema
+        - Table
+        - View
+        - Stored procedure
+        - Snow Pipe
+        - Stream
+        - Task
 
 </details>
 
@@ -70,13 +69,12 @@ My intention with this project is to replicate some of the more important aspect
 </p>
 
 - DBT: Language of choice SQL
-- Dimensions
-- Facts
-- SCD
-- Type-1
-- Type-2
-- Reports
-- Basic Reports connect to BI tool (eClinicalWorks uses Cognos)
+    - Dimensions
+    - Facts
+    - SCD
+    - Type-1
+    - Type-2
+    - build operational reports (push to BI Tool)
   
 </details>
 
@@ -93,12 +91,13 @@ My intention with this project is to replicate some of the more important aspect
 </p>
 
 - Jupyter Lab
-- Data Exploring
-- Data Cleansing
-- Healthcare Reports
-- Revenue Reports (can use BI tools)
-- PMI Reports (can use BI tools) 
-- CMS Reports (can use BI tools)
+    - Data Exploring
+    - Data Cleansing
+    - Recycle Revenue Reports
+ - Tableau Healthcare Reports
+    - Revenue Reports 
+    - PMI Reports  
+    - CMS Reports
 
 </details>
 
