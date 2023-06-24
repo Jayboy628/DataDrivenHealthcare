@@ -11,25 +11,26 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Extraction: Nifi, SqlServer, AWS
+### Ingestion Approach:
 </summary>
 
 <p>
-1) The Extraction (Nifi) design was simply to pull the data files (FTP) in a dev environment and then use SQL Server Integration Service (SSIS) to Load and Transform. Instead, for this illustration I opted to implement a cloud load environment. However, since the files are normalized, I would load (PutFile) the files into a local database (SQL Server) before pushing the file to the cloud storage(S3) environment. . See diagram below: 
+1) The Ingestion (Apache Nifi) is design to automate data across systems. In realtime I would load (PutFile) the files into a local database (SQL Server) before pushing the file to the cloud storage(S3) environment. . See diagram below: 
 </p>
 
-- NIFI
+- NIFI: Click the link to view configuration
     - Goto http://localhost:2080/nifi/
-    - NiFi-S3 integration
-    - Push files using NiFi
-    - Organize and Storage
-- AWS
+        - NiFi-S3 integration
+        - Push files using NiFi
+        - Organize and Storage
+          
+- AWS: Click the link to view configuration
     - S3
-    - Identity and Access Management (IAM)
-    - Access Keys
-    - Bucket
-    - Folder
-    - Upload Files
+        - Identity and Access Management (IAM)
+        - Access Keys
+        - Bucket
+        - Folder
+        - Upload Files
   
 </details>
 
@@ -44,11 +45,15 @@ My intention with this project is to replicate some of the more important aspect
 2) The next step is to populate the cloud database. Snowpipe will pull the normalized Json files from AWS into tables. I would need to create a Task (Acron)remember; the files will be sent twice a day so I will need to scheduler also I need to build a Stream (CDC) to enable triggers.
 </p>
 
-- Snowflake:Data Warehouse and SQS Setup
+- Snowflake:Click the link to view configuration
+    - Data Warehouse and SQS Setup
     - Warehouse/Virtual Warehouse
     - Database and Schema
         - Table
+            - Type-1
+            - Type-2
         - View
+            - DBT (explained in next section)
         - Stored procedure
         - Snow Pipe
         - Stream
@@ -68,14 +73,15 @@ My intention with this project is to replicate some of the more important aspect
 3) For us to develop reports and KPI’s I needed to design a star schema. I wanted to document each Dimension and their columns and visualize the schema. DBT is a great tool for this process because DBT doesn’t only work well with Snowflake but it’s awesome tool to create and visualize the star schema while documenting. 
 </p>
 
-- DBT: Language of choice SQL
-    - Dimensions
-    - Facts
-    - SCD
-    - Type-1
-    - Type-2
-    - build operational reports (push to BI Tool)
-  
+- DBT: Click the link to view configuration (Language of choice SQL)
+    - Tables
+        - Dimensions
+        - Facts
+        - SCD
+            - Type-1
+            - Type-2
+        - build operational reports (push to BI Tool)
+      
 </details>
 
 ## <font color=green><left>PHASE: THREE </left></font>
