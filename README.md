@@ -83,7 +83,6 @@ My intention with this project is to replicate some of the more important aspect
       
 </details>
 
-## <font color=green><left>PHASE: THREE </left></font>
 <details open>
     
 <summary>
@@ -106,6 +105,7 @@ My intention with this project is to replicate some of the more important aspect
 
 </details>
 
+## <font color=green><left>PHASE: THREE </left></font>
 * Models
 
 
