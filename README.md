@@ -7,9 +7,6 @@ My intention with this project is to replicate some of the more important aspect
 
 ## <font color=green><left>PHASE: ONE </left></font>
 
-<title>InsightByte/ApacheNifi: Youtube Apache NiFi 2022 Series resources</title>
-
-
 <details open>
     
 <summary>
