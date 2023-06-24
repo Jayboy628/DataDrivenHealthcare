@@ -1,4 +1,5 @@
-# <font color=blue><center>Overcoming EMR Challenges with Cloud-Based Solutions: Building a Data Warehouse for Accurate Healthcare Reports</center></font>
+# <font color=blue><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
+## <font color=blue><center>Building a Data Warehouse for Accurate Healthcare Reports</center></font>
 I worked for a health company that encountered a major issue with their EMR system because it did not align with their business process. In turn, this caused the system to be bugy, as too many custom builts were implemented. The company decided to move away from their current system and instead implemented eClinicalWorks. The EMR company owned the database, so we had to make an agreement to extend their usage agreement and to FTP the live data files at 2:00 am and 7:00 pm. 
 
 My job was to create and implement a data warehouse from these files. The requirements included creating various production reports and KPI’s that matched with the EMR system. The business owners would compare eClinicalWorks integrated reports with my reports and if aligned, they would be flagged to be used for production. In the company’s view this was critical for data migration because it guaranteed that all operational reports would be correct. 
