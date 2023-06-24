@@ -5,7 +5,7 @@ My job was to create and implement data warehouse from these files sent by NextG
 
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
 
-## <font color=green><left>PHASE: ONE </left></font>
+## <font color=green><left>PHASE: One </left></font>
 
 <details open>
     
