@@ -11,7 +11,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Ingestion Approach:
+### Extraction Approach: Apache Nifi
 </summary>
 
 <p>
@@ -47,17 +47,16 @@ My intention with this project is to replicate some of the more important aspect
 
 - Snowflake:Click the link to view configuration
     - Data Warehouse and SQS Setup
-    - Warehouse/Virtual Warehouse
-    - Database and Schema
-        - Table
-            - Type-1
-            - Type-2
-        - View
-            - DBT (explained in next section)
-        - Stored procedure
-        - Snow Pipe
-        - Stream
-        - Task
+        - Database and Schema
+            - Table
+                - Type-1
+                - Type-2
+            - View
+                - DBT (explained in next section)
+            - Stored procedure
+            - Snow Pipe
+            - Stream
+            - Task
 
 </details>
 
@@ -109,5 +108,4 @@ My intention with this project is to replicate some of the more important aspect
 
 * Models
 
-### Nifi
-Apache NiFi is a data logistics platform that automates data transfer across systems. It gives real-time control over data transportation from any source to any destination, making it simple to handle.%                  
+
