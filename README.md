@@ -1,9 +1,9 @@
 # <font color=blue><center>Data Migration for Healthcare Industry</center></font>
-I worked for a health company that encountered a major issue with their EMR system. The EMR system, NextGen, did not align with our business process and in turn caused the system to be bugy. This is because of too many custom builds were implemented. The company decided to move away from NextGen and implemented a new EMR system called eClinicalWorks. NextGen owned the database, so we had to make an agreement to extend our off time while 2:AM and 7:PM they would FTP our data files. 
+I worked for a health company that encountered a major issue with their EMR system because it did not align with their business process. In turn, this caused the system to be bugy, as too many custom builts were implemented. The company decided to move away from their current system and instead implemented eClinicalWorks. The EMR company owned the database, so we had to make an agreement to extend their usage agreement and to FTP the live data files at 2:00 am and 7:00 pm. 
 
-My job was to create and implement data warehouse from these files sent by NextGen. The requirements included creating various production reports and KPI’s that matched with NextGen. The business owners would compare eClinicalWorks integrated reports with my reports and if aligned then flagged to be used for production. In the company’s view this was critical for data migration because it guarantees that all operational reports were correct. 
+My job was to create and implement a data warehouse from these files. The requirements included creating various production reports and KPI’s that matched with the EMR system. The business owners would compare eClinicalWorks integrated reports with my reports and if aligned, they would be flagged to be used for production. In the company’s view this was critical for data migration because it guaranteed that all operational reports would be correct. 
 
-My intention with this project is to replicate some of the more important aspects of the above scenario. <font color=red>Please note that the healthcare dataset is fake and is being used only for demonstration purposes. </font>
+My intention with this project is to replicate some of the more important aspects of the above scenario. Please note that the healthcare dataset is fake and is being used only for demonstration purposes. 
 
 ## <font color=green><left>PHASE: ONE </left></font>
 
