@@ -4,7 +4,7 @@ I worked for a health company that encountered a major issue with their EMR syst
 My job was to design and implement a data warehouse from these files. The requirements included creating various production reports and KPI’s that matched with the EMR system. The business owners would compare eClinicalWorks integrated reports with my reports and if aligned, they would be flagged to be used for production. In the company’s view this was critical for data migration because it guaranteed that all operational reports would be correct and more importantly, would prove that eClinicalWorks was configured based on the company’s business requirements.  
 My intention with this project is to replicate some of the more important aspects of the above scenario. Please note that the healthcare dataset is fake and is being used only for demonstration purposes. 
 
-## <font color=green><left>PHASE: ONE </left></font>
+## <font color=green><left>PHASE ONE: Data Integration, Data Consolidation and Standardization </left></font>
 
 <details open>
     
@@ -60,7 +60,7 @@ My intention with this project is to replicate some of the more important aspect
 
 </details>
 
-## <font color=green><left>PHASE: TWO </left></font>
+## <font color=green><left>PHASE TWO: Reporting and Analytics </left></font>
 <details open>
     
 <summary>
