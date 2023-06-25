@@ -1,4 +1,5 @@
- <span style=color: red;>Still working on project below</span>
+<span style="color: red;">Make words red</span>
+
 
 # <font color=blue><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
 ### <font color=blue><center>Harnessing Cloud Technology for an Efficient Data Warehouse Solution</center></font>
