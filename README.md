@@ -40,10 +40,10 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
         1) Nifi Configuration
           - Installing Nifi Toolkit
-                export version='1.16.1'
-                export nifi_registry_port='18443'
-                export nifi_prd_port='8443'
-            Download Nifi Toolkit
+              export version='1.16.1'
+              export nifi_registry_port='18443'
+              export nifi_prd_port='8443'
+          - Download Nifi Toolkit
                         
   
         2) Ingest Files to Postgres Database
