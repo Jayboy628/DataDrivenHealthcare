@@ -35,7 +35,7 @@ My intention with this project is to replicate some of the more important aspect
 
 <summary>
 
-#### How we create the Extraction Environment
+#### Steps 
 1) Nifi Configuration
 2) Ingest Files to Postgres Database
 3) Move Files to S3 bucket
@@ -50,7 +50,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Load: Snowflake and SQL
+### Load Approach: Snowflake and SQL
 </summary>
 
 <p>
@@ -100,7 +100,7 @@ My intention with this project is to replicate some of the more important aspect
     
 <summary>
     
-### Analyze: Language of choice Python and Tableau
+### Analyze Approach: Language of choice Python and Tableau
 </summary>
 
 <p>
