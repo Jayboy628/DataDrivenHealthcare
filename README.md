@@ -22,27 +22,24 @@ My intention with this project is to replicate some of the more important aspect
 
 #### Table of Content
 
-- NIFI: Ingest
-    - Goto http://localhost:2080/nifi/
-        - NiFi-S3 integration
+- NIFI: Goto http://localhost:8443/nifi/
+        - NiFi Cofiguration
         - Push files using NiFi
-        - Organize and Storage
-          
-- AWS: Storage
-    - S3
+        - Organize and Storage       
+- AWS: S3 Storage
         - Identity and Access Management (IAM)
         - Access Keys
         - Bucket
         - Folder
         - Upload Files
           
-            <details open>
-            
-                <summary>
-                
-            #### How to Run/Build or Install Extraction Environment 
-                </summary>
-            </details>
+<details open>
+
+<summary>
+
+#### How to Run/Build or Install Extraction Environment 
+</summary>
+</details>
   
 </details>
 
