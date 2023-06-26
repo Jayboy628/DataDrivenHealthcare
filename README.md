@@ -40,20 +40,22 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
         1) Nifi Configuration
         - Start by Installing Nifi Toolkit
-        - <table>
-   <tr>
-       <td>
-           First Entry
-       </td>
-       - Start st
-       <td>
-           Second Entry
-       </td>
-       <td>
-           Third Entry
-       </td>
-   </tr>
-</table>
+  
+            <table>
+               <tr>
+                   <td>
+                       First Entry
+                   </td>
+                   - Start st
+                   <td>
+                       Second Entry
+                   </td>
+                   <td>
+                       Third Entry
+                   </td>
+               </tr>
+            </table>
+  
         2) Ingest Files to Postgres Database
         3) Move Files to S3 bucket
     </details>
