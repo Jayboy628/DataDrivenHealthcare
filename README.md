@@ -17,7 +17,7 @@ My intention with this project is to replicate some of the more important aspect
 </summary>
 
 <p>
-` The Ingestion (Apache Nifi) is designed to automate data across systems. In real time it will load (PutFile) the files into a local database (SQL Server) before pushing the files to the cloud storage(S3) environment. . See diagram below: `
+`The Ingestion (Apache Nifi) is designed to automate data across systems. In real time it will load (PutFile) the files into a local database (SQL Server) before pushing the files to the cloud storage(S3) environment. . See diagram below:`
 </p>
 
 #### Table of Content
