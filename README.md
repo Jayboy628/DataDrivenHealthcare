@@ -17,7 +17,7 @@ My intention with this project is to replicate some of the more important aspect
 </summary>
 
 <p>
-1) The Ingestion (Apache Nifi) is designed to automate data across systems. In real time it will load (PutFile) the files into a local database (SQL Server) before pushing the files to the cloud storage(S3) environment. . See diagram below: 
+''' The Ingestion (Apache Nifi) is designed to automate data across systems. In real time it will load (PutFile) the files into a local database (SQL Server) before pushing the files to the cloud storage(S3) environment. . See diagram below: '''
 </p>
 
 #### Table of Content
@@ -53,6 +53,18 @@ My intention with this project is to replicate some of the more important aspect
         2) Ingest Files to Postgres Database
         3) Move Files to S3 bucket
     </details>
+  <details open>
+    
+    <summary>
+    
+     #### 3) Move Files to S3 bucket
+    </summary>
+    
+        1) Nifi Configuration
+        2) Ingest Files to Postgres Database
+        3) Move Files to S3 bucket
+    </details>
+    
   
 </details>
 
@@ -65,7 +77,7 @@ My intention with this project is to replicate some of the more important aspect
 </summary>
 
 <p>
-2) The next step is to populate the cloud database. Snowpipe will pull the normalized Json files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. 
+ The next step is to populate the cloud database. Snowpipe will pull the normalized Json files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. 
     I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
 </p>
 
@@ -93,7 +105,7 @@ My intention with this project is to replicate some of the more important aspect
 </summary>
 
 <p>
-3) Another requirement was implementing a Data Warehouse that enabled the stakeholders to view and compare the reports and KPIs. Since Data Warehouse usage is mainly for analytical purposes rather than transactional, I decided to design a Star Schema because the structure is less complex and provides better query performance. Documenting wasn’t required, however, adding the Data Build Tool (DBT) to this process allowed us to document each dimension, columns and visualize the Star Schema. DBT also allowed us to neatly organize all data transformations into discrete models.  
+ Another requirement was implementing a Data Warehouse that enabled the stakeholders to view and compare the reports and KPIs. Since Data Warehouse usage is mainly for analytical purposes rather than transactional, I decided to design a Star Schema because the structure is less complex and provides better query performance. Documenting wasn’t required, however, adding the Data Build Tool (DBT) to this process allowed us to document each dimension, columns and visualize the Star Schema. DBT also allowed us to neatly organize all data transformations into discrete models.  
 </p>
 
 - DBT: Documentation and Transformation
