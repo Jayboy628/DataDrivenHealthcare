@@ -46,12 +46,12 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                 export nifi_prd_port='8443'
             <li>Download Nifi Toolkit</li>
                         </ul>
-            <ul>
-            <li>First item</li>
-            <li>Second item</li>
-            <li>Third item</li>
-            <li>Fourth item</li>
-            </ul>
+                <ul>
+                <li>First item</li>
+                <li>Second item</li>
+                <li>Third item</li>
+                <li>Fourth item</li>
+                </ul>
   
         2) Ingest Files to Postgres Database
         3) Move Files to S3 bucket
