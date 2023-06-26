@@ -35,7 +35,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
     <summary>
     
-    #### 1) Nifi Configuration: Local Installation Setup
+    #### 1) Nifi Configuration: Local Installation Setup 
     </summary>
     
         1) Nifi Configuration
@@ -43,9 +43,11 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
               export version='1.22.0'
               export nifi_registry_port='18443'
               export nifi_prd_port='8443'
-          - Download Nifi Toolkit
+  
+          - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
               - wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
               - unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
+  
         2) Ingest Files to Postgres Database
         3) Move Files to S3 bucket
     </details>
