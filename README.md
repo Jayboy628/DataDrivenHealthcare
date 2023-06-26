@@ -39,14 +39,11 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     </summary>
     
         1) Nifi Configuration
-        - Start by Installing Nifi Toolkit
-  
-            | No Align | Right Align | Left Align | Center Align |
-            | -------- | -----------:|:---------- |:------------:|
-            | 1        |           1 | 1          |      1       |
-            | 11       |          11 | 11         |      11      |
-            | 111      |         111 | 111        |     111      |
-            | 1111     |        1111 | 1111       |     1111     |
+            - Installing Nifi Toolkit
+            export version='1.16.1'
+            export nifi_registry_port='18443'
+            export nifi_prd_port='8443'
+            - Download Nifi Toolkit
   
         2) Ingest Files to Postgres Database
         3) Move Files to S3 bucket
