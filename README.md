@@ -47,6 +47,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             | 11       |          11 | 11         |      11      |
             | 111      |         111 | 111        |     111      |
             | 1111     |        1111 | 1111       |     1111     |
+  
         2) Ingest Files to Postgres Database
         3) Move Files to S3 bucket
     </details>
