@@ -31,17 +31,17 @@ My intention with this project is to replicate some of the more important aspect
         - Folder
         - Upload Files
           
-<details open>
-
-<summary>
-
-#### Steps 
-1) Nifi Configuration
-2) Ingest Files to Postgres Database
-3) Move Files to S3 bucket
-
-</summary>
-</details>
+    <details open>
+    
+    <summary>
+    
+    #### Steps 
+    1) Nifi Configuration
+    2) Ingest Files to Postgres Database
+    3) Move Files to S3 bucket
+    
+    </summary>
+    </details>
   
 </details>
 
