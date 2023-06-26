@@ -19,7 +19,9 @@ My intention with this project is to replicate some of the more important aspect
 <p>
 1) The Ingestion (Apache Nifi) is designed to automate data across systems. In real time it will load (PutFile) the files into a local database (SQL Server) before pushing the files to the cloud storage(S3) environment. . See diagram below: 
 </p>
+
 #### Table of Content
+
 - NIFI: Ingest
     - Goto http://localhost:2080/nifi/
         - NiFi-S3 integration
