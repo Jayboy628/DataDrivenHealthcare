@@ -33,13 +33,14 @@ My intention with this project is to replicate some of the more important aspect
         - Bucket
         - Folder
         - Upload Files
-<details open>
-
-    <summary>
-    
-#### How to Run/Build or Install Extraction Environment 
-    </summary>
-</details>
+          
+            <details open>
+            
+                <summary>
+                
+            #### How to Run/Build or Install Extraction Environment 
+                </summary>
+            </details>
   
 </details>
 
