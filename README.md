@@ -35,7 +35,11 @@ My intention with this project is to replicate some of the more important aspect
 
 <summary>
 
-#### How to Run/Build or Install Extraction Environment 
+#### How we create the Extraction Environment
+1) Nifi Configuration
+2) Ingest Files to Postgres Database
+3) Move Files to S3 bucket
+
 </summary>
 </details>
   
