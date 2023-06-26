@@ -21,12 +21,10 @@ My intention with this project is to replicate some of the more important aspect
 </p>
 
 #### Table of Content
-
 - NIFI: Goto http://localhost:8443/nifi/
-        - NiFi Cofiguration
-        - Push files using NiFi
-        - Organize and Storage       
-- AWS: S3 Storage
+    - NiFi Cofiguration
+    - Push files using NiFi to Postges    
+    - AWS: S3 Storage
         - Identity and Access Management (IAM)
         - Access Keys
         - Bucket
