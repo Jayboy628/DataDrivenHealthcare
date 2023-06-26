@@ -42,6 +42,17 @@ My intention with this project is to replicate some of the more important aspect
         2) Ingest Files to Postgres Database
         3) Move Files to S3 bucket
     </details>
+  <details open>
+    
+    <summary>
+    
+    #### 2) Ingest Files to Postgres Database
+    </summary>
+    
+        1) Nifi Configuration
+        2) Ingest Files to Postgres Database
+        3) Move Files to S3 bucket
+    </details>
   
 </details>
 
