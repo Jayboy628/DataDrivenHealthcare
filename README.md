@@ -47,6 +47,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
           - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
               - wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
               - unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
+  
           - Configuration Files
                   --- varibales loop ---
                   prop_replace () { target_file=${3:-${nifi_props_file}}
