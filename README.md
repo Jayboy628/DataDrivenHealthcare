@@ -52,86 +52,89 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     #### 1) Goto http:/localhost:8443/nifi/: Setup Nifi Environment
     </summary>
     
-- Setup Nifi Environment: I am using a MAC
-    - Open Terminal
-        - Move to the following folder: cd /opt
-    - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
-        - Create the following Variables
-            * export version='1.22.0'
-            * export nifi_registry_port='18443'  (I am keeping the illustration simple. However, install regisrty, prod, dev stg is recommended)
-            * export nifi_prd_port='8443'
-        - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
-            * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
-            * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
-        - Configuration Files
-          
-                      Using the varibales created above to configure Loop
-                  ---------------------------------------------------------
-          
-                  prop_replace () { target_file=${3:-${nifi_props_file}}
-                  echo 'replacing target file ' ${target_file}
-                  sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}}
-
-                    mkdir -p /opt/nifi-toolkit/nifi-envs
-                    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/nifi-PRD
-                    prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
-                    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
-                    prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
-          
-          ##### NIFI CLI test
-          - This utility is used to automate NiFi or NiFi Registry tasks.
-              * Configure this nifi-PRD
-                  * Type the following: cd /opt/nifi-toolkit/nifi-envs
-                  * Add the following to baseUrl: baseUrl=http://localhost:8443 (add pic)
-              * Type the following and enter Nifi Toolkit env:/opt/nifi-toolkit/bin/cli.sh
-              * Show Session Keys: session keys
-                  * The config files has the following properties 
-                  * Add session: session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
-                  * View current Session: session show
-                  * Find the root PG Id: nifi get-root-id
-                  * List all Process Groups: nifi pg-list
-                  * Find the current user: nifi current-user
-                  * List all available templates: nifi list-templates 
+        - Setup Nifi Environment: I am using a MAC
+            - Open Terminal
+                - Move to the following folder: cd /opt
+            - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
+                - Create the following Variables
+                    * export version='1.22.0'
+                    * export nifi_registry_port='18443'  (I am keeping the illustration simple. However, install regisrty, prod, dev stg is recommended)
+                    * export nifi_prd_port='8443'
+                - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
+                    * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
+                    * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
+                - Configuration Files
+                  
+                              Using the varibales created above to configure Loop
+                          ---------------------------------------------------------
+                  
+                          prop_replace () { target_file=${3:-${nifi_props_file}}
+                          echo 'replacing target file ' ${target_file}
+                          sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}}
+        
+                            mkdir -p /opt/nifi-toolkit/nifi-envs
+                            cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/nifi-PRD
+                            prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
+                            cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
+                            prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
+                  
+                  ##### NIFI CLI test
+                  - This utility is used to automate NiFi or NiFi Registry tasks.
+                      * Configure this nifi-PRD
+                          * Type the following: cd /opt/nifi-toolkit/nifi-envs
+                          * Add the following to baseUrl: baseUrl=http://localhost:8443 (add pic)
+                      * Type the following and enter Nifi Toolkit env:/opt/nifi-toolkit/bin/cli.sh
+                      * Show Session Keys: session keys
+                          * The config files has the following properties 
+                          * Add session: session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
+                          * View current Session: session show
+                          * Find the root PG Id: nifi get-root-id
+                          * List all Process Groups: nifi pg-list
+                          * Find the current user: nifi current-user
+                          * List all available templates: nifi list-templates 
 </details>
- <details open>
-   <summary>
+
+
+<details open>
+<summary>
   
  #### 2) Goto http:/localhost:8443/nifi/: Automate Log parsing
-    </summary>
-- Setup Nifi Environment: I am using a MAC
-    - Open Terminal
-        - Move to the following folder: cd /opt
-    - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
-        - Type the following variables and click enter
-            * export version='1.22.0'
-            * export nifi_registry_port='18443'
-            * export nifi_prd_port='8443'
-        - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
-            * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
-            * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
-        - Configuration Files
+</summary>
+        - Setup Nifi Environment: I am using a MAC
+            - Open Terminal
+                - Move to the following folder: cd /opt
+            - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
+                - Type the following variables and click enter
+                    * export version='1.22.0'
+                    * export nifi_registry_port='18443'
+                    * export nifi_prd_port='8443'
+                - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
+                    * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
+                    * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
+                - Configuration Files
+                  
+                              Using the varibales created above to configure Loop
+                          ---------------------------------------------------------
+                  
+                          prop_replace () { target_file=${3:-${nifi_props_file}}
+                          echo 'replacing target file ' ${target_file}
+                          sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}}
+        
+                            mkdir -p /opt/nifi-toolkit/nifi-envs
+                            cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/nifi-PRD
+                            prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
+                            cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
+                            prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
+                  
+                  - The config files has the following properties
+                    * session  keys
+                    * The config files has the following properties 
+                    * session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
+                    * export nifi_prd_port='8443'
           
-                      Using the varibales created above to configure Loop
-                  ---------------------------------------------------------
-          
-                  prop_replace () { target_file=${3:-${nifi_props_file}}
-                  echo 'replacing target file ' ${target_file}
-                  sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}}
+                3) Move Files to S3 bucket
+</details>
 
-                    mkdir -p /opt/nifi-toolkit/nifi-envs
-                    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/nifi-PRD
-                    prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
-                    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
-                    prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
-          
-          - The config files has the following properties
-            * session  keys
-            * The config files has the following properties 
-            * session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
-            * export nifi_prd_port='8443'
-  
-        3) Move Files to S3 bucket
-    </details>
   <details open>
     
     <summary>
