@@ -64,7 +64,8 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
         - Configuration Files
           
-                  ##### Varibales Loop
+                      Varibales Loop
+                  --------------------------
           
                   prop_replace () { target_file=${3:-${nifi_props_file}}
                   echo 'replacing target file ' ${target_file}
