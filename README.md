@@ -82,11 +82,14 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
               * Configure this nifi-PRD
                   * Type the following: cd /opt/nifi-toolkit/nifi-envs
                   * Add the following to baseUrl: baseUrl=http://localhost:8443 (add pic)
-              - Type the following and enter Nifi Toolkit env:/opt/nifi-toolkit/bin/cli.sh
-                * session  keys
-                * The config files has the following properties 
-                * session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
-                * export nifi_prd_port='8443'
+              * Type the following and enter Nifi Toolkit env:/opt/nifi-toolkit/bin/cli.sh
+              * Show Session Keys: session keys
+                  * The config files has the following properties 
+                  * Add session: session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
+                  * View current Session: session show
+                  * Find the root PG Id: nifi get-root-id
+                  * List all Process Groups: nifi pg-list
+                  * Find the current user: nifi current-user
   
      #### 2) Goto http:/localhost:8443/nifi/: Automate Log parsing
     </summary>
