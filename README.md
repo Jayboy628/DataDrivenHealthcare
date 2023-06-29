@@ -90,6 +90,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                   * Find the root PG Id: nifi get-root-id
                   * List all Process Groups: nifi pg-list
                   * Find the current user: nifi current-user
+</details>
  <details open>
    <summary>
   
