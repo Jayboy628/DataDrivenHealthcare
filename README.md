@@ -50,22 +50,20 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
     <summary>
     
-    #### 1) Nifi Configuration: Local Installation Setup 
+    #### 1) Nifi Configuration: Setup Nifi Environment
     </summary>
 - Setup Nifi Environment: I am using a MAC
     - Open Terminal
         - Move to the following folder: cd /opt
     - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
         - Create the following Variables
-        * export version='1.22.0'
-        * export nifi_registry_port='18443'
-        * export nifi_prd_port='8443'
-  
-          - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
-              - wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
-              - unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
-  
-          - Configuration Files
+            * export version='1.22.0'
+            * export nifi_registry_port='18443'
+            * export nifi_prd_port='8443'
+        - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
+            * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
+            * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
+        - Configuration Files
                   --- varibales loop ---
                   prop_replace () { target_file=${3:-${nifi_props_file}}
                   echo 'replacing target file ' ${target_file}
