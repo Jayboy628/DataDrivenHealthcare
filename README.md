@@ -76,8 +76,8 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                     prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
                     cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
                     prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
-          
-          - Type the following variables and click enter 
+          ##### NIFI CLI test
+          - This utility is used to automate NiFi or NiFi Registry tasks.
             * session  keys
             * The config files has the following properties 
             * session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
