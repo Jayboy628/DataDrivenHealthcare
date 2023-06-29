@@ -22,14 +22,29 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
 #### Table of Content
 - NIFI: Goto http://localhost:8443/nifi/
-    - NiFi Cofiguration
-    - Push files using NiFi to Postges    
-    - AWS: S3 Storage
-        - Identity and Access Management (IAM)
-        - Access Keys
-        - Bucket
-        - Folder
-        - Upload Files
+        - Setup Nifi Environment    
+            - Installing Nifi Toolkit & Nifi
+        - Automatic Log parsing:    
+            - INFO
+            - DEBUG
+            - WARN
+            - ERROR
+        - Push files  to Postges
+            - parameter-context
+                - JSON FILE
+            - postgres
+                - Create Tables
+            - Upload Files
+        - Push files to Storage
+            - Parameter-Context
+                - JSON FIL
+            - AWS: S3 Storage
+                - Identity and Access Management (IAM)
+                - Access Keys
+                - Bucket
+                - Folder
+                - Upload Files
+      
           
     <details open>
     
