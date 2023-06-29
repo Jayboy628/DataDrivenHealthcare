@@ -64,8 +64,8 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
         - Configuration Files
           
-                      Varibales Loop
-                  --------------------------
+                      Using the varibales created above to configure Loop
+                  ---------------------------------------------------------
           
                   prop_replace () { target_file=${3:-${nifi_props_file}}
                   echo 'replacing target file ' ${target_file}
@@ -77,7 +77,34 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                     cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
                     prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
   
-        2) Ingest Files to Postgres Database
+     #### 2) Nifi Configuration: Automate Log parsing
+    </summary>
+- Setup Nifi Environment: I am using a MAC
+    - Open Terminal
+        - Move to the following folder: cd /opt
+    - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
+        - Create the following Variables
+            * export version='1.22.0'
+            * export nifi_registry_port='18443'
+            * export nifi_prd_port='8443'
+        - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
+            * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
+            * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
+        - Configuration Files
+          
+                      Using the varibales created above to configure Loop
+                  ---------------------------------------------------------
+          
+                  prop_replace () { target_file=${3:-${nifi_props_file}}
+                  echo 'replacing target file ' ${target_file}
+                  sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}}
+
+                    mkdir -p /opt/nifi-toolkit/nifi-envs
+                    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/nifi-PRD
+                    prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
+                    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
+                    prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
+  
         3) Move Files to S3 bucket
     </details>
   <details open>
