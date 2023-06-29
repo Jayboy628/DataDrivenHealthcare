@@ -24,7 +24,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 - NIFI: Goto http://localhost:8443/nifi/
     - Setup Nifi Environment
         - Installing Nifi Toolkit & Nifi
-    - Automatic Log parsing:
+    - Automate Log parsing:
         - INFO
         - DEBUG
         - WARN
@@ -52,12 +52,14 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
     #### 1) Nifi Configuration: Local Installation Setup 
     </summary>
-    
-        1) Nifi Configuration
-          - Installing Nifi Toolkit
-              export version='1.22.0'
-              export nifi_registry_port='18443'
-              export nifi_prd_port='8443'
+- Setup Nifi Environment: I am using a MAC
+    - Open Terminal
+        - Move to the following folder: cd /opt
+    - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
+        - Create the following Variables
+        * export version='1.22.0'
+        * export nifi_registry_port='18443'
+        * export nifi_prd_port='8443'
   
           - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
               - wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
