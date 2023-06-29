@@ -51,6 +51,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
     #### 1) Goto http:/localhost:8443/nifi/: Setup Nifi Environment
     </summary>
+    
 - Setup Nifi Environment: I am using a MAC
     - Open Terminal
         - Move to the following folder: cd /opt
@@ -90,6 +91,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                   * Find the root PG Id: nifi get-root-id
                   * List all Process Groups: nifi pg-list
                   * Find the current user: nifi current-user
+                  * List all available templates: nifi list-templates 
 </details>
  <details open>
    <summary>
