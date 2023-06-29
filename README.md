@@ -57,7 +57,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     - Installing Nifi Toolkit: You can download the Apache Nifi https://nifi.apache.org/download.html or folling steps
         - Create the following Variables
             * export version='1.22.0'
-            * export nifi_registry_port='18443'  (I am keeping the illustration simple. However, install regisrty prod, dev stg is recommended)
+            * export nifi_registry_port='18443'  (I am keeping the illustration simple. However, install regisrty, prod, dev stg is recommended)
             * export nifi_prd_port='8443'
         - Download Nifi Toolkit: I am using a MAC and my envrionment loaction is cd/opt
             * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
@@ -76,6 +76,12 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                     prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
                     cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
                     prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
+          
+          - Type the following variables and click enter 
+            * session  keys
+            * The config files has the following properties 
+            * session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
+            * export nifi_prd_port='8443'
   
      #### 2) Goto http:/localhost:8443/nifi/: Automate Log parsing
     </summary>
@@ -105,7 +111,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                     cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
                     prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
           
-          - Type the following variables and click enter 
+          - The config files has the following properties
             * session  keys
             * The config files has the following properties 
             * session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
