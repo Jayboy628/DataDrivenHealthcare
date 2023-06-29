@@ -29,7 +29,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
         - DEBUG
         - WARN
         - ERROR
-    - Push files to Postges
+    - Push files to Postges Database
         - parameter-context
             - JSON FILE
         - postgres
@@ -44,7 +44,6 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             - Bucket
             - Folder
             - Upload Files
-  
           
     <details open>
     
@@ -64,7 +63,9 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             * wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt
             * unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd  /opt/nifi-toolkit/nifi-toolkit-${version} &&  mv * .. && cd .. && rm -rf nifi-toolkit-${version}
         - Configuration Files
-                  --- varibales loop ---
+          
+                  ##### Varibales Loop
+          
                   prop_replace () { target_file=${3:-${nifi_props_file}}
                   echo 'replacing target file ' ${target_file}
                   sed -i -e "s|^$1=.*$|$1=$2|"  ${target_file}}
