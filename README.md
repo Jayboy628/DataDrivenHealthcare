@@ -160,14 +160,18 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                 - <img src="images/AddBulltin.png" alt="header" style="width: 600px; height: 400px;"> <br>
     - Connect `RouteOnContent` RELATIONSHIPS to Success `ExtractGrok` and Terminate: `unmatched`
     - Configure Processor for `ExtractGrok`
-        - Grok Expression: `%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} \[%{DATA:thread}\] %{DATA:class} %{GREEDYDATA:message}`
-        - Character Set: `flowfile-attribute`
+        - ***Grok Expression***: `%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} \[%{DATA:thread}\] %{DATA:class} %{GREEDYDATA:message}`
+        - ***Character Set***: `flowfile-attribute`
 
-    - Connect `RouteOnContent` RELATIONSHIPS to Success `PutSlack`
+    - If you have a `Slack` account Connect `RouteOnContent` RELATIONSHIPS to Success `PutSlack`
     - Configure Processor for `RouteOnContent`
         - ***Webhook URL***: `Sensitive value set`
         - ***Webhook Text***: ` An Error occoured at ${grok.timestamp} with Service ${grok.thread}. Error msg ${grok.message}`
-        - Channel: 
+        - Channel: <Your slack Channel>
+
+    NIFI: LOG DATA FLOW
+    ------------------------------------------
+    <img src="images/logfile.png" alt="header" style="width: 700px; height: 500px;"> <br>   
             
  
 </details>
