@@ -82,7 +82,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
     ### NIFI CLI STEPS:
     
-    <strong>This utility is used to automate NiFi or NiFi Registry tasks</strong>
+    <strong>The config files have the following properties</strong>
     -----------------------------------------------------------------------------
     
     - Configure this nifi-PRD
@@ -90,16 +90,23 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
       - Add the following to `baseUrl`: `baseUrl=http://localhost:8443` 
     - Type the following and enter Nifi Toolkit env: `/opt/nifi-toolkit/bin/cli.sh`
     - Show Session Keys: `session keys`
+    - Add session: `session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV`
 
-    <strong>The config files have the following properties</strong>
+    <strong>View the nifi Environment</strong>
     ---------------------------------------------------------------
      
-    - Add session: `session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV`
+    - Start Nifi: `/opt/nifi-prd/bin/nifi.sh start  
+    - Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`                 `
     - View current Session: `session show`
     - Find the root PG Id: `nifi get-root-id`
-    - List all Process Groups: `nifi pg-list`
+    - List all Process Groups: `nifi pg-list` (its empty,but will be used in `Files to Postgres Database` section)
     - Find the current user: `nifi current-user`
-    - List all available templates: `nifi list-templates`
+    - List all available templates: `nifi list-templates` (its empty, haven't add any template as yet)
+
+     <strong>Below is a basic view of Nifi Environment</strong>
+    ---------------------------------------------------------------
+     
+    <img src="images/fileconfig.png" alt="header" style="width: 1000px; height: 700px;"><br> 
 
 </details>
 
