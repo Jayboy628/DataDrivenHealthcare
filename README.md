@@ -1,5 +1,5 @@
 <!-- ABOUT THE PROJECT -->
-# <font color="blue"><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
+## <font color="blue"><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
 #### <font color="blue"><em><center>Harnessing Cloud Technology for an Efficient Data Warehouse Solution</em></center></font>
 
 <img src="images/main2.png" alt="header" style="width: 900px; height: 400px;">
