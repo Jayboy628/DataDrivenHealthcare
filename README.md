@@ -128,19 +128,36 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
 <strong> Create the Log Flow in Nifi</strong>
 ---------------------------------------------------------------
-- Drag the `Processor` onto the plane and type `TailFile`
+- Drag the `Processor` onto the plane and type `TailFile` and Relationship is success
 - Open the TailFaile Configure page and click on the `SETTINGS` and click on `Bulletin Level`
     - Will mirror the flow base on the `Bulletin Level` Then click on `PROPERTIES`
     - In `Property` column  `Tailing mode` choose Value `Single file` and in column `File(s) to Tail` add the log path
     - Log file Path: `/opt/nifi-prd/logs/nifi-app.log`<br><br>
 
-    <em>TailFile Configure Processor: Bulltin Level</em>
+    - TailFile Configure Processor: `Bulltin Level`
     ------------------------------------------
-    <img src="images/Bulletin.png" alt="header" style="width: 1000px; height: 700px;"><br>
+    <img src="images/Bulletin.png" alt="header" style="width: 700px; height: 400px;"> <br>
 
-    <em>TailFile Configure Processor: PROPERTIES</em>
+    - TailFile Configure Processor: `PROPERTIES`
     ------------------------------------------
-    <img src="images/TailFile.png" alt="header" style="width: 1000px; height: 700px;"><br>-------
+    <img src="images/TailFile.png" alt="header" style="width: 700px; height: 500px;"> <br>
+
+    - Configure Processor for `SplitText`: Line Split Count `1`this split the `Bulltin Level type`
+        - Header Line Count: `0`
+        - Removing Trailing Newlines: `True`
+    - Configure Processor for `RouteOnContent`
+        - ***Match Requirement***: `content must contain match`
+        - ***Character Set***: `UTF`
+        - ***Content Buffer Size*** : `1 MB`
+        - ***Click*** the `+` and manually add the following:
+            - DEBUG
+            - ERROR
+            - INFO
+            - WARN
+            - See Below
+             <img src="images/AddBulltin.png" alt="header" style="width: 600px; height: 400px;"> <br>
+            
+
     
          
    
