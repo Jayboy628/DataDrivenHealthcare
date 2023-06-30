@@ -95,7 +95,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     <strong>View the nifi Environment</strong>
     ---------------------------------------------------------------
      
-    - Start Nifi: `/opt/nifi-prd/bin/nifi.sh start  
+    - Start Nifi: `/opt/nifi-prd/bin/nifi.sh start` 
     - Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`                 `
     - View current Session: `session show`
     - Find the root PG Id: `nifi get-root-id`
@@ -117,42 +117,23 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 ##### 2) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Automate Log parsing
 </summary>
 
-- Setup Nifi Environment: I am using a MAC
-  - Open Terminal
-  - Move to the following folder: `cd /opt`
-- Installing Nifi Toolkit: You can download the Apache Nifi [here](https://nifi.apache.org/download.html) or follow these steps:
-  - Type the following variables and click enter:
-    - `export version='1.22.0'`
-    - `export nifi_registry_port='18443'`
-    - `export nifi_prd_port='8443'`
-  - Download Nifi Toolkit: I am using a MAC and my environment location is `cd/opt`
-    - `wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt`
-    - `unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd /opt/nifi-toolkit/nifi-toolkit-${version} && mv * .. && cd .. && rm -rf nifi-toolkit-${version}`
-  - Configuration Files
-  
-    Using the variables created above to configure Loop
-    ----------------------------------------------------
-    
-    ```shell
-    prop_replace () {
-      target_file=${3:-${nifi_props_file}}
-      echo 'replacing target file ' ${target_file}
-      sed -i -e "s|^$1=.*$|$1=$2|" ${target_file}
-    }
+<strong> Setup Log parsing inside NIFI</strong>
+---------------------------------------------------------------
+- Log file location: `/opt/nifi-prd/logs` we can view the log files `nifi-app.log`
+- Start Nifi: `/opt/nifi-prd/bin/nifi.sh start` 
+- Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`
+- Goto your nifi web location: `http:/localhost:8443/nifi/`
+    - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
+    - Drag another `Process Group` and name it `LOGS`
 
-    mkdir -p /opt/nifi-toolkit/nifi-envs
-    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/nifi-PRD
-    prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
-    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
-    prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
-    ```
-    
-    - The config files have the following properties
-      - session keys
-      - The config files have the following properties
-      - session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV 
-      - export nifi_prd_port='8443'
-          
+<strong> Create the Log Flow in Nifi</strong>
+---------------------------------------------------------------
+- Log file location: `/opt/nifi-prd/logs` we can view the log files `nifi-app.log`
+- Start Nifi: `/opt/nifi-prd/bin/nifi.sh start` 
+- Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`
+- Goto your nifi web location: `http:/localhost:8443/nifi/`
+    - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
+    - Drag another `Process Group` and name it `LOGS`          
    
 </details>
 
