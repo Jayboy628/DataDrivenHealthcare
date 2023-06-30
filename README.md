@@ -142,25 +142,34 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     ------------------------------------------
     <img src="images/TailFile.png" alt="header" style="width: 700px; height: 500px;"> <br>
 
+    - Connect `TailFile` RELATIONSHIPS to Success `SplitText`
     - Configure Processor for `SplitText`: Line Split Count `1`this split the `Bulltin Level type`
         - Header Line Count: `0`
         - Removing Trailing Newlines: `True`
+    - Connect `SplitText` RELATIONSHIPS to Success `RouteOnContent` and Terminate: `failure` and `original`
     - Configure Processor for `RouteOnContent`
         - ***Match Requirement***: `content must contain match`
         - ***Character Set***: `UTF`
         - ***Content Buffer Size*** : `1 MB`
         - ***Click*** the `+` and manually add the following:
-            - DEBUG
-            - ERROR
-            - INFO
-            - WARN
-            - See Below
-             <img src="images/AddBulltin.png" alt="header" style="width: 600px; height: 400px;"> <br>
-            
+            - DEBUG : connect to LongAttribute
+            - ERROR : connect to `ExtractGrok`
+            - INFO : connect to LongAttribute
+            - WARN : connect to LongAttribute
+            - See Below <br>
+                - <img src="images/AddBulltin.png" alt="header" style="width: 600px; height: 400px;"> <br>
+    - Connect `RouteOnContent` RELATIONSHIPS to Success `ExtractGrok` and Terminate: `unmatched`
+    - Configure Processor for `ExtractGrok`
+        - Grok Expression: `%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} \[%{DATA:thread}\] %{DATA:class} %{GREEDYDATA:message}`
+        - Character Set: `flowfile-attribute`
 
-    
-         
-   
+    - Connect `RouteOnContent` RELATIONSHIPS to Success `PutSlack`
+    - Configure Processor for `RouteOnContent`
+        - ***Webhook URL***: `Sensitive value set`
+        - ***Webhook Text***: ` An Error occoured at ${grok.timestamp} with Service ${grok.thread}. Error msg ${grok.message}`
+        - Channel: 
+            
+ 
 </details>
 
   <details>
