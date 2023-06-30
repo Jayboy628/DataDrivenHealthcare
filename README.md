@@ -1,5 +1,5 @@
 <!-- ABOUT THE PROJECT -->
-# <font color="blue"><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
+## <font color="blue"><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
 ### <font color="blue"><center>Harnessing Cloud Technology for an Efficient Data Warehouse Solution</center></font>
 
 <img src="images/main2.png" alt="header" style="width: 900px; height: 400px;">
@@ -188,7 +188,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 #### <font color="green"><left>PHASE TWO: Reporting and Analytics</left></font>
 <details>
     
-<summary><strong> Transformation, Documentation: DBT and SQL</strong></summary>
+<summary><strong> Transformation, Documentation Approach: DBT and SQL</strong></summary>
 
 <p>
 Another requirement was implementing a Data Warehouse that enabled the stakeholders to view and compare the reports and KPIs. Since Data Warehouse usage is mainly for analytical purposes rather than transactional, I decided to design a Star Schema because the structure is less complex and provides better query performance. Documenting wasn’t required, however, adding the Data Build Tool (DBT) to this process allowed us to document each dimension, columns, and visualize the Star Schema. DBT also allowed us to neatly organize all data transformations into discrete models.
