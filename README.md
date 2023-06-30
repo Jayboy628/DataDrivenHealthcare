@@ -49,6 +49,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
 ##### 1) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Setup Nifi Environment
 </summary>
+
 - Setup Nifi Environment: `I am using a MAC`
   - Open Terminal
   - Move to the following folder: `cd /opt`
