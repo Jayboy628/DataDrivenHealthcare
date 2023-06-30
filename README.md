@@ -128,12 +128,21 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
 <strong> Create the Log Flow in Nifi</strong>
 ---------------------------------------------------------------
-- Log file location: `/opt/nifi-prd/logs` we can view the log files `nifi-app.log`
-- Start Nifi: `/opt/nifi-prd/bin/nifi.sh start` 
-- Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`
-- Goto your nifi web location: `http:/localhost:8443/nifi/`
-    - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
-    - Drag another `Process Group` and name it `LOGS`          
+- Drag the `Processor` onto the plane and type `TailFile`
+- Open the TailFaile Configure page and click on the `SETTINGS` and click on `Bulletin Level`
+    - Will mirror the flow base on the `Bulletin Level` Then click on `PROPERTIES`
+    - In `Property` column  `Tailing mode` choose Value `Single file` and in column `File(s) to Tail` add the log path
+    - Log file Path: `/opt/nifi-prd/logs/nifi-app.log`<br><br>
+
+    <em>TailFile Configure Processor: Bulltin Level</em>
+    ------------------------------------------
+    <img src="images/Bulletin.png" alt="header" style="width: 1000px; height: 700px;"><br>
+
+    <em>TailFile Configure Processor: PROPERTIES</em>
+    ------------------------------------------
+    <img src="images/TailFile.png" alt="header" style="width: 1000px; height: 700px;"><br>-------
+    
+         
    
 </details>
 
