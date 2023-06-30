@@ -12,6 +12,7 @@ My intention with this project is to replicate some of the more important aspect
 
 
 #### <font color="green"><left>PHASE ONE: Data Integration and Data Consolidation with Standardization</left></font>
+---------------------------------------------------------------------------------------------------------------------
 
 <details>
   <summary><strong><em>Extraction Approach: Apache Nifi</em></strong></summary>
@@ -185,6 +186,8 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 </details>
 
 #### <font color="green"><left>PHASE TWO: Reporting and Analytics</left></font>
+---------------------------------------------------------------------------------------------------------------------
+
 <details>
     
 <summary><strong><em> Transformation, Documentation Approach: DBT and SQL</em></strong></summary>
@@ -224,4 +227,6 @@ My intention with this project is to replicate some of the more important aspect
 </details>
 
 #### <font color="green"><left>PHASE THREE</left></font>
+---------------------------------------------------------------------------------------------------------------------
+
 * Models
