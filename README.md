@@ -33,16 +33,16 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
       - JSON FILE: Database configuration
     - postgresql
       - Create Tables
-    - Upload Files
-- Cloud Storage (S3): Stored processed and transformation files
-    - Parameter-Context
-      - JSON FILE: File configuration
-    - AWS(S3)
-      - Identity and Access Management (IAM)
-      - Access Keys
-      - Bucket
-      - Folder
       - Upload Files
+    - Cloud Storage (S3): Stored processed and transformation files
+        - Parameter-Context
+        - JSON FILE: File configuration
+        - AWS(S3)
+        - Identity and Access Management (IAM)
+        - Access Keys
+        - Bucket
+        - Folder
+        - Upload Files
 
 <details>
 <summary>
@@ -247,12 +247,67 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
   <details>
 <summary>
   
- ##### 4) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Files to PostgreSQL Database
+ ##### 4) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): PostgreSQL Database to AWS (S3)
 </summary>
     
-- Nifi Configuration
-- Ingest Files to Postgres Database
-- Move Files to S3 bucket
+- Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
+- Automate configuration file within parameter-context 
+    - ***Create two folders***: Process-Nifi and parameter_context
+    - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context` and add the files [`postgres-config.json`](parameter-context) to the folder
+    - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
+    - ***Create the parameter Context for database***:
+    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`
+    - ***Create the parameter Context for file Tracker***:
+    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/excell-healthcare-tracker-config.json' -u http://localhost:8443`
+    - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
+    - ***Open Nifi***: In the top right corner click the icon and click on `Parameter Contexts` to confirm that the above files are loaded
+    - *** Global Gear***: Click on it and search in the `Process Group Parameter Context` for your loaded files and click apply
+        - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
+        - Drag another `Process Group` and name it `File Extraction to Databases`
+            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
+                - In the ListFile processor the file configuration should be loaded inplace automatically
+                - ***Input Directory*** : `#{source_directory}`
+                - ***File Filter*** : `#{file_list}`
+                - ***Entity Tracking Node Identifier*** : `${hostname()}`
+
+            - Drag the Processor and type `FetchFile`
+                - ***File to Fetch*** : `${absolute.path}/${filename}`
+                - ***Move Conflict Strategy*** : `Rename`
+            
+            - Drag the Processor and type `ConvertRecord`: Read CSV files and convert to `JSON`
+                - ***Record Reader*** :`CSVReader`: we needed configure a `Controller Service Details` click on `properties`
+                    - ***Schema Access Strategys*** : `Infer Schema`
+                    - ***CSV Parse*** : `Apache Commons CSV`
+                    - ***CSV Format*** : `Microsoft Excel`
+                - ***Record Writer*** : `JsonRecordSetWriter`
+                    - ***Schema Write Strategy*** : `Set 'avro.schema' Attribute`
+                    - ***Schema Access Strategy*** : `Inherit Record Schema`
+                    - ***Output Grouping*** : `Array`
+                    - ***Compression Format*** : `None`
+
+            - Drag the Processor and type `ConvertJSONToSQL`: Read JSON files and convert to `SQL Queries`
+                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
+
+                - NIFI upload JSON config file for Database: `JPostgreSQL-DBCPConnectionPool`
+                -----------------------------------------------------------------------------
+                <img src="images/DBCPConnectionConfig.png" alt="header" style="width: 700px; height: 400px;"> <br>
+                
+                - ***Statement Type*** : `INSERT`
+                - ***File Filter*** : `#{filename:replace('.csv')}`
+              
+
+            - Drag the Processor and type `PUTSQL`: Read JSON files and convert to `SQL Queries INSERT`
+                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
+                - ***Batch Size*** : `1000`
+                - ***Rollback On Failure*** : `true`
+
+               - NIFI Data Flow `Push Files to PostgreSQL Database`
+                -----------------------------------------------------------------------------
+                <img src="images/File_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
+                
+
+
+
 </details> 
 </details>
 
