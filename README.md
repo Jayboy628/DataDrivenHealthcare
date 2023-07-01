@@ -235,7 +235,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                 - ***Batch Size*** : `1000`
                 - ***Rollback On Failure*** : `true`
 
-               - NIFI Data Flow `Push Files to PostgreSQL Database`
+               - NIFI Data Flow `Set up scheduled or event-driven processes to load data from NiFi into PostgreSQL`
                 -----------------------------------------------------------------------------
                 <img src="images/File_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
                 
@@ -250,10 +250,15 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
  ##### 4) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): PostgreSQL Database to AWS (S3)
 </summary>
     
-- Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
-- Automate configuration file within parameter-context 
-    - ***Create two folders***: Process-Nifi and parameter_context
-    - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context` and add the files [`postgres-config.json`](parameter-context) to the folder
+- Staging Database (PostgreSQL): The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
+Cloud Storage (S3): The cloud storage, such as Amazon S3, is used to store the processed and transformed data. It provides scalable and cost-effective storage for large volumes of data, ensuring durability and availability.
+
+- ***Data Transformation and Staging with PostgreSQL***:![#f03c15]`I will not go through the transformation stage here`
+    - Install and configure PostgreSQL database on a dedicated server or cluster
+    - Create the necessary tables and schemas in PostgreSQL to stage the incoming data
+    - Design SQL scripts or stored procedures to perform data transformation, standardization, and cleansing based on specific business rules
+    - Implement data validation and quality checks to ensure the integrity of the staged data
+    - Set up scheduled or event-driven processes to load data from NiFi into PostgreSQL.
     - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
     - ***Create the parameter Context for database***:
     `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`
@@ -314,7 +319,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
 <details>
     
-<summary><strong><em>Load Approach: Snowflake and SQL</em></strong></summary>
+<summary><strong><em>Load Approach: Data Warehouse in Snowflake (SQL)</em></strong></summary>
 
 <p>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
