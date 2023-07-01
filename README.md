@@ -181,7 +181,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
   <details>
 <summary>
   
- ##### 3) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Push Files to Postgres Database
+ ##### 3) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Push Files to PostgreSQL Database
 </summary>
     
 - Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
@@ -194,15 +194,49 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     - ***Create the parameter Context for file Tracker***:
     `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/excell-healthcare-tracker-config.json' -u http://localhost:8443`
     - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
-    - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
-    - Drag another `Process Group` and name it `Files to Database`
+    - ***Open Nifi***: In the top right corner click the icon and click on `Parameter Contexts` to confirm that the above files are loaded
+    - *** Global Gear***: Click on it and search in the `Process Group Parameter Context` for your loaded files and click apply
+        - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
+        - Drag another `Process Group` and name it `File Extraction to Databases`
+            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
+                - In the ListFile processor the file configuration should be loaded inplace automatically
+                - ***Input Directory*** : `#{source_directory}`
+                - ***File Filter*** : `#{file_list}`
+                - ***Entity Tracking Node Identifier*** : `${hostname()}`
+
+            - Drag the Processor and type `FetchFile`
+                - ***File to Fetch*** : `${absolute.path}/${filename}`
+                - ***Move Conflict Strategy*** : `Rename`
+            
+            - Drag the Processor and type `ConvertRecord`
+                - ***Record Reader*** :`CSVReader`: we need configure a `Controller Service Details` click on `properties`
+                    - ***Schema Access Strategys*** : `Infer Schema`
+                    - ***CSV Parse*** : `Apache Commons CSV`
+                    - ***CSV Format*** : `Microsoft Excel`
+                - ***File Filter*** : `JsonRecordSetWriter`
+                - ***Include Zero Record FlowFiles*** : `false`
+
+            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
+                - In the ListFile processor the file configuration should be loaded inplace automatically
+                - ***Input Directory*** : `#{source_directory}`
+                - ***File Filter*** : `#{file_list}`
+                - ***Entity Tracking Node Identifier*** : `${hostname()}`
+
+            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
+                - In the ListFile processor the file configuration should be loaded inplace automatically
+                - ***Input Directory*** : `#{source_directory}`
+                - ***File Filter*** : `#{file_list}`
+                - ***Entity Tracking Node Identifier*** : `${hostname()}`
+                
+
+
 
 </details>
 
   <details>
 <summary>
   
- ##### 4) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Files to Postgres Database
+ ##### 4) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Files to PostgreSQL Database
 </summary>
     
 - Nifi Configuration
