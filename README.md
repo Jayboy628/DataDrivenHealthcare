@@ -1,5 +1,6 @@
 <!-- ABOUT THE PROJECT -->
-<code style="color: red">I will not go through</code>
+
+$${\color{red}Red}$$
 ## <font color="blue"><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
 <br>
 <img src="images/main2.png" alt="header" style="width: 900px; height: 400px;"><br>
