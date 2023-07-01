@@ -119,6 +119,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
 <strong> Setup Log parsing inside NIFI</strong>
 ---------------------------------------------------------------
+
 - Log file location: `/opt/nifi-prd/logs` we can view the log files `nifi-app.log`
 - Start Nifi: `/opt/nifi-prd/bin/nifi.sh start` 
 - Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`
@@ -128,11 +129,12 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
 <strong> Create the Log Flow in Nifi</strong>
 ---------------------------------------------------------------
+
 - Drag the `Processor` onto the plane and type `TailFile` and Relationship is success
 - Open the TailFaile Configure page and click on the `SETTINGS` and click on `Bulletin Level`
     - Will mirror the flow base on the `Bulletin Level` Then click on `PROPERTIES`
     - In `Property` column  `Tailing mode` choose Value `Single file` and in column `File(s) to Tail` add the log path
-    - Log file Path: `/opt/nifi-prd/logs/nifi-app.log`<br><br>
+    - ***Log file Path**: `/opt/nifi-prd/logs/nifi-app.log`<br><br>
 
     - TailFile Configure Processor: `Bulltin Level`
     ------------------------------------------
@@ -144,8 +146,8 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
     - Connect `TailFile` RELATIONSHIPS to Success `SplitText`
     - Configure Processor for `SplitText`: Line Split Count `1`this split the `Bulltin Level type`
-        - Header Line Count: `0`
-        - Removing Trailing Newlines: `True`
+        - ***Header Line Count***: `0`
+        - ***Removing Trailing Newlines***: `True`
     - Connect `SplitText` RELATIONSHIPS to Success `RouteOnContent` and Terminate: `failure` and `original`
     - Configure Processor for `RouteOnContent`
         - ***Match Requirement***: `content must contain match`
@@ -185,10 +187,14 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 - Local Database: This may seem like an over kill. However, there are a few advantages, including a local staging database. For instance, it's cost effective. Using the cloud can be `expensive` if use SELECT repeatedly. Also, I can catch unexpected data issues and do any additional `Data Cleansing` or `Standardization`.  My goal is to make sure that I do as minimal `Update and Insert` into `Snowflake` as possible. 
 - Automate configuration file within parameter-context 
     - ***Create two folders***: Process-Nifi and parameter_context
-    - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context`
+    - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context` and add the files [`postgres-config.json`](parameter-context) to the folder
+    - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
     - ***Create the parameter Context for database***:
-    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`[`postgres-config.json`](parameter-context)
-    - Goto : (http:/localhost:8443/nifi/)
+    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`
+    - Goto your nifi web location: `http:/localhost:8443/nifi/`
+    - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
+    - Drag another `Process Group` and name it `Files to Database`
+
 </details>
 
   <details>
