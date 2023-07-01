@@ -11,7 +11,7 @@ My job was to design and implement a data warehouse from these files. The requir
 My intention with this project is to replicate some of the more important aspects of the above scenario. Please note that the healthcare dataset is fake and is being used only for demonstration purposes.
 
 
-#### <font color="green"><left>PHASE ONE: Data Ingestion and Storage Layer</left></font>
+#### <font color="green"><left>PHASE ONE: Data Ingestion, Data Storage, Data Warehouse Layer</left></font>
 ---------------------------------------------------------------------------------------------------------------------
 
 <details>
@@ -235,7 +235,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 </details>
 
-#### <font color="green"><left>PHASE TWO: Reporting and Analytics</left></font>
+#### <font color="green"><left>PHASE TWO: Data Transformation, Documentation, Data Visualization and Reporting Layer</left></font>
 ---------------------------------------------------------------------------------------------------------------------
 
 <details>
