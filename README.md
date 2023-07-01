@@ -255,7 +255,6 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
 - ***Staging Database (PostgreSQL)***: The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
 ***Cloud Storage (S3)***: The cloud storage, such as Amazon S3, is used to store the processed and transformed data. It provides scalable and cost-effective storage for large volumes of data, ensuring durability and availability.
-
 - ***Data Transformation and Staging***: A Guide below but`Beyond the scope of the project`
     - Install and configure PostgreSQL database on a dedicated server or cluster
     - Create the necessary tables and schemas in PostgreSQL to stage the incoming data
@@ -270,25 +269,23 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     - Ensure proper data encryption and data integrity mechanisms are in place.
  - ***Start Nifi***: `/opt/nifi-prd/bin/nifi.sh start`
  - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
-        - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
-        - Drag another `Process Group` and name it `Database Extraction to AWS(S3)`
-            - Click the process group `Database Extraction to AWS(S3)` and then Drag the Processor and type `ExecuteSQL`
-                - In the ExecuteSQL processor we need to query the tables
-                    - ***Database Connection Pooling Service*** : `PostgreSQL-DBCPConnectionPool`
-                    - ***SQL select query*** : `SELECT * FROM CHARGES`
-            - Drag the Processor and type `ConvertRecord`: follow the previous config 
-            - Drag the Processor and type `UpdateAttribute`: Reads the table names
-                - ***Click `+` and name `filename`*** :`${sql.tablename}.json`: returns json file
-            - Drag the Processor and type `PutS3Object`: sends the file to Storage (S3)
-                - ***Object Key***: `${filename}`
-                - ***Bucket*** : The Name you gave your `S3 Storage`
-                    - ***Access Key ID*** : `Sensitive value set`
-                    - ***Secret Access key*** :  `Sensitive value set`
-                    - ***Storage Class*** : `Standard`
-                    - ***Region*** : `Where your AWS Account is located`
-
-            - Drag the Processor and type `ConvertJSONToSQL`: Read JSON files and convert to `SQL Queries`
-                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
+    - Drag another `Process Group` and name it `Database Extraction to AWS(S3)`
+    - Click the process group `Database Extraction to AWS(S3)` and then Drag the Processor and type `ExecuteSQL`
+    - In the ExecuteSQL processor we need to query the tables
+        - ***Database Connection Pooling Service*** : `PostgreSQL-DBCPConnectionPool`
+            - ***SQL select query*** : `SELECT * FROM CHARGES`
+        - Drag the Processor and type `ConvertRecord`: follow the previous config 
+        - Drag the Processor and type `UpdateAttribute`: Reads the table names
+            - ***Click `+` and name `filename`*** :`${sql.tablename}.json`: returns json file
+        - Drag the Processor and type `PutS3Object`: sends the file to Storage (S3)
+            - ***Object Key***: `${filename}`
+            - ***Bucket*** : The Name you gave your `S3 Storage`
+            - ***Access Key ID*** : `Sensitive value set`
+            - ***Secret Access key*** :  `Sensitive value set`
+            - ***Storage Class*** : `Standard`
+            - ***Region*** : `Where your AWS Account is located`
+        - Drag the Processor and type `ConvertJSONToSQL`: Read JSON files and convert to `SQL Queries`
+            - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
 
                 - NIFI upload JSON config file for Database: `JPostgreSQL-DBCPConnectionPool`
                 -----------------------------------------------------------------------------
