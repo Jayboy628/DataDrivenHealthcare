@@ -1,7 +1,8 @@
 <!-- ABOUT THE PROJECT -->
 
-$${\color{red}Red}$$
-## <font color="blue"><center>Overcoming EMR Challenges with Cloud-Based Solutions:</center></font>
+$${\color{red}Still working on project}$$
+
+## <center>$${\color{blue}Overcoming EMR Challenges with Cloud-Based Solutions:}$$</center>
 <br>
 <img src="images/main2.png" alt="header" style="width: 900px; height: 400px;"><br>
 
