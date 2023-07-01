@@ -191,7 +191,9 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
     - ***Create the parameter Context for database***:
     `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`
-    - Goto your nifi web location: `http:/localhost:8443/nifi/`
+    - ***Create the parameter Context for file Tracker***:
+    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/excell-healthcare-tracker-config.json' -u http://localhost:8443`
+    - ***Goto your nifi web location**: `http:/localhost:8443/nifi/`
     - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
     - Drag another `Process Group` and name it `Files to Database`
 
