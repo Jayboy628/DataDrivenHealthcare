@@ -1,8 +1,8 @@
 <!-- ABOUT THE PROJECT -->
 
-$${\color{red}Still working on project}$$
+$${\color{red}Still \space working \space on \space project}$$
 
-## <center>$${\color{blue}Overcoming EMR Challenges with Cloud-Based Solutions:}$$</center>
+## <center>$${\color{blue}Overcoming \space EMR \space Challenges \space with \space Cloud-Based \space Solutions:}$$</center>
 <br>
 <img src="images/main2.png" alt="header" style="width: 900px; height: 400px;"><br>
 
@@ -256,8 +256,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 - Staging Database (PostgreSQL): The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
 Cloud Storage (S3): The cloud storage, such as Amazon S3, is used to store the processed and transformed data. It provides scalable and cost-effective storage for large volumes of data, ensuring durability and availability.
 
-- ***Data Transformation and Staging with PostgreSQL***:
-<code style="color: red">I will not go through</code>
+- ***Data Transformation and Staging with PostgreSQL***: `$${\color{red}I \space will \space not \space get \space in \space Details \space in \space }$$`
     - Install and configure PostgreSQL database on a dedicated server or cluster
     - Create the necessary tables and schemas in PostgreSQL to stage the incoming data
     - Design SQL scripts or stored procedures to perform data transformation, standardization, and cleansing based on specific business rules
