@@ -186,7 +186,9 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 - Automate configuration file within parameter-context 
     - ***Create two folders***: Process-Nifi and parameter_context
     - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context`
-    - ***Create the database configuration file***: [`postgres-config.json`](parameter-context)
+    - ***Create the parameter Context for database***:
+    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`[`postgres-config.json`](parameter-context)
+    - Goto : (http:/localhost:8443/nifi/)
 </details>
 
   <details>
