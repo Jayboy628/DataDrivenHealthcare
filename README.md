@@ -256,20 +256,15 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 - Staging Database (PostgreSQL): The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
 Cloud Storage (S3): The cloud storage, such as Amazon S3, is used to store the processed and transformed data. It provides scalable and cost-effective storage for large volumes of data, ensuring durability and availability.
 
-- ***Data Transformation and Staging with PostgreSQL***: $${\color{red}`I \space will \space not \space get \space in \space Details \space in`}$$
+- ***Data Transformation and Staging with PostgreSQL***: $${\color{red}I \space will \space not \space get \space in \space Details \space in}$$
     - Install and configure PostgreSQL database on a dedicated server or cluster
     - Create the necessary tables and schemas in PostgreSQL to stage the incoming data
     - Design SQL scripts or stored procedures to perform data transformation, standardization, and cleansing based on specific business rules
     - Implement data validation and quality checks to ensure the integrity of the staged data
     - Set up scheduled or event-driven processes to load data from NiFi into PostgreSQL.
-    - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
-    - ***Create the parameter Context for database***:
-    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`
-    - ***Create the parameter Context for file Tracker***:
-    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/excell-healthcare-tracker-config.json' -u http://localhost:8443`
-    - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
-    - ***Open Nifi***: In the top right corner click the icon and click on `Parameter Contexts` to confirm that the above files are loaded
-    - *** Global Gear***: Click on it and search in the `Process Group Parameter Context` for your loaded files and click apply
+ - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
+ - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
+    
         - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
         - Drag another `Process Group` and name it `File Extraction to Databases`
             - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
