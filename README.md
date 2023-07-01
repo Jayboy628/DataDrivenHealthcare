@@ -184,7 +184,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
  ##### 3) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Push Files to Postgres Database
 </summary>
     
-- Local Database: This may seem like an over kill. However, there are a few advantages, including a local staging database. For instance, it's cost effective. Using the cloud can be `expensive` if use SELECT repeatedly. Also, I can catch unexpected data issues and do any additional `Data Cleansing` or `Standardization`.  My goal is to make sure that I do as minimal `Update and Insert` into `Snowflake` as possible. 
+- Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
 - Automate configuration file within parameter-context 
     - ***Create two folders***: Process-Nifi and parameter_context
     - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context` and add the files [`postgres-config.json`](parameter-context) to the folder
@@ -193,7 +193,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`
     - ***Create the parameter Context for file Tracker***:
     `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/excell-healthcare-tracker-config.json' -u http://localhost:8443`
-    - ***Goto your nifi web location**: `http:/localhost:8443/nifi/`
+    - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
     - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
     - Drag another `Process Group` and name it `Files to Database`
 
