@@ -237,7 +237,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 
                - NIFI Data Flow `Push Files to PostgreSQL Database`
                 -----------------------------------------------------------------------------
-                <img src="images/File_Database.png" alt="header" style="width: 700px; height: 400px;"> <br>
+                <img src="images/File_Database.png" alt="header" style="width: 700px; height: 600px;"> <br>
                 
 
 
