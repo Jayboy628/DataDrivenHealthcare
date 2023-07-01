@@ -11,13 +11,13 @@ My job was to design and implement a data warehouse from these files. The requir
 My intention with this project is to replicate some of the more important aspects of the above scenario. Please note that the healthcare dataset is fake and is being used only for demonstration purposes.
 
 
-#### <font color="green"><left>PHASE ONE: Data Integration and Data Consolidation with Standardization</left></font>
+#### <font color="green"><left>PHASE ONE: Data Ingestion and Storage Layer</left></font>
 ---------------------------------------------------------------------------------------------------------------------
 
 <details>
-  <summary><strong><em>Extraction Approach: Apache Nifi</em></strong></summary>
+  <summary><strong><em>Ingestion Approach: Apache Nifi</em></strong></summary>
 
-The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (SQL Server) before pushing the files to the cloud storage (S3) environment.
+The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.
 
 #### Table of Content
 - NIFI: Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/)
@@ -28,16 +28,16 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     - DEBUG
     - WARN
     - ERROR
-  - Push files to Postges Database
+  - Staging Database (PostgreSQL):Ingest files into Database,temporary storage location for Data cleansing, validation and transformation processes
     - parameter-context
-      - JSON FILE
-    - postgres
+      - JSON FILE: Database configuration
+    - postgresql
       - Create Tables
     - Upload Files
-  - Push files to Storage
+- Cloud Storage (S3): Stored processed and transformation files
     - Parameter-Context
-      - JSON FILE
-    - AWS: S3 Storage
+      - JSON FILE: File configuration
+    - AWS(S3)
       - Identity and Access Management (IAM)
       - Access Keys
       - Bucket
