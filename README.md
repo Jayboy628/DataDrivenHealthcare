@@ -253,39 +253,39 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
  ##### 4) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): PostgreSQL Database to AWS (S3)
 </summary>
     
-- Staging Database (PostgreSQL): The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
-Cloud Storage (S3): The cloud storage, such as Amazon S3, is used to store the processed and transformed data. It provides scalable and cost-effective storage for large volumes of data, ensuring durability and availability.
+- ***Staging Database (PostgreSQL)***: The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
+***Cloud Storage (S3)***: The cloud storage, such as Amazon S3, is used to store the processed and transformed data. It provides scalable and cost-effective storage for large volumes of data, ensuring durability and availability.
 
-- ***Data Transformation and Staging with PostgreSQL***: $${\color{red}I \space will \space not \space get \space in \space Details \space in}$$
+- ***Data Transformation and Staging***: A Guide below but`Beyond the scope of the project`
     - Install and configure PostgreSQL database on a dedicated server or cluster
     - Create the necessary tables and schemas in PostgreSQL to stage the incoming data
     - Design SQL scripts or stored procedures to perform data transformation, standardization, and cleansing based on specific business rules
     - Implement data validation and quality checks to ensure the integrity of the staged data
-    - Set up scheduled or event-driven processes to load data from NiFi into PostgreSQL.
- - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
+    - Set up scheduled or event-driven processes to load data from `NiFi PostgreSQL to Storage (S3)`.
+- ***Storage and Scalability with S3***: A Guide below but`Beyond the scope of the project`
+    - Set up an Amazon S3 account and create a bucket to store the ingested data.
+    - Configure access controls and permissions for secure data storage.
+    - Define a folder structure or naming conventions to organize the data within the S3 bucket.
+    - Establish data retention policies and lifecycle rules based on data usage and compliance requirements.
+    - Ensure proper data encryption and data integrity mechanisms are in place.
+ - ***Start Nifi***: `/opt/nifi-prd/bin/nifi.sh start`
  - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
         - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
-        - Drag another `Process Group` and name it `File Extraction to Databases`
-            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
-                - In the ListFile processor the file configuration should be loaded inplace automatically
-                - ***Input Directory*** : `#{source_directory}`
-                - ***File Filter*** : `#{file_list}`
-                - ***Entity Tracking Node Identifier*** : `${hostname()}`
-
-            - Drag the Processor and type `FetchFile`
-                - ***File to Fetch*** : `${absolute.path}/${filename}`
-                - ***Move Conflict Strategy*** : `Rename`
-            
-            - Drag the Processor and type `ConvertRecord`: Read CSV files and convert to `JSON`
-                - ***Record Reader*** :`CSVReader`: we needed configure a `Controller Service Details` click on `properties`
-                    - ***Schema Access Strategys*** : `Infer Schema`
-                    - ***CSV Parse*** : `Apache Commons CSV`
-                    - ***CSV Format*** : `Microsoft Excel`
-                - ***Record Writer*** : `JsonRecordSetWriter`
-                    - ***Schema Write Strategy*** : `Set 'avro.schema' Attribute`
-                    - ***Schema Access Strategy*** : `Inherit Record Schema`
-                    - ***Output Grouping*** : `Array`
-                    - ***Compression Format*** : `None`
+        - Drag another `Process Group` and name it `Database Extraction to AWS(S3)`
+            - Click the process group `Database Extraction to AWS(S3)` and then Drag the Processor and type `ExecuteSQL`
+                - In the ExecuteSQL processor we need to query the tables
+                    - ***Database Connection Pooling Service*** : `PostgreSQL-DBCPConnectionPool`
+                    - ***SQL select query*** : `SELECT * FROM CHARGES`
+            - Drag the Processor and type `ConvertRecord`: follow the previous config 
+            - Drag the Processor and type `UpdateAttribute`: Reads the table names
+                - ***Click `+` and name `filename`*** :`${sql.tablename}.json`: returns json file
+            - Drag the Processor and type `PutS3Object`: sends the file to Storage (S3)
+                - ***Object Key***: `${filename}`
+                - ***Bucket*** : The Name you gave your `S3 Storage`
+                    - ***Access Key ID*** : `Sensitive value set`
+                    - ***Secret Access key*** :  `Sensitive value set`
+                    - ***Storage Class*** : `Standard`
+                    - ***Region*** : `Where your AWS Account is located`
 
             - Drag the Processor and type `ConvertJSONToSQL`: Read JSON files and convert to `SQL Queries`
                 - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
