@@ -264,7 +264,6 @@ Cloud Storage (S3): The cloud storage, such as Amazon S3, is used to store the p
     - Set up scheduled or event-driven processes to load data from NiFi into PostgreSQL.
  - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
  - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
-    
         - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
         - Drag another `Process Group` and name it `File Extraction to Databases`
             - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
