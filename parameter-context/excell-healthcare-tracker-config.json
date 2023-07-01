@@ -1,0 +1,29 @@
+{
+    "name": "excell healthcare tracker config",
+    "description": "",
+    "parameters": [
+        {
+            "parameter": {
+                "name": "source_directory",
+                "description": "location where healthcare excell files are located",
+                "sensitive": false,
+                "value": "/Users/shaunjaybrown/projects/dev/DataDrivenHealthcare/data_integration/nifi/process"
+            }
+        },
+        {
+            "parameter": {
+                "name": "file_list",
+                "description": "List of files to be extracted, if all set value to [^\\.].*",
+                "sensitive": false,
+                "value": "[^\\.].*"
+            }
+        }
+    ],
+    "inheritedParameterContexts": [
+        {
+            "component": {
+                "name": "local postgresql parameters"
+            }
+        }
+    ]
+}

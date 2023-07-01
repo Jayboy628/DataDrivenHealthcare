@@ -183,8 +183,10 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 </summary>
     
 - Local Database: This may seem like an over kill. However, there are a few advantages, including a local staging database. For instance, it's cost effective. Using the cloud can be `expensive` if use SELECT repeatedly. Also, I can catch unexpected data issues and do any additional `Data Cleansing` or `Standardization`.  My goal is to make sure that I do as minimal `Update and Insert` into `Snowflake` as possible. 
-- Automate File and Json file to parameter-context 
-- process
+- Automate configuration file within parameter-context 
+    - ***Create two folders***: Process-Nifi and parameter_context
+    - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context`
+    - ***Create the database configuration file***: [`postgres-config.json`](parameter-context)
 </details>
 
   <details>
