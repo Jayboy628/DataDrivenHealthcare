@@ -208,25 +208,36 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                 - ***File to Fetch*** : `${absolute.path}/${filename}`
                 - ***Move Conflict Strategy*** : `Rename`
             
-            - Drag the Processor and type `ConvertRecord`
-                - ***Record Reader*** :`CSVReader`: we need configure a `Controller Service Details` click on `properties`
+            - Drag the Processor and type `ConvertRecord`: Read CSV files and convert to `JSON`
+                - ***Record Reader*** :`CSVReader`: we needed configure a `Controller Service Details` click on `properties`
                     - ***Schema Access Strategys*** : `Infer Schema`
                     - ***CSV Parse*** : `Apache Commons CSV`
                     - ***CSV Format*** : `Microsoft Excel`
-                - ***File Filter*** : `JsonRecordSetWriter`
-                - ***Include Zero Record FlowFiles*** : `false`
+                - ***Record Writer*** : `JsonRecordSetWriter`
+                    - ***Schema Write Strategy*** : `Set 'avro.schema' Attribute`
+                    - ***Schema Access Strategy*** : `Inherit Record Schema`
+                    - ***Output Grouping*** : `Array`
+                    - ***Compression Format*** : `None`
 
-            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
-                - In the ListFile processor the file configuration should be loaded inplace automatically
-                - ***Input Directory*** : `#{source_directory}`
-                - ***File Filter*** : `#{file_list}`
-                - ***Entity Tracking Node Identifier*** : `${hostname()}`
+            - Drag the Processor and type `ConvertJSONToSQL`: Read JSON files and convert to `SQL Queries`
+                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
 
-            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
-                - In the ListFile processor the file configuration should be loaded inplace automatically
-                - ***Input Directory*** : `#{source_directory}`
-                - ***File Filter*** : `#{file_list}`
-                - ***Entity Tracking Node Identifier*** : `${hostname()}`
+                - NIFI upload JSON config file for Database: `JPostgreSQL-DBCPConnectionPool`
+                -----------------------------------------------------------------------------
+                <img src="images/DBCPConnectionConfig.png" alt="header" style="width: 700px; height: 400px;"> <br>
+                
+                - ***Statement Type*** : `INSERT`
+                - ***File Filter*** : `#{filename:replace('.csv')}`
+              
+
+            - Drag the Processor and type `PUTSQL`: Read JSON files and convert to `SQL Queries INSERT`
+                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
+                - ***Batch Size*** : `1000`
+                - ***Rollback On Failure*** : `true`
+
+               - NIFI Data Flow `Push Files to PostgreSQL Database`
+                -----------------------------------------------------------------------------
+                <img src="images/File_Database.png" alt="header" style="width: 700px; height: 400px;"> <br>
                 
 
 
