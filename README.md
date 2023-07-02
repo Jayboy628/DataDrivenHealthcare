@@ -194,8 +194,8 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 - ***FTP LOCATION***: I used python script to create a `timestamp` and `increment count` for each file.
   - `Python Script`:[Script](path/to/folder): I also implement `Slack` to notify me that the file reachs `2:AM Before work and 7:PM `
   - To integrate the Incoming `Webhooks` feature into the code, you'll need to make the following modifications:
-    1.Install the slack_sdk library if you haven't already: `pip install slack_sdk`
-    2.Import the necessary modules:
+    1. Install the slack_sdk library if you haven't already: `pip install slack_sdk`
+    2. Import the necessary modules:
 
 - Automate configuration file within parameter-context 
     - ***Create two folders***: Process-Nifi and parameter_context
