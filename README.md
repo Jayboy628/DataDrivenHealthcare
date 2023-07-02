@@ -291,12 +291,13 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             - ***Secret Access key*** :  `Sensitive value set`
             - ***Storage Class*** : `Standard`
             - ***Region*** : `Where your AWS Account is located`
-               - NIFI Data Flow `Push Files to PostgreSQL Database`
+               - NIFI Data Flow `PostgreSQL Database`
                 -----------------------------------------------------------------------------
-                <img src="images/File_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
+                <img src="images/Database_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
                 
-
-
+                - NIFI Data Flow `PostgreSQL Database`
+                -----------------------------------------------------------------------------
+                <img src="images/Storage_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
 
 </details> 
 </details>
