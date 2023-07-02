@@ -192,10 +192,11 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     
 - Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
 - ***FTP LOCATION***: I used python script to create a `timestamp` and `increment count` for each file.
-  - `Python Script`:[Script](path/to/folder): I also implement `Slack` to notify me that the file reachs `2:AM Before work and 7:PM `
+  - `Python Script`:[Script](code): I also implement `Slack` to notify me that the file reachs `2:AM Before work and 7:PM `
   - To integrate the Incoming `Webhooks` feature into the code, you'll need to make the following modifications:
     1. Install the slack_sdk library if you haven't already: `pip install slack_sdk`
-    2. Import the necessary modules:
+    2. Import the necessary modules: `from slack_sdk import WebClient`,`from slack_sdk.errors import SlackApiError`
+    3. Set up the Slack webhook URL: `slack_webhook_url = 'YOUR_SLACK_WEBHOOK_URL'`: Click here to view script [Script](code)
 
 - Automate configuration file within parameter-context 
     - ***Create two folders***: Process-Nifi and parameter_context
