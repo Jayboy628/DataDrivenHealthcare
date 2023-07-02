@@ -23,9 +23,8 @@ My intention with this project is to replicate some of the more important aspect
 The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.
 
 #### Table of Content
-- NIFI: Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/)
-  - Setup Nifi Environment
-    - Installing Nifi Toolkit & Nifi
+- [NIFI](http:/localhost:8443/nifi/): Setup Nifi Environment
+    - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html)
   - Automate Log parsing:
     - INFO
     - DEBUG
@@ -53,10 +52,10 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 <details>
 <summary>
     
-##### 1) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Setup Nifi Environment
+##### 1) Goto [NIFI](http:/localhost:8443/nifi/): Setup Nifi Environment
 </summary>
 
-- Setup Nifi Environment: `I am using a MAC`
+- Setup Nifi Environment: (I am using a MAC)
   - Open Terminal
   - Move to the following folder: `cd /opt`
 - Installing Nifi Toolkit: You can download the Apache Nifi [here](https://nifi.apache.org/download.html) or follow these steps:
@@ -120,7 +119,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 <details>
 <summary>
   
-##### 2) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Automate Log parsing
+##### 2) Goto [NIFI](http:/localhost:8443/nifi/): Automate Log parsing
 </summary>
 
 <strong> Setup Log parsing inside NIFI</strong>
@@ -187,7 +186,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
   <details>
 <summary>
   
- ##### 3) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): Push Files to PostgreSQL Database
+ ##### 3) Goto [NIFI](http:/localhost:8443/nifi/): Push Files to PostgreSQL Database
 </summary>
     
 - Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
@@ -257,7 +256,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
   <details>
 <summary>
   
- ##### 4) Goto [http:/localhost:8443/nifi/](http:/localhost:8443/nifi/): PostgreSQL Database to AWS (S3)
+ ##### 4) Goto [NIFI](http:/localhost:8443/nifi/): PostgreSQL Database to AWS (S3)
 </summary>
     
 - ***Staging Database (PostgreSQL)***: The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
@@ -268,12 +267,28 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     - Design SQL scripts or stored procedures to perform data transformation, standardization, and cleansing based on specific business rules
     - Implement data validation and quality checks to ensure the integrity of the staged data
     - Set up scheduled or event-driven processes to load data from `NiFi PostgreSQL to Storage (S3)`.
-- ***Storage and Scalability with S3***: A Guide below but`Beyond the scope of the project`
-    - Set up an Amazon S3 account and create a bucket to store the ingested data.
-    - Configure access controls and permissions for secure data storage.
-    - Define a folder structure or naming conventions to organize the data within the S3 bucket.
-    - Establish data retention policies and lifecycle rules based on data usage and compliance requirements.
-    - Ensure proper data encryption and data integrity mechanisms are in place.
+-AWS S3 CONFIGURATION
+----------------------------------------
+- **Create a User**:
+    - Login to the `AWS Management Console`
+    - In the search bar, type `IAM` and click on `IAM (Identity and Access Management)`
+    - Click on `Users` from the left-hand menu and then click on `Add User`
+    - Enter a name for the user and select `Programmatic access` for the `Access type`
+    - Click on `Next: Permissions` and then select `Attach existing policies directly`
+    - Search for and select the `AmazonS3FullAccess` policy
+    - Click on `Next: Tags` (optional) and then click on `Next: Review`
+    - Review the user details and click on `Create user`
+    - Take note of the `Access key ID` and `Secret access key` as you will need them in the Nifi configuration
+
+- **Create an S3 Bucket**:
+    - Go to the `AWS Management Console`
+    - In the search bar, type `S3` and click on `S3`
+    - Click on `Create bucket`
+    - Enter a unique name for the bucket and choose the region
+    - Click on `Next` and leave the rest of the settings as default
+    - Click on `Next` and review the bucket settings
+    - Click on `Create bucket`
+
  - ***Start Nifi***: `/opt/nifi-prd/bin/nifi.sh start`
  - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
     - Drag another `Process Group` and name it `Database Extraction to AWS(S3)`
