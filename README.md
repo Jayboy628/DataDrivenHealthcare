@@ -31,21 +31,24 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
     - DEBUG
     - WARN
     - ERROR
+  - FTP Environment:The EMR company push the health data to an Environmet 
+      - JSON FILE: File(FTP Location) configuration
+      - Upload Files
   - Staging Database (PostgreSQL):Ingest files into Database,temporary storage location for Data cleansing, validation and transformation processes
     - parameter-context
       - JSON FILE: Database configuration
     - postgresql
       - Create Tables
-      - Upload Files
+      - load Data 
     - Cloud Storage (S3): Stored processed and transformation files
         - Parameter-Context
-        - JSON FILE: File configuration
+          - JSON FILE: File configuration
         - AWS(S3)
         - Identity and Access Management (IAM)
         - Access Keys
         - Bucket
         - Folder
-        - Upload Files
+        - Load JSON Files
 
 <details>
 <summary>
@@ -188,6 +191,12 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 </summary>
     
 - Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
+- ***FTP LOCATION***: I used python script to create a `timestamp` and `increment count` for each file.
+  - `Python Script`:[Script](path/to/folder): I also implement `Slack` to notify me that the file reachs `2:AM Before work and 7:PM `
+  - To integrate the Incoming `Webhooks` feature into the code, you'll need to make the following modifications:
+    1.Install the slack_sdk library if you haven't already: `pip install slack_sdk`
+    2.Import the necessary modules:
+
 - Automate configuration file within parameter-context 
     - ***Create two folders***: Process-Nifi and parameter_context
     - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context` and add the files [`postgres-config.json`](parameter-context) to the folder
@@ -281,21 +290,6 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             - ***Secret Access key*** :  `Sensitive value set`
             - ***Storage Class*** : `Standard`
             - ***Region*** : `Where your AWS Account is located`
-        - Drag the Processor and type `ConvertJSONToSQL`: Read JSON files and convert to `SQL Queries`
-            - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
-                - NIFI upload JSON config file for Database: `JPostgreSQL-DBCPConnectionPool`
-                -----------------------------------------------------------------------------
-                <img src="images/DBCPConnectionConfig.png" alt="header" style="width: 700px; height: 400px;"> <br>
-                
-                - ***Statement Type*** : `INSERT`
-                - ***File Filter*** : `#{filename:replace('.csv')}`
-              
-
-            - Drag the Processor and type `PUTSQL`: Read JSON files and convert to `SQL Queries INSERT`
-                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
-                - ***Batch Size*** : `1000`
-                - ***Rollback On Failure*** : `true`
-
                - NIFI Data Flow `Push Files to PostgreSQL Database`
                 -----------------------------------------------------------------------------
                 <img src="images/File_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
