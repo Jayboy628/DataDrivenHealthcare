@@ -297,7 +297,7 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                 
                 - AWS Storage: `S3`
                 -----------------------------------------------------------------------------
-                <img src="images/Storage_S3.png" alt="header" style="width: 400px; height: 300px;"> <br>
+                <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
 
 </details> 
 </details>
