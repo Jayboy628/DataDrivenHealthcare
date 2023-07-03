@@ -347,7 +347,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 <summary>
 
 
-##### Cloud Technology: [S3](https://aws.amazon.com/) and Snowflake (SQL)
+##### Cloud Technology: [S3](https://aws.amazon.com/) and [Snowflake](https://www.snowflake.com/en/) (SQL)
 
 </summary>
 
@@ -382,8 +382,14 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 <details>
     
-<summary><strong><em> Transformation, Documentation Approach: DBT and SQL</em></strong></summary>
+<summary>
 
+##### 6) Cloud Technology: [DBT] (https://www.getdbt.com/)(***SQL***)
+
+</summary>
+
+### Transformation, Documentation Approach
+------------------------------------------
 <p>
 Another requirement was implementing a Data Warehouse that enabled the stakeholders to view and compare the reports and KPIs. Since Data Warehouse usage is mainly for analytical purposes rather than transactional, I decided to design a Star Schema because the structure is less complex and provides better query performance. Documenting wasn’t required, however, adding the Data Build Tool (DBT) to this process allowed us to document each dimension, columns, and visualize the Star Schema. DBT also allowed us to neatly organize all data transformations into discrete models.
 </p>
