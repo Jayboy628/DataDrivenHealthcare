@@ -55,6 +55,19 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
         - Bucket
         - Folder
         - Load JSON Files
+  - Snowflake: Database
+  - Data Warehouse and SQS Setup
+    - Database and Schema
+      - Table
+        - Type-1
+        - Type-2
+      - View
+        - DBT (explained in the next section)
+      - Stored procedure
+      - Snowpipe
+      - Stream
+      - Task
+
 
 <details>
 <summary>
