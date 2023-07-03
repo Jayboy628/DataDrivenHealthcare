@@ -20,7 +20,8 @@ My intention with this project is to replicate some of the more important aspect
 <details>
   <summary><strong><em>Ingestion Approach: Apache Nifi</em></strong></summary>
 
-The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.
+The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.<br><br>
+The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.<br><br>
 
 #### Table of Content
 - [NIFI](http:/localhost:8443/nifi/): Setup Nifi Environment
@@ -307,17 +308,15 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             - ***Storage Class*** : `Standard`
             - ***Region*** : `Where your AWS Account is located`
 
-            ***Below is the Data Flow***
-              - Stage Database: `PostgreSQL Database`
+              - ***Stage Database***: `PostgreSQL Database`
                 -----------------------------------------------------------------------------
-                <img src="images/Stage_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
+                <img src="images/Stage_Database.png" alt="header" style="width: 1000px; height: 800px;"> <br>
 
-
-               - NIFI Data Flow `PostgreSQL Database`
+               - ***NIFI Data Flow*** `PostgreSQL Database`
                 -----------------------------------------------------------------------------
                 <img src="images/Database_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
                 
-                - AWS Storage: `S3`
+                - ***AWS Storage***: `S3`
                 -----------------------------------------------------------------------------
                 <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
 
