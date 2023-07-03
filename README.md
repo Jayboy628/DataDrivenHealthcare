@@ -20,7 +20,7 @@ My intention with this project is to replicate some of the more important aspect
 <details>
 <summary>
 
-##### Cloud Technology: [Apache Nifi](https://nifi.apache.org/), [Slack](https://slack.com/),[S3](https://aws.amazon.com/) and PostgreSQL
+##### Cloud Technology: [Apache Nifi](https://nifi.apache.org/), [Slack](https://slack.com/),[S3](https://aws.amazon.com/) and [PostgreSQL](https://www.postgresql.org/)
 
 </summary>
 
@@ -334,10 +334,8 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
     
 
 <summary><strong><em>Cloud Tools: S3, Snowflake (SQL)</em></strong></summary>
-<summary>
 
 ##### 5) Cloud Technology: Snowflake (SQL)
-</summary>
 
 ### Load Approach
 -----------------------
