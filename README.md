@@ -24,6 +24,7 @@ My intention with this project is to replicate some of the more important aspect
   Cloud Technology: [Apache Nifi](https://nifi.apache.org/), [Slack](https://slack.com/), S3 and PostgreSQL
 </strong>
 </summary>
+
 ### Ingestion Approach
 -----------------------
 The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.<br><br>
