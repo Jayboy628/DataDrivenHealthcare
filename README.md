@@ -4,7 +4,7 @@ $${\color{red}Still \space working \space on \space project}$$
 
 ## <center>$${\color{blue}Overcoming \space EMR \space Challenges \space with \space Cloud-Based \space Solutions:}$$</center>
 <br>
-<img src="images/main2.png" alt="header" style="width: 900px; height: 400px;"><br>
+<img src="images/main.png" alt="header" style="width: 900px; height: 400px;"><br>
 
 #### <font color="blue"><em><center>Harnessing Cloud Technology for an Efficient Data Warehouse Solution</em></center></font>
 I worked for a health company that encountered a major issue with their EMR system because it did not align with their business process. In turn, this caused the system to be buggy, as too many custom builds were implemented. The company decided to move away from their current system and instead implemented eClinicalWorks. The EMR company owned the database, so my company had to arrange an amendment to the contract that enables them to extend their usage agreement. The EMR company also agreed to FTP the live data files before work begins at 2:00 am and after work ends at 7:00 pm.
@@ -19,7 +19,7 @@ My intention with this project is to replicate some of the more important aspect
 - Cloud-Based Solutions: Healthcare Data Warehouse
   - Ingestion Approach
     - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html): Setup Nifi Environment
-    - Automate Log parsing:
+    - Automate Log parsing
     - Nifi Ingest Data to Staging Database (PostgreSQL)
     - Nifi Automate PostgreSQL Database to Store JSON File in AWS (S3)
   - Load Approach
@@ -187,7 +187,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
   <details>
 <summary>
   
- ##### 3) Goto [NIFI](http:/localhost:8443/nifi/): Push Files to PostgreSQL Database
+ ##### 3) Goto [NIFI](http:/localhost:8443/nifi/): Ingest Data to Staging Database (PostgreSQL)
 </summary>
     
 - Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
@@ -257,7 +257,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
   <details>
 <summary>
   
- ##### 4) Goto [NIFI](http:/localhost:8443/nifi/): PostgreSQL Database to AWS (S3)
+ ##### 4) Goto [NIFI](http:/localhost:8443/nifi/): Automate PostgreSQL Database to Store JSON File in AWS (S3)
 </summary>
     
 - ***Staging Database (PostgreSQL)***: The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
