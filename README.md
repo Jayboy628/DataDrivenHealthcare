@@ -24,7 +24,7 @@ My intention with this project is to replicate some of the more important aspect
     - Nifi Automate PostgreSQL Database to Store JSON File in AWS (S3)
   - Load Approach
     - Implementing dedicated virtual warehouse
-    - Staging Database (PostgreSQL)
+    - CREATE PERMISSION FOR ROLES (SQL)
     - Cloud Storage (S3)
     - Data Warehouse 
   - Reporting Approach
@@ -375,19 +375,17 @@ USE ROLE ACCOUNTADMIN;
 <pre lang="js">
 
   - ***CREATE ROLE FOR TRANSFOMATION**:`CREATE ROLE TRANSFORM_ROLE;`
-
---GRANT PRIV SYSADMIN
-GRANT MODIFY ON WAREHOUSE HEALTHCARE_WH TO ROLE ACCOUNTADMIN;
-
---- CREATE USER
-CREATE USER TRANSFORM_USER
+  - ***GRANT PRIV SYSADMIN***: `GRANT MODIFY ON WAREHOUSE HEALTHCARE_WH TO ROLE ACCOUNTADMIN;`
+  - ***CREATE USER***:
+    ```shell
+    CREATE USER TRANSFORM_USER
     PASSWORD = 'Rassman123'
     LOGIN_NAME = 'TRANSFORM_USER'
     DEFAULT_ROLE='TRANSFORM_ROLE'
     DEFAULT_WAREHOUSE = 'HEALTHCARE_WH'
     MUST_CHANGE_PASSWORD = FALSE;
     GRANT ROLE TRANSFORM_ROLE TO USER TRANSFORM_USER;
-
+```
 ---Create Databases (SQL)
 CREATE DATABASE HEALTHCARE_RAW;
 CREATE DATABASE HEALTHCARE_DEV; 
