@@ -18,7 +18,7 @@ My intention with this project is to replicate some of the more important aspect
 ---------------------------------------------------------------------------------------------------------------------
 
 <details>
-  <summary><strong><em>Tools: Apache Nifi, Slack, S3, PostgreSQL and Snowflake</em></strong></summary>
+  <summary><strong><em>Cloud Tools: Apache Nifi, Slack, S3 and PostgreSQL</em></strong></summary>
 
 ### Ingestion Approach
 -----------------------
@@ -325,14 +325,18 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 </details>
 
-### Load Approach
------------------------
+
 <details>
     
+
+<summary><strong><em>Cloud Tools: S3, Snowflake (SQL)</em></strong></summary>
 <summary>
 
-##### 5) Tools: Snowflake (SQL)
+##### 5) Cloud Tools: Snowflake (SQL)
 </summary>
+
+### Load Approach
+-----------------------
 
 <p>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
