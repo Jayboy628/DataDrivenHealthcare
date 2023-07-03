@@ -306,6 +306,13 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
             - ***Secret Access key*** :  `Sensitive value set`
             - ***Storage Class*** : `Standard`
             - ***Region*** : `Where your AWS Account is located`
+
+            ***Below is the Data Flow***
+              - Stage Database: `PostgreSQL Database`
+                -----------------------------------------------------------------------------
+                <img src="images/Stage_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
+
+
                - NIFI Data Flow `PostgreSQL Database`
                 -----------------------------------------------------------------------------
                 <img src="images/Database_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
@@ -314,13 +321,16 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
                 -----------------------------------------------------------------------------
                 <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
 
-</details> 
+
 </details>
 
 
 <details>
     
-<summary><strong><em>Load Approach: Data Warehouse in Snowflake (SQL)</em></strong></summary>
+<summary>
+
+##### 5) Load Approach: Data Warehouse in Snowflake (SQL)
+</summary>
 
 <p>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
@@ -340,6 +350,8 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
       - Task
 
 </details>
+
+</details> 
 
 #### <font color="green"><left>PHASE TWO: Data Transformation, Documentation, Data Visualization and Reporting Layers</left></font>
 ---------------------------------------------------------------------------------------------------------------------
