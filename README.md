@@ -23,7 +23,7 @@ My intention with this project is to replicate some of the more important aspect
     - Nifi Ingest Data to Staging Database (PostgreSQL)
     - Nifi Automate PostgreSQL Database to Store JSON File in AWS (S3)
   - Load Approach
-    - Create Stage Environment
+    - Implementing dedicated virtual warehouse
     - Staging Database (PostgreSQL)
     - Cloud Storage (S3)
     - Data Warehouse 
@@ -342,18 +342,149 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
 </p>
 
-- Snowflake: Database
-  - Data Warehouse and SQS Setup
-    - Database and Schema
-      - Table
-        - Type-1
-        - Type-2
-      - View
-        - DBT (explained in the next section)
-      - Stored procedure
-      - Snowpipe
-      - Stream
-      - Task
+- Implementing dedicated virtual warehouse
+
+<table>
+<tr> 
+    <th><h5>CREATE DATA WAREHOUSE (SQL)</h5></th>
+</tr>
+<tr>
+<td>  
+<pre lang="js">
+USE ROLE ACCOUNTADMIN;
+
+    CREATE WAREHOUSE HEALTHCARE_WH 
+    WITH WAREHOUSE_SIZE = 'XSMALL'
+    WAREHOUSE_TYPE = 'STANDARD' 
+    AUTO_SUSPEND = 300 
+    AUTO_RESUME = TRUE 
+    MIN_CLUSTER_COUNT = 1 
+    MAX_CLUSTER_COUNT = 1 
+    SCALING_POLICY = 'STANDARD'
+    COMMENT = 'This is  a Data Warehouse for Healthcare';
+</pre>
+</td>
+</tr>
+</table>
+<table>
+<tr> 
+    <th><h5>CREATE PERMISSION FOR ROLES (SQL)</h5></th>
+</tr>
+<tr>
+<td>  
+<pre lang="js">
+
+  - ***CREATE ROLE FOR TRANSFOMATION**:`CREATE ROLE TRANSFORM_ROLE;`
+
+--GRANT PRIV SYSADMIN
+GRANT MODIFY ON WAREHOUSE HEALTHCARE_WH TO ROLE ACCOUNTADMIN;
+
+--- CREATE USER
+CREATE USER TRANSFORM_USER
+    PASSWORD = 'Rassman123'
+    LOGIN_NAME = 'TRANSFORM_USER'
+    DEFAULT_ROLE='TRANSFORM_ROLE'
+    DEFAULT_WAREHOUSE = 'HEALTHCARE_WH'
+    MUST_CHANGE_PASSWORD = FALSE;
+    GRANT ROLE TRANSFORM_ROLE TO USER TRANSFORM_USER;
+
+---Create Databases (SQL)
+CREATE DATABASE HEALTHCARE_RAW;
+CREATE DATABASE HEALTHCARE_DEV; 
+CREATE DATABASE HEALTHCARE_PROD;
+
+---MODFIY DATABASE PRIV (SQL)
+GRANT MODIFY ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+GRANT MODIFY ON DATABASE HEALTHCARE_DEV TO ROLE TRANSFORM_ROLE;
+GRANT MODIFY ON DATABASE HEALTHCARE_PROD TO ROLE TRANSFORM_ROLE;
+
+---GRANT PRIVALEGE ON RAW DATABASE FOR SCHEMA,TABLES AND VIEWS(SQL)
+
+GRANT USAGE ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+GRANT USAGE ON DATABASE HEALTHCARE_DEV TO ROLE TRANSFORM_ROLE;
+GRANT USAGE ON DATABASE HEALTHCARE_PROD TO ROLE TRANSFORM_ROLE;
+
+--GRANT PRIVALEGE ON HEALTHCARE_RAW DATABASE FOR SCHEMA,TABLES AND VIEWS(SQL)
+GRANT CREATE SCHEMA ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+GRANT MODIFY ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+GRANT MODIFY ON ALL SCHEMAS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+
+GRANT USAGE ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+
+GRANT SELECT ON ALL TABLES IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+GRANT SELECT ON ALL VIEWS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;
+
+---CREATE SCHEMA
+CREATE SCHEMA HEALTHCARE_RAW.EMR;
+</pre>
+</td>
+</tr>
+</table>
+---CREATE TABLES
+
+    CREATE TABLE EMR.patient(
+	 patientPK varchar(255)			Not Null
+	,PatientNumber varchar(255)			NULL
+	,FirstName varchar(255)				NULL
+	,LastName varchar(255)				NULL
+	,Email varchar(255)					NULL
+	,PatientGender varchar(255)			NULL
+	,PatientAge int						NULL
+	,City varchar(255)					NULL
+	,State varchar(255)					NULL);
+
+    CREATE TABLE EMR.doctor(
+	 doctorPK varchar(255)				Not NULL 
+	,ProviderNpi varchar(255)			NULL
+	,ProviderName varchar(255)			NULL
+	,ProviderSpecialty varchar(255)		NULL
+	,ProviderFTE decimal(10,2)			NULL Default 0
+    );
+
+    CREATE TABLE EMR.charge(
+	 chargePK varchar(255)			Not NULL
+	,TransactionType varchar(255)	NULL
+	,Transaction varchar(255)		NULL
+	,AdjustmentReason varchar(255)	NULL
+    );
+
+    CREATE TABLE EMR.payer(
+	 payerPK varchar(255)				Not NULL
+	,PayerName varchar(255)				NULL
+    ); 
+    
+    CREATE TABLE EMR.location(
+	 locationPK varchar(255)				Not NULL 
+	,LocationName varchar(255)				NULL
+    );
+
+    CREATE TABLE EMR.diagnosis(
+	 CodePK varchar(255)			        Not NULL 
+	,DiagnosisCode varchar(255)				NULL
+	,DiagnosisCodeDescription varchar(255) 	NULL
+	,DiagnosisCodeGroup varchar(255)		NULL
+    );
+    
+    CREATE TABLE EMR.Code(
+	  CodePK varchar(255)				Not NULL
+	,CptCode varchar(255)				NULL
+	,CptDesc varchar(255)				NULL
+	,CptGrouping varchar(255)			NULL
+    );
+
+    CREATE TABLE EMR.Date(
+	 PostPK varchar(255)				Not NULL 
+	,Date Date							NULL
+	,Year varchar(255)					NULL
+	,Month varchar(255)					NULL
+	,MonthPeriod varchar(255)			NULL
+	,MonthYear varchar(255)				NULL
+	,Day varchar(255)					NULL
+	,DayName varchar(255)				NULL
+    );
+
+
 
 </details>
 
