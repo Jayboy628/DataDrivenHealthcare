@@ -18,7 +18,7 @@ My intention with this project is to replicate some of the more important aspect
 ---------------------------------------------------------------------------------------------------------------------
 
 <details>
-  <summary><strong><em>Cloud Tools: Apache Nifi, Slack, S3 and PostgreSQL</em></strong></summary>
+  <summary><strong><em>Cloud Technology: [Apache Nifi](https://nifi.apache.org/), [Slack](https://slack.com/), S3 and PostgreSQL</em></strong></summary>
 
 ### Ingestion Approach
 -----------------------
@@ -332,7 +332,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 <summary><strong><em>Cloud Tools: S3, Snowflake (SQL)</em></strong></summary>
 <summary>
 
-##### 5) Cloud Tools: Snowflake (SQL)
+##### 5) Cloud Technology: Snowflake (SQL)
 </summary>
 
 ### Load Approach
