@@ -30,8 +30,8 @@ The Ingestion (Apache Nifi) is designed to automate data across systems. In real
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.<br><br>
 
 #### Table of Content
-- [NIFI](http:/localhost:8443/nifi/): Setup Nifi Environment
-    - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html)
+- Cloud-Based Solutions
+  - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html): Setup Nifi Environment
   - Automate Log parsing:
     - INFO
     - DEBUG
@@ -55,9 +55,8 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
         - Bucket
         - Folder
         - Load JSON Files
-  - Snowflake: Database
-  - Data Warehouse and SQS Setup
-    - Database and Schema
+  - Snowflake: Data Warehouse and SQS Setup
+    - Database 
       - Table
         - Type-1
         - Type-2
@@ -345,8 +344,12 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 <details>
     
+<summary>
 
-<summary><strong><em>Cloud Technology: S3, Snowflake (SQL)</em></strong></summary>
+
+##### Cloud Technology: [S3](https://aws.amazon.com/) and Snowflake (SQL)
+
+</summary>
 
 ##### 5) Goto [NIFI](http:/localhost:8443/nifi/): AWS (S3) to Snowflake
 
