@@ -13,6 +13,23 @@ My job was to design and implement a data warehouse from these files. The requir
 <br><br>
 My intention with this project is to replicate some of the more important aspects of the above scenario. Please note that the healthcare dataset is fake and is being used only for demonstration purposes.
 
+---------------------------------------------------------------------------------------------------------------------
+### Agenda
+
+- Cloud-Based Solutions: Healthcare Data Warehouse
+  - Ingestion Approach
+    - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html): Setup Nifi Environment
+    - Automate Log parsing:
+    - Nifi Ingest Data to Staging Database (PostgreSQL)
+    - Nifi Automate PostgreSQL Database to Store JSON File in AWS (S3)
+  - Load Approach
+    - Create Stage Environment
+    - Staging Database (PostgreSQL)
+    - Cloud Storage (S3)
+    - Data Warehouse 
+  - Reporting Approach
+    - CMS 
+
 
 #### <font color="green"><left>PHASE ONE: Data Ingestion, Data Storage, Data Warehouse Layers</left></font>
 ---------------------------------------------------------------------------------------------------------------------
@@ -29,44 +46,9 @@ My intention with this project is to replicate some of the more important aspect
 The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.<br><br>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.<br><br>
 
-#### Table of Content
-- Cloud-Based Solutions
-  - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html): Setup Nifi Environment
-  - Automate Log parsing:
-    - INFO
-    - DEBUG
-    - WARN
-    - ERROR
-  - FTP Environment:The EMR company push the health data to an Environmet 
-      - JSON FILE: File(FTP Location) configuration
-      - Upload Files
-  - Staging Database (PostgreSQL):Ingest files into Database,temporary storage location for Data cleansing, validation and transformation processes
-    - parameter-context
-      - JSON FILE: Database configuration
-    - postgresql
-      - Create Tables
-      - load Data 
-    - Cloud Storage (S3): Stored processed and transformation files
-        - Parameter-Context
-          - JSON FILE: File configuration
-        - AWS(S3)
-        - Identity and Access Management (IAM)
-        - Access Keys
-        - Bucket
-        - Folder
-        - Load JSON Files
-  - Snowflake: Data Warehouse and SQS Setup
-    - Database 
-      - Table
-        - Type-1
-        - Type-2
-      - View
-        - DBT (explained in the next section)
-      - Stored procedure
-      - Snowpipe
-      - Stream
-      - Task
+#### Diagram Shows Ingestion Approach
 
+<img src="images/main2.png" alt="header" style="width: 900px; height: 400px;"><br>
 
 <details>
 <summary>
