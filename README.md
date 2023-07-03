@@ -19,10 +19,9 @@ My intention with this project is to replicate some of the more important aspect
 
 <details>
 <summary>
-<strong>
 
-  Cloud Technology: [Apache Nifi](https://nifi.apache.org/), [Slack](https://slack.com/), S3 and PostgreSQL
-</strong>
+##### Cloud Technology: [Apache Nifi](https://nifi.apache.org/), [Slack](https://slack.com/),[S3](https://aws.amazon.com/) and PostgreSQL
+
 </summary>
 
 ### Ingestion Approach
