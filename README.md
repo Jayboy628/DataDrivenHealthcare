@@ -333,9 +333,9 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 <details>
     
 
-<summary><strong><em>Cloud Tools: S3, Snowflake (SQL)</em></strong></summary>
+<summary><strong><em>Cloud Technology: S3, Snowflake (SQL)</em></strong></summary>
 
-##### 5) Cloud Technology: Snowflake (SQL)
+##### 5) Goto [NIFI](http:/localhost:8443/nifi/): AWS (S3) to Snowflake
 
 ### Load Approach
 -----------------------
