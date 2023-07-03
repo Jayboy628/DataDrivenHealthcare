@@ -397,8 +397,8 @@ USE ROLE ACCOUNTADMIN;
 <td>  
 <pre lang="js">
 
-  - ***CREATE TABLE EMR.patient***
-    - (patientPK varchar(255)	Not Null
+  - ***CREATE TABLE EMR.patient(***
+    -  patientPK varchar(255)	Not Null
     - ,PatientNumber varchar(255)	NULL
     - ,FirstName varchar(255)	NULL
     - ,LastName varchar(255) NULL
@@ -408,37 +408,32 @@ USE ROLE ACCOUNTADMIN;
     - ,City varchar(255) NULL
     - ,State varchar(255)		NULL);
 
-    CREATE TABLE EMR.doctor(
-	 doctorPK varchar(255)				Not NULL 
-	,ProviderNpi varchar(255)			NULL
-	,ProviderName varchar(255)			NULL
-	,ProviderSpecialty varchar(255)		NULL
-	,ProviderFTE decimal(10,2)			NULL Default 0
-    );
+  - ***CREATE TABLE EMR.doctor(***
+	   - doctorPK varchar(255)	Not NULL 
+	   - ,ProviderNpi varchar(255)	NULL
+	   - ,ProviderName varchar(255) NULL
+	   - ,ProviderSpecialty varchar(255)	NULL
+	   - ,ProviderFTE decimal(10,2)	NULL Default 0);
 
-    CREATE TABLE EMR.charge(
-	 chargePK varchar(255)			Not NULL
-	,TransactionType varchar(255)	NULL
-	,Transaction varchar(255)		NULL
-	,AdjustmentReason varchar(255)	NULL
-    );
+  - ***CREATE TABLE EMR.charge(***
+    - chargePK varchar(255)	Not NULL
+    - ,TransactionType varchar(255)	NULL
+    - ,Transaction varchar(255)	NULL
+    - ,AdjustmentReason varchar(255) NULL);
 
-    CREATE TABLE EMR.payer(
-	 payerPK varchar(255)				Not NULL
-	,PayerName varchar(255)				NULL
-    ); 
+  - ***CREATE TABLE EMR.payer(***
+	 - payerPK varchar(255)	Not NULL
+	 - ,PayerName varchar(255)	NULL ); 
     
-    CREATE TABLE EMR.location(
-	 locationPK varchar(255)				Not NULL 
-	,LocationName varchar(255)				NULL
-    );
+  - ***CREATE TABLE EMR.location(***
+	 - locationPK varchar(255)	Not NULL 
+	 - ,LocationName varchar(255) NULL);
 
-    CREATE TABLE EMR.diagnosis(
-	 CodePK varchar(255)			        Not NULL 
-	,DiagnosisCode varchar(255)				NULL
-	,DiagnosisCodeDescription varchar(255) 	NULL
-	,DiagnosisCodeGroup varchar(255)		NULL
-    );
+  - ***CREATE TABLE EMR.diagnosis(***
+	 - CodePK varchar(255)	Not NULL 
+	 - ,DiagnosisCode varchar(255)	NULL
+	 - ,DiagnosisCodeDescription varchar(255) 	NULL
+	 - ,DiagnosisCodeGroup varchar(255) NULL);
     
     CREATE TABLE EMR.Code(
 	  CodePK varchar(255)				Not NULL
@@ -447,16 +442,15 @@ USE ROLE ACCOUNTADMIN;
 	,CptGrouping varchar(255)			NULL
     );
 
-    CREATE TABLE EMR.Date(
-	 PostPK varchar(255)				Not NULL 
-	,Date Date							NULL
-	,Year varchar(255)					NULL
-	,Month varchar(255)					NULL
-	,MonthPeriod varchar(255)			NULL
-	,MonthYear varchar(255)				NULL
-	,Day varchar(255)					NULL
-	,DayName varchar(255)				NULL
-    );
+  - ***CREATE TABLE EMR.Date(***
+    - PostPK varchar(255) Not NULL 
+    - ,Date Date	NULL
+    - ,Year varchar(255) NULL
+    - ,Month varchar(255)	NULL
+    - ,MonthPeriod varchar(255) NULL
+    - ,MonthYear varchar(255)	NULL
+    - ,Day varchar(255)	NULL
+    - ,DayName varchar(255)	NULL);
   </pre>
 </td>
 </tr>
