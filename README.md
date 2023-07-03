@@ -455,6 +455,7 @@ USE ROLE ACCOUNTADMIN;
 </td>
 </tr>
 </table>
+
  - ***CREATE USER***:
 ```shell
     CREATE USER TRANSFORM_USER
