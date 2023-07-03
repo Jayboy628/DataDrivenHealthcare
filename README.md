@@ -351,7 +351,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 </summary>
 
-##### 5) Goto [NIFI](http:/localhost:8443/nifi/): AWS (S3) to Snowflake
+##### 5) Goto [Snowflake](https://app.snowflake.com/): AWS (S3) to Snowflake
 
 ### Load Approach
 -----------------------
@@ -384,9 +384,11 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
     
 <summary>
 
-##### 6) Cloud Technology: [DBT] (https://www.getdbt.com/)(***SQL***)
+##### Cloud Technology: [DBT](https://www.getdbt.com/)(***SQL***)
 
 </summary>
+
+##### 6) Goto [DBT](https://auth.cloud.getdbt.com/login): Snowflake and DBT 
 
 ### Transformation, Documentation Approach
 ------------------------------------------
