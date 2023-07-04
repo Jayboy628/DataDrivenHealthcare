@@ -533,7 +533,7 @@ My intention with this project is to replicate some of the more important aspect
   - ***Jupyter Lab****
   ---------------------
   - `Revenue Cycle`
-    - [Explore Data](/Users/shaunjaybrown/projects/repo/DataDrivenHealthcare/revenue_cycle/exploring.ipynb)
+    - [Explore Data](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/exploring.ipynb)
         - RVU
         - Denial Analysis
         - Writeoffs
