@@ -393,33 +393,6 @@ USE ROLE ACCOUNTADMIN;
 </table>
 
 
-```sql
-CREATE TABLE EMR.patient(
-patientPK varchar(255)	    Not Null
-,PatientNumber varchar(255)	NULL
-,FirstName varchar(255)	    NULL
-,LastName varchar(255)      NULL
-,Email varchar(255)	NULL
-,PatientGender varchar(255)	NULL
-,PatientAge int	NULL
-,City varchar(255) NULL
-,State varchar(255)		NULL
-);
-```
-
-
-   ```sql
-   CREATE TABLE dbo.PurchaseOrderDetail (
-       PurchaseOrderID INT NOT NULL,
-       LineNumber SMALLINT NOT NULL,
-       ProductID INT NULL,
-       UnitPrice MONEY NULL,
-       OrderQty SMALLINT NULL,
-       ReceivedQty FLOAT NULL,
-       RejectedQty FLOAT NULL,
-       DueDate DATETIME NULL
-   );
-   ```
 
 <table>
 <tr> 
@@ -428,6 +401,19 @@ patientPK varchar(255)	    Not Null
 <tr>
 <td>  
 <pre lang="js">
+
+
+    - ***CREATE TABLE EMR.patient(***
+      - patientPK varchar(255)	    Not Null
+      - ,PatientNumber varchar(255)	NULL
+      - ,FirstName varchar(255)	    NULL
+      - ,LastName varchar(255)      NULL
+      - ,Email varchar(255)	NULL
+      - ,PatientGender varchar(255)	NULL
+      - ,PatientAge int	NULL
+      - ,City varchar(255) NULL
+      - ,State varchar(255)		NULL);
+
   - ***CREATE TABLE EMR.doctor(***
 	   - doctorPK varchar(255)	Not NULL 
 	   - ,ProviderNpi varchar(255)	NULL
