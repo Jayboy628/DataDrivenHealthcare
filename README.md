@@ -28,7 +28,14 @@ My intention with this project is to replicate some of the more important aspect
     - Cloud Storage (S3)
     - Data Warehouse 
   - Reporting Approach
-    - CMS 
+    - Operations Report
+     - Questions & Answers
+    - Revenue Cycle
+      - RVU
+      - Denial Analysis
+      - Writeoffs
+    - Visualization
+      - LOS
 
 
 #### <font color="green"><left>PHASE ONE: Data Ingestion, Data Storage, Data Warehouse Layers</left></font>
@@ -531,5 +538,6 @@ My intention with this project is to replicate some of the more important aspect
   - Revenue Reports
   - PMI Reports
   - CMS Reports
+
 
 </details>
