@@ -510,7 +510,7 @@ Another requirement was implementing a Data Warehouse that enabled the stakehold
 <details>
 <summary>
 
-##### 7) Cloud Technology: [Jupter Lab & Tableau](https://www.getdbt.com/)(***Python & SQL***)
+#####  Cloud Technology: [Jupter Lab & Tableau](https://www.getdbt.com/)(***Python & SQL***)
 
 </summary>
 
