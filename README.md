@@ -254,7 +254,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
                - ***Stage Database***: `PostgreSQL Database` Ingest Results
                 -----------------------------------------------------------------------------
-                <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
+              <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
                 
 </details>
 
@@ -325,7 +325,8 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 </details>
 
-
+#### <font color="green"><left>PHASE TWO: Data Transformation, Documentation, Data Visualization and Reporting Layers</left></font>
+---------------------------------------------------------------------------------------------------------------------
 <details>
     
 <summary>
@@ -471,10 +472,9 @@ USE ROLE ACCOUNTADMIN;
 
 </details>
 
+
 </details> 
 
-#### <font color="green"><left>PHASE TWO: Data Transformation, Documentation, Data Visualization and Reporting Layers</left></font>
----------------------------------------------------------------------------------------------------------------------
 
 <details>
     
