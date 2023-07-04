@@ -388,18 +388,8 @@ USE ROLE ACCOUNTADMIN;
  - ***GRANT USAGE ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;*** `GRANT USAGE ON ALL SCHEMAS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`AND `GRANT SELECT ON ALL TABLES IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;` AND `GRANT SELECT ON ALL VIEWS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`
  - ***CREATE SCHEMA***: `CREATE SCHEMA HEALTHCARE_RAW.EMR;`
 
-</pre>
-</td>
-</tr>
-</table>
-<table>
-<tr> 
-    <th><h5>CREATE TABLES (SQL)</h5></th>
-</tr>
-<tr>
-<td>  
-<pre lang="js">
 
+ ```sql
   - ***CREATE TABLE EMR.patient(***
     -  patientPK varchar(255)	Not Null
     - ,PatientNumber varchar(255)	NULL
@@ -411,6 +401,17 @@ USE ROLE ACCOUNTADMIN;
     - ,City varchar(255) NULL
     - ,State varchar(255)		NULL);
 
+</pre>
+</td>
+</tr>
+</table>
+<table>
+<tr> 
+    <th><h5>CREATE TABLES (SQL)</h5></th>
+</tr>
+<tr>
+<td>  
+<pre lang="js">
   - ***CREATE TABLE EMR.doctor(***
 	   - doctorPK varchar(255)	Not NULL 
 	   - ,ProviderNpi varchar(255)	NULL
@@ -458,6 +459,7 @@ USE ROLE ACCOUNTADMIN;
 </td>
 </tr>
 </table>
+```
 
  - ***CREATE USER***:
 ```shell
