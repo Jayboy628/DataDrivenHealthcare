@@ -490,8 +490,8 @@ USE ROLE ACCOUNTADMIN;
 
 ##### 6) Goto [DBT](https://auth.cloud.getdbt.com/login): Snowflake and DBT 
 
-### Transformation, Documentation Approach
-------------------------------------------
+### Transformation, Documentation,  Approach
+-----------------------------------------------------
 <p>
 Another requirement was implementing a Data Warehouse that enabled the stakeholders to view and compare the reports and KPIs. Since Data Warehouse usage is mainly for analytical purposes rather than transactional, I decided to design a Star Schema because the structure is less complex and provides better query performance. Documenting wasn’t required, however, adding the Data Build Tool (DBT) to this process allowed us to document each dimension, columns, and visualize the Star Schema. DBT also allowed us to neatly organize all data transformations into discrete models.
 </p>
@@ -514,8 +514,10 @@ Another requirement was implementing a Data Warehouse that enabled the stakehold
 
 </summary>
 
-### Analyze Approach: Language of choice Python and Tableau
-------------------------------------------------------------
+##### 7) Goto [DBT](https://auth.cloud.getdbt.com/login):  Python and Tableau 
+
+### Analyze Approach
+--------------------
 
 <p>
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color="red">Please note that the healthcare dataset is fake and is being used only for demonstration purposes.</font>
