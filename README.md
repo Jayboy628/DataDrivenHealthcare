@@ -508,8 +508,14 @@ Another requirement was implementing a Data Warehouse that enabled the stakehold
 </details>
 
 <details>
-    
-<summary><strong><em> Analyze Approach: Language of choice Python and Tableau</em></strong></summary>
+<summary>
+
+##### 7) Cloud Technology: [Jupter Lab & Tableau](https://www.getdbt.com/)(***Python & SQL***)
+
+</summary>
+
+### Analyze Approach: Language of choice Python and Tableau
+------------------------------------------------------------
 
 <p>
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color="red">Please note that the healthcare dataset is fake and is being used only for demonstration purposes.</font>
@@ -525,8 +531,3 @@ My intention with this project is to replicate some of the more important aspect
   - CMS Reports
 
 </details>
-
-#### <font color="green"><left>PHASE THREE</left></font>
----------------------------------------------------------------------------------------------------------------------
-
-* Models
