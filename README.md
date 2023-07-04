@@ -296,7 +296,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
     - Click the process group `Database Extraction to AWS(S3)` and then Drag the Processor and type `ExecuteSQL`
     - In the `ExecuteSQL processor` we need to query the tables
         - ***Database Connection Pooling Service*** : `PostgreSQL-DBCPConnectionPool`
-            - ***SQL select query*** : `SELECT * FROM CHARGES`
+            - ***SQL select query*** : `SELECT * FROM CHARGES` -> `We can make this more dynamic however, Its beyond the Scope`
         - Drag the Processor and type `ConvertRecord`: follow the previous config 
         - Drag the Processor and type `UpdateAttribute`: Reads the table names
             - ***Click `+` and name `filename`*** :`${sql.tablename}.json`: returns json file
@@ -311,6 +311,29 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
               - ***Stage Database***: `PostgreSQL Database`
                 -----------------------------------------------------------------------------
                 <img src="images/Stage_Database.png" alt="header" style="width: 1100px; height: 800px;"> <br>
+                  ╒════════════╤═══════════════════╤═══════════════════════════════════════════════════╤════════════════════╕
+                  │   trans_pk │ transactiontype   │ transaction                                       │ adjustmentreason   │
+                  ╞════════════╪═══════════════════╪═══════════════════════════════════════════════════╪════════════════════╡
+                  │      45842 │ Charge            │ ppps, initial visit                               │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45873 │ Charge            │ pr diagnostic mammography computer-aided detcj bi │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45874 │ Charge            │ Eardrum Opening                                   │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45888 │ Charge            │ e&m estb detailed/mod                             │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45889 │ Charge            │ x-ray ankle 3+ vw                                 │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45945 │ Charge            │ repair ing hernia,5+y/o,reducibl                  │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45950 │ Adjustment        │ contractual/differential w/o                      │ Contractual        │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45979 │ Charge            │ ct scan of abdomen contrast                       │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45986 │ Charge            │ mr angio, neck, combo                             │ Charge             │
+                  ├────────────┼───────────────────┼───────────────────────────────────────────────────┼────────────────────┤
+                  │      45999 │ Charge            │ hosp discharge day mgmt 30 or <                   │ Charge             │
+                  ╘════════════╧═══════════════════╧═══════════════════════════════════════════════════╧════════════════════╛
 
               - ***NIFI Data Flow***: `PostgreSQL Database`
                 -----------------------------------------------------------------------------
@@ -459,8 +482,8 @@ USE ROLE ACCOUNTADMIN;
  - ***CREATE USER***:
 ```shell
     CREATE USER TRANSFORM_USER
-    PASSWORD = 'Rassman123'
-    LOGIN_NAME = 'TRANSFORM_USER'
+    PASSWORD = 'yourpassword'
+    LOGIN_NAME = 'LOGIN_NAME'
     DEFAULT_ROLE='TRANSFORM_ROLE'
     DEFAULT_WAREHOUSE = 'HEALTHCARE_WH'
     MUST_CHANGE_PASSWORD = FALSE;
