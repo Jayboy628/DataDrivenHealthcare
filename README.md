@@ -530,22 +530,22 @@ Another requirement was implementing a Data Warehouse that enabled the stakehold
 My intention with this project is to replicate some of the more important aspects of the above scenario. <font color="red">Please note that the healthcare dataset is fake and is being used only for demonstration purposes.</font>
 </p>
 
-- ***Jupyter Lab****
----------------------s
- - `Revenue Cycle`
-  - [Explore Data](/Users/shaunjaybrown/projects/repo/DataDrivenHealthcare/revenue_cycle/exploring.ipynb)
-      - RVU
-      - Denial Analysis
-      - Writeoffs
-    - Visualization
-      - LOS
-  - Data Exploring
-  - Data Cleansing
-  - Recycle Revenue Reports
-- Tableau Healthcare Reports
-  - Revenue Reports
-  - PMI Reports
-  - CMS Reports
+  - ***Jupyter Lab****
+  ---------------------
+  - `Revenue Cycle`
+    - [Explore Data](/Users/shaunjaybrown/projects/repo/DataDrivenHealthcare/revenue_cycle/exploring.ipynb)
+        - RVU
+        - Denial Analysis
+        - Writeoffs
+      - Visualization
+        - LOS
+    - Data Exploring
+    - Data Cleansing
+    - Recycle Revenue Reports
+  - Tableau Healthcare Reports
+    - Revenue Reports
+    - PMI Reports
+    - CMS Reports
 
 
 </details>
