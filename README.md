@@ -252,9 +252,9 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
                 -----------------------------------------------------------------------------
                 <img src="images/File_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
 
-              - ***Stage Database***: `PostgreSQL Database` Ingest Results
-            -----------------------------------------------------------------------------
-              <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
+               - ***Stage Database***: `PostgreSQL Database` Ingest Results
+                -----------------------------------------------------------------------------
+                <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
                 
 </details>
 
@@ -317,8 +317,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
               - ***NIFI Data Flow***: `PostgreSQL Database`
             -----------------------------------------------------------------------------
             <img src="images/Database_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
-            
-                
+
               - ***AWS Storage***: `S3`
             -----------------------------------------------------------------------------
             <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
