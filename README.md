@@ -395,10 +395,10 @@ USE ROLE ACCOUNTADMIN;
 
 ```sql
 CREATE TABLE EMR.patient(
-patientPK varchar(255)	Not Null
+patientPK varchar(255)	    Not Null
 ,PatientNumber varchar(255)	NULL
-,FirstName varchar(255)	NULL
-,LastName varchar(255) NULL
+,FirstName varchar(255)	    NULL
+,LastName varchar(255)      NULL
 ,Email varchar(255)	NULL
 ,PatientGender varchar(255)	NULL
 ,PatientAge int	NULL
