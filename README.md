@@ -308,18 +308,18 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
             - ***Storage Class*** : `Standard`
             - ***Region*** : `Where your AWS Account is located`
 
-              - ***Stage Database***: `PostgreSQL Database`-> Click [Here](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/code/Load.ipynb) To View
+              - ***Stage Database***: `PostgreSQL Database`-> Click [Here](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/code/Load.ipynb) To View Code
             -----------------------------------------------------------------------------
             <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
                 
 
               - ***NIFI Data Flow***: `PostgreSQL Database`
-                -----------------------------------------------------------------------------
-                <img src="images/Database_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
+            -----------------------------------------------------------------------------
+            <img src="images/Database_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
                 
               - ***AWS Storage***: `S3`
-                -----------------------------------------------------------------------------
-                <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
+            -----------------------------------------------------------------------------
+            <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
 
 
 </details>
