@@ -251,6 +251,10 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
                - NIFI Data Flow `Set up scheduled or event-driven processes to load data from NiFi into PostgreSQL`
                 -----------------------------------------------------------------------------
                 <img src="images/File_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
+
+              - ***Stage Database***: `PostgreSQL Database` Ingest Results
+            -----------------------------------------------------------------------------
+              <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
                 
 </details>
 
@@ -309,9 +313,6 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
             - ***Region*** : `Where your AWS Account is located`
 
               - ***Stage Database***: `PostgreSQL Database`-> Click [Here](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/code/Load.ipynb) To View Code
-            -----------------------------------------------------------------------------
-            <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
-                
 
               - ***NIFI Data Flow***: `PostgreSQL Database`
             -----------------------------------------------------------------------------
