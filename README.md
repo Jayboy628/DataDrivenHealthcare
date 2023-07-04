@@ -310,7 +310,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
               - ***Stage Database***: `PostgreSQL Database`-> Click [Here](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/code/Load.ipynb) To View
                 -----------------------------------------------------------------------------
-                <img src="images/Stage_Database2.png" alt="header" style="width: 1100px; height: 800px;"> <br>
+                <img src="images/Stage_Database1.png" alt="header" style="width: 1100px; height: 800px;"> <br>
                 
 
               - ***NIFI Data Flow***: `PostgreSQL Database`
