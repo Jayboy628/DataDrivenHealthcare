@@ -359,7 +359,8 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
 </p>
 
-- Implementing dedicated virtual warehouse
+- ### Implementing Dedicated Virtual Warehouse
+- 1) ***Create Warehouse***: for this example we create a Warehouse called `HEALTHCARE_WH` SEE BELOW!
 
 <table>
 <tr> 
