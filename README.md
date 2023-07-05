@@ -358,7 +358,8 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 <p>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
 </p>
-- 1) ***Creating a Snowflake Account***: First, you need to create a Snowflake account, if you don't already have one.
+
+- 1) ***Creating a Snowflake Account***: `First`, you need to create a Snowflake account, if you don't already have one.
 
 
 - ### Implementing Dedicated Virtual Warehouse
@@ -388,14 +389,17 @@ USE ROLE ACCOUNTADMIN;
 </tr>
 </table>
 
-- 3) ***Creating Roles and Users***: You can create roles and users by executing the following commands:
+- 3) ***Creating Roles and Users***: `You can create roles` and users by executing the following commands:
+
 ```
   CREATE ROLE dev_role;
   GRANT ROLE dev_role TO USER your_username;
-  CREATE USER dev_user PASSWORD = 'YourPassword' MUST_CHANGE_PASSWORD = TRUE DEFAULT_ROLE = dev_role;```
+  CREATE USER dev_user PASSWORD = 'YourPassword' MUST_CHANGE_PASSWORD = TRUE DEFAULT_ROLE = dev_role;
+  ```
 
 
-- 4) ***House Work***: Best practice is to create your own ROLE and give correct permission`HEALTHCARE_WH` SEE BELOW!
+- 4) ***House Work***: Best practice is to create your own `ROLE` and give correct 
+permission`HEALTHCARE_WH` SEE BELOW!
 <table>
 <tr> 
     <th><h5>CREATE PERMISSION FOR ROLES (SQL)</h5></th>
