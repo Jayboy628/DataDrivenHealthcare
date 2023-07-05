@@ -430,17 +430,6 @@ USE ROLE ACCOUNTADMIN;
     - `GRANT SELECT ON ALL VIEWS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`
   - ***CREATE SCHEMA***: `CREATE SCHEMA HEALTHCARE_RAW.EMR;`
 
-    ```shell
-  ***CREATE TABLE EMR.Date(***
-  PostPK varchar(255) Not NULL 
-  ,Date Date	NULL
-  ,Year varchar(255) NULL
-  ,Month varchar(255)	NULL
-  ,MonthPeriod varchar(255) NULL
-  ,MonthYear varchar(255)	NULL
-  ,Day varchar(255)	NULL
-  ,DayName varchar(255)	NULL);
-  ```
 
 </pre>
 </td>
@@ -501,7 +490,6 @@ USE ROLE ACCOUNTADMIN;
 	,CptGrouping varchar(255)			NULL
     );
 
-  
   </pre>
 </td>
 </tr>
