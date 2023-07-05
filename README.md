@@ -357,7 +357,23 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 <p>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
+</p><br><br>
+<p>
+Implementing Slowly Changing Dimensions (SCD) Type 2 in healthcare can provide invaluable insights and support data integrity in various use-cases. Here are a few scenarios where it might be relevant:
+<br>
+Patient Information Tracking: Patients' personal details or health status might change over time. SCD Type 2 would help keep track of these changes without losing the history. For example, if a patient's address changes or a patient's health condition improves or worsens, the latest information is always available and the history is preserved for any trend or recovery analysis.
 </p>
+- Table: details
+<p>
+Healthcare Provider Details: Information about healthcare providers, like doctors or nurses, can also change. For instance, a doctor might change their specialty or a nurse might move to a different department or hospital. SCD Type 2 can be used to track these changes over time.
+</p>
+- Table: provider_details
+<p>
+Healthcare Plan Changes: Healthcare insurance plans can change. With SCD Type 2, changes can be tracked effectively, including coverage details or costs. This can be important for patient billing and understanding how plans have evolved over time.
+</p>
+- Table: insurance_plan_details
+
+In each of these cases, a change to the current record results in an update to the end_date of the current record (with the current_flag set to FALSE) and the insertion of a new record with the updated details (with the current_flag set to TRUE and end_date as NULL). This allows the system to always have a pointer to the most current information while retaining historical changes.
 
 - 1) ***Creating a Snowflake Account***: `First`, you need to create a Snowflake account, if you don't already have one.
 
@@ -455,10 +471,7 @@ permission`HEALTHCARE_WH` SEE BELOW!
     - ,PatientGender varchar(255)	NULL
     - ,PatientAge int	            NULL
     - ,City varchar(255)          NULL
-    - ,State varchar(255)		      NULL
-    - ,effective_date CURRENT_TIMESTAMP() NOT NULL
-    - ,end_date DATE              NULL
-    - ,current_flag BOOLEAN       NOT NULL); 
+    - ,State varchar(255)		      NULL); 
 
   - ***CREATE TABLE EMR.doctor(***
 	   - doctorPK varchar(255)	Not NULL 
@@ -484,15 +497,29 @@ permission`HEALTHCARE_WH` SEE BELOW!
   - ***CREATE TABLE EMR.diagnosis(***
 	 - CodePK varchar(255)	Not NULL 
 	 - ,DiagnosisCode varchar(255)	NULL
-	 - ,DiagnosisCodeDescription varchar(255) 	NULL
-	 - ,DiagnosisCodeGroup varchar(255) NULL);
+	 - ,DiagnosisCodeDescription varchar(255) NULL
+	 - ,DiagnosisCodeGroup varchar(255)       NULL
+   - ,effective_date CURRENT_TIMESTAMP()    NOT NULL
+   - ,end_date DATE                         NULL
+   - ,current_flag BOOLEAN                  NOT NULL);
     
-    CREATE TABLE EMR.Code(
-	  CodePK varchar(255)				Not NULL
-	,CptCode varchar(255)				NULL
-	,CptDesc varchar(255)				NULL
-	,CptGrouping varchar(255)			NULL
-    );
+  - ***CREATE TABLE EMR.Code(***
+    - CodePK varchar(255)				          NOT NULL
+    - ,CptCode varchar(255)				        NULL
+    - ,CptDesc varchar(255)				        NULL
+    - ,CptGrouping varchar(255)			      NULL
+    - ,effective_date CURRENT_TIMESTAMP() NOT NULL
+    - ,end_date DATE                      NULL
+    - ,current_flag BOOLEAN               NOT NULL);
+
+  - ***CREATE TABLE insurance_plan_details (***
+    - plan_PK varchar(255)				          NOT NULL
+    - ,plan_id varchar(255)                 NULL
+    - ,coverage_details varchar(255)        NULL
+    - ,costs INT                            NULL
+    - ,effective_date CURRENT_TIMESTAMP() NOT NULL
+    - ,end_date DATE
+    - ,current_flag BOOLEAN);
 
   </pre>
 </td>
