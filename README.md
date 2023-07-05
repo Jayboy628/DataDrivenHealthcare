@@ -61,7 +61,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 
 #### Diagram Shows Ingestion Approach
 
-<img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 400px;"><br>
+<img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 700px;"><br>
 
 <details>
 <summary>
