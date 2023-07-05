@@ -339,7 +339,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 </details>
 </details>
 
-#### <font color="green"><left>PHASE TWO: Data Transformation, Documentation, Data Visualization and Reporting Layers</left></font>
+#### <font color="green"><left>PHASE TWO: Data Transformation, Documentation Layers</left></font>
 ---------------------------------------------------------------------------------------------------------------------
 <details>
     
@@ -520,7 +520,10 @@ Another requirement was implementing a Data Warehouse that enabled the stakehold
     - build operational reports (push to BI Tool)
       
 </details>
+</details>
 
+#### <font color="green"><left>PHASE THREE: Data Visualization & Reporting Layers</left></font>
+---------------------------------------------------------------------------------------------------------------------
 <details>
 <summary>
 
