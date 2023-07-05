@@ -446,19 +446,19 @@ permission`HEALTHCARE_WH` SEE BELOW!
 <pre lang="js">
     
 
-    - ***CREATE TABLE EMR.patient(***
-      - patientPK varchar(255)	    NOT NULL
-      - ,PatientNumber varchar(255)	NULL
-      - ,FirstName varchar(255)	    NULL
-      - ,LastName varchar(255)      NULL
-      - ,Email varchar(255)	        NULL
-      - ,PatientGender varchar(255)	NULL
-      - ,PatientAge int	            NULL
-      - ,City varchar(255)          NULL
-      - ,State varchar(255)		      NULL
-      - ,effective_date CURRENT_TIMESTAMP() NOT NULL
-      - ,end_date DATE              NULL
-      - ,current_flag BOOLEAN       NOT NULL); 
+  - ***CREATE TABLE EMR.patient(***
+    - patientPK varchar(255)	    NOT NULL
+    - ,PatientNumber varchar(255)	NULL
+    - ,FirstName varchar(255)	    NULL
+    - ,LastName varchar(255)      NULL
+    - ,Email varchar(255)	        NULL
+    - ,PatientGender varchar(255)	NULL
+    - ,PatientAge int	            NULL
+    - ,City varchar(255)          NULL
+    - ,State varchar(255)		      NULL
+    - ,effective_date CURRENT_TIMESTAMP() NOT NULL
+    - ,end_date DATE              NULL
+    - ,current_flag BOOLEAN       NOT NULL); 
 
   - ***CREATE TABLE EMR.doctor(***
 	   - doctorPK varchar(255)	Not NULL 
