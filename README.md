@@ -447,7 +447,7 @@ permission`HEALTHCARE_WH` SEE BELOW!
     
 
     - ***CREATE TABLE EMR.patient(***
-      - patientPK varchar(255)	    Not Null
+      - patientPK varchar(255)	    NOT NULL
       - ,PatientNumber varchar(255)	NULL
       - ,FirstName varchar(255)	    NULL
       - ,LastName varchar(255)      NULL
@@ -456,7 +456,7 @@ permission`HEALTHCARE_WH` SEE BELOW!
       - ,PatientAge int	            NULL
       - ,City varchar(255)          NULL
       - ,State varchar(255)		      NULL
-      - ,effective_date DATE        NOT NULL
+      - ,effective_date CURRENT_TIMESTAMP() NOT NULL
       - ,end_date DATE              NULL
       - ,current_flag BOOLEAN       NOT NULL); 
 
