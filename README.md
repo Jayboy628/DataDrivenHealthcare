@@ -359,6 +359,17 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
 </p>
 
+ - ***CREATE USER***: Create Username and Password 
+```shell
+    CREATE USER TRANSFORM_USER
+    PASSWORD = 'yourpassword'
+    LOGIN_NAME = 'LOGIN_NAME'
+    DEFAULT_ROLE='TRANSFORM_ROLE'
+    DEFAULT_WAREHOUSE = 'HEALTHCARE_WH'
+    MUST_CHANGE_PASSWORD = FALSE;
+    GRANT ROLE TRANSFORM_ROLE TO USER TRANSFORM_USER;
+```
+
 - ### Implementing Dedicated Virtual Warehouse
 - 1) ***Create Warehouse***: for this example we create a Warehouse called `HEALTHCARE_WH` SEE BELOW!
 
@@ -490,18 +501,7 @@ USE ROLE ACCOUNTADMIN;
 </td>
 </tr>
 </table>
-```
 
- - ***CREATE USER***:
-```shell
-    CREATE USER TRANSFORM_USER
-    PASSWORD = 'yourpassword'
-    LOGIN_NAME = 'LOGIN_NAME'
-    DEFAULT_ROLE='TRANSFORM_ROLE'
-    DEFAULT_WAREHOUSE = 'HEALTHCARE_WH'
-    MUST_CHANGE_PASSWORD = FALSE;
-    GRANT ROLE TRANSFORM_ROLE TO USER TRANSFORM_USER;
-```
 
 </details>
 
