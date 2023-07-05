@@ -373,17 +373,6 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
 - ### Implementing Dedicated Virtual Warehouse
 - 1) ***Create Warehouse***: for this example we create a Warehouse called `HEALTHCARE_WH` SEE BELOW!
 
-```shell
-CREATE TABLE EMR.Date(
-PostPK varchar(255) Not NULL 
-,Date Date	NULL
-,Year varchar(255) NULL
-,Month varchar(255)	NULL
-,MonthPeriod varchar(255) NULL
-,MonthYear varchar(255)	NULL
-,Day varchar(255)	NULL
-,DayName varchar(255)	NULL);
-```
 <table>
 <tr> 
     <th><h5>CREATE DATA WAREHOUSE (SQL)</h5></th>
@@ -440,6 +429,19 @@ USE ROLE ACCOUNTADMIN;
     - `GRANT SELECT ON ALL TABLES IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`AND
     - `GRANT SELECT ON ALL VIEWS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`
   - ***CREATE SCHEMA***: `CREATE SCHEMA HEALTHCARE_RAW.EMR;`
+
+    ```shell
+  ***CREATE TABLE EMR.Date(***
+  PostPK varchar(255) Not NULL 
+  ,Date Date	NULL
+  ,Year varchar(255) NULL
+  ,Month varchar(255)	NULL
+  ,MonthPeriod varchar(255) NULL
+  ,MonthYear varchar(255)	NULL
+  ,Day varchar(255)	NULL
+  ,DayName varchar(255)	NULL);
+  ```
+
 </pre>
 </td>
 </tr>
@@ -452,7 +454,7 @@ USE ROLE ACCOUNTADMIN;
 <tr>
 <td>  
 <pre lang="js">
-
+    
 
     - ***CREATE TABLE EMR.patient(***
       - patientPK varchar(255)	    Not Null
