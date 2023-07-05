@@ -380,6 +380,9 @@ USE ROLE ACCOUNTADMIN;
     MAX_CLUSTER_COUNT = 1 
     SCALING_POLICY = 'STANDARD'
     COMMENT = 'This is  a Data Warehouse for Healthcare';
+
+- 2) ***House***: Best practice is to create your own ROLE and give correct permission`HEALTHCARE_WH` SEE BELOW!
+
 </pre>
 </td>
 </tr>
