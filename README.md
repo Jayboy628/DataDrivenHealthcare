@@ -391,12 +391,11 @@ USE ROLE ACCOUNTADMIN;
 
 - 3) ***Creating Roles and Users***: `You can create roles` and users by executing the following commands:
 
-```
+  ```
   CREATE ROLE dev_role;
   GRANT ROLE dev_role TO USER your_username;
   CREATE USER dev_user PASSWORD = 'YourPassword' MUST_CHANGE_PASSWORD = TRUE DEFAULT_ROLE = dev_role;
   ```
-
 
 - 4) ***House Work***: Best practice is to create your own `ROLE` and give correct 
 permission`HEALTHCARE_WH` SEE BELOW!
