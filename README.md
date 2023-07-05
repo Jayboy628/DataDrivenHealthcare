@@ -27,6 +27,12 @@ My intention with this project is to replicate some of the more important aspect
     - CREATE PERMISSION FOR ROLES (SQL)
     - Cloud Storage (S3)
     - Data Warehouse 
+  - Transformation & Documentation Approach
+    - Data Warehouse 
+      - Type 1 (SCD)
+      - Type 2 (SCD)
+      - Star Schema
+      - Design Reports
   - Reporting Approach
     - Operations Report
      - Questions & Answers
@@ -330,6 +336,7 @@ The next step is to populate the cloud database. Snowpipe will pull the normaliz
             <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
 
 
+</details>
 </details>
 
 #### <font color="green"><left>PHASE TWO: Data Transformation, Documentation, Data Visualization and Reporting Layers</left></font>
