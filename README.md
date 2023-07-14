@@ -59,8 +59,7 @@ My intention with this project is to replicate some of the more important aspect
 The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.<br><br>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.<br><br>
 
-#### Diagram Shows Ingestion Approach
-
+- ***Diagram Shows Ingestion*** `Approach`
   <img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 700px;"><br>
 
 
