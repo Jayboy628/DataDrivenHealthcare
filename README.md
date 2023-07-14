@@ -46,6 +46,7 @@ My intention with this project is to replicate some of the more important aspect
 
 #### <font color="green"><left>PHASE ONE: Data Ingestion, Data Storage, Data Warehouse Layers</left></font>
 ---------------------------------------------------------------------------------------------------------------------
+<img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 400px;"><br>
 
 <details>
 <summary>
