@@ -17,11 +17,11 @@ My intention with this project is to replicate some of the more important aspect
 ### Agenda
 
 - Cloud-Based Solutions: Healthcare Data Warehouse
-  - Ingestion Approach
+  - `Ingestion Approach`
     - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html): Setup Nifi Environment
     - Automate Log parsing
     - Nifi Ingest Data to Staging Database (PostgreSQL)
-    - Nifi Automate PostgreSQL Database to Store JSON File in AWS (S3)
+    - Nifi Automate PostgreSQL Datadabase to Store JSON File in AWS (S3)
   - Load Approach
     - Implementing dedicated virtual warehouse
     - CREATE PERMISSION FOR ROLES (SQL)
@@ -59,9 +59,7 @@ My intention with this project is to replicate some of the more important aspect
 The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.<br><br>
 The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.<br><br>
 
-#### Diagram Shows Ingestion Approach
-
-<img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 700px;"><br>
+#### Diagram Shows Ingestion Approach<img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 700px;"><br> `test`
 
 <details>
 <summary>
