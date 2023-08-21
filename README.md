@@ -21,45 +21,45 @@ My intention with this project is to replicate some of the more important aspect
     - Setting up Jupyter Lab:
       - Environment setup and configuration.
       - Best practices for Python scripting for ETL processes.
-  - Installing and Configuring S3:
-    - Set up AWS S3 and Service Manager: Parameter Store.
-    - Emphasize versioning or timestamping files in S3.
-    - Security and data access controls.
-  - Setting Up Snowflake:
-    - Install Snowflake.
-    - Determine stakeholders and required levels of access.
-    - Create Snowflake Data Warehouse and Database.
-    - Set up bulk loading mechanisms for efficient data ingestion.
-  - Installing and Configuring Airflow:
-    - Installing and initializing Airflow.
-    - Create Airflow test script for troubleshooting and testing.
-    - Design and create DAGs and Tasks.
-    - Test and validate each task.
-    - Integrate with Snowflake and validate their relationship.
-  - Installing and Configuring DBT:
-    - Install DBT.
-    - Create and test a DBT profile.
-    - Design and implement models.
-    - Implement Star Schema.
-    - Create tasks in Airflow for DBT and test them.
-    - Emphasize creating tests within dbt for data validation.
-  - Alerting and Monitoring:
-    - Install Slack and set up integrations.
-    - Create and test Slack alerts for each significant step (S3 ingestion, transformations in Snowflake, etc.).
-    - Implement monitoring for data anomalies or volume changes.
-- `Ingestion Approach:`
-  - Python Scripting with Jupyter Lab:
-    - Design the Python script to:
-    - Read CSV files.
-    - Cleanse and validate data for consistency.
-    - Handle missing values or anomalies.
-    - Implement logging for transparency and easier debugging.
-    - Set up an automated routine to execute scripts. Consider scheduling tools or triggering mechanisms.
-  - AWS S3:
-    - Determine folder structures in S3 to organize the data efficiently. You might need landing, processing, and archive areas.
-    - Develop naming conventions for S3 objects for easier traceability.
-    - Implement S3 bucket policies for data retention and security.
-    - Slack notification on successful data push to S3 or failure.
+    - Installing and Configuring S3:
+      - Set up AWS S3 and Service Manager: Parameter Store.
+      - Emphasize versioning or timestamping files in S3.
+      - Security and data access controls.
+    - Setting Up Snowflake:
+      - Install Snowflake.
+      - Determine stakeholders and required levels of access.
+      - Create Snowflake Data Warehouse and Database.
+      - Set up bulk loading mechanisms for efficient data ingestion.
+    - Installing and Configuring Airflow:
+      - Installing and initializing Airflow.
+      - Create Airflow test script for troubleshooting and testing.
+      - Design and create DAGs and Tasks.
+      - Test and validate each task.
+      - Integrate with Snowflake and validate their relationship.
+    - Installing and Configuring DBT:
+      - Install DBT.
+      - Create and test a DBT profile.
+      - Design and implement models.
+      - Implement Star Schema.
+      - Create tasks in Airflow for DBT and test them.
+      - Emphasize creating tests within dbt for data validation.
+    - Alerting and Monitoring:
+      - Install Slack and set up integrations.
+      - Create and test Slack alerts for each significant step (S3 ingestion, transformations in Snowflake, etc.).
+      - Implement monitoring for data anomalies or volume changes.
+  - `Ingestion Approach:`
+    - Python Scripting with Jupyter Lab:
+      - Design the Python script to:
+      - Read CSV files.
+      - Cleanse and validate data for consistency.
+      - Handle missing values or anomalies.
+      - Implement logging for transparency and easier debugging.
+      - Set up an automated routine to execute scripts. Consider scheduling tools or triggering mechanisms.
+    - AWS S3:
+      - Determine folder structures in S3 to organize the data efficiently. You might need landing, processing, and archive areas.
+      - Develop naming conventions for S3 objects for easier traceability.
+      - Implement S3 bucket policies for data retention and security.
+      - Slack notification on successful data push to S3 or failure.
   - `Orchestration Approach:`
     - Apache Airflow:
       - Design DAGs for different workflows – data ingestion, transformation, and reporting.
@@ -108,11 +108,11 @@ My intention with this project is to replicate some of the more important aspect
       - Share your dashboards with the stakeholders using Tableau Server or Online.
       - Enable subscriptions to dashboards for key stakeholders to receive automated updates.
     - Feedback Loop:
-     - Collect feedback from users regarding the reports. This can help in refining and making necessary adjustments to the dashboards for better decision-making.
+      - Collect feedback from users regarding the reports. This can help in refining and making necessary adjustments to the dashboards for better decision-making.
     - Documentation:
-     - It's crucial to document the design, business logic, and any other technical details of your Tableau dashboards. This ensures clarity and makes any future transitions or troubleshooting more manageable.
+      - It's crucial to document the design, business logic, and any other technical details of your Tableau dashboards. This ensures clarity and makes any future transitions or troubleshooting more manageable.
     - Integration with Slack (Optional):
-     - If you want to share insights directly in Slack or notify users when a new report is available, consider integrating Tableau with Slack using webhooks or third-party integrations.
+      - If you want to share insights directly in Slack or notify users when a new report is available, consider integrating Tableau with Slack using webhooks or third-party integrations.
 
 
 #### <font color="green"><left>PHASE ONE: Data Ingestion, Data Storage, Data Warehouse Layers</left></font>
