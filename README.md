@@ -17,31 +17,102 @@ My intention with this project is to replicate some of the more important aspect
 ### Agenda
 
 - Cloud-Based Solutions: Healthcare Data Warehouse
-  - `Ingestion Approach`
-    - [Installing Nifi Toolkit & Nifi](https://nifi.apache.org/docs/nifi-docs/html/getting-started.html): Setup Nifi Environment
-    - Automate Log parsing
-    - Nifi Ingest Data to Staging Database (PostgreSQL)
-    - Nifi Automate PostgreSQL Datadoriabase to Store JSON File in AWS (S3)
-  - Load Approach
-    - Implementing dedicated virtual warehouse
-    - CREATE PERMISSION FOR ROLES (SQL)
-    - Cloud Storage (S3)
-    - Data Warehouse 
-  - Transformation & Documentation Approach
-    - Data Warehouse 
-      - Type 1 (SCD)
-      - Type 2 (SCD)
-      - Star Schema
-      - Design Reports
-  - Reporting Approach
-    - Operations Report
-     - Questions & Answers
-    - Revenue Cycle
-      - RVU
-      - Denial Analysis
-      - Writeoffs
-    - Visualization
-      - LOS
+  - `Configuration Approach:`
+    - Setting up Jupyter Lab:
+      - Environment setup and configuration.
+      - Best practices for Python scripting for ETL processes.
+  - Installing and Configuring S3:
+    - Set up AWS S3 and Service Manager: Parameter Store.
+    - Emphasize versioning or timestamping files in S3.
+    - Security and data access controls.
+  - Setting Up Snowflake:
+    - Install Snowflake.
+    - Determine stakeholders and required levels of access.
+    - Create Snowflake Data Warehouse and Database.
+    - Set up bulk loading mechanisms for efficient data ingestion.
+  - Installing and Configuring Airflow:
+    - Installing and initializing Airflow.
+    - Create Airflow test script for troubleshooting and testing.
+    - Design and create DAGs and Tasks.
+    - Test and validate each task.
+    - Integrate with Snowflake and validate their relationship.
+  - Installing and Configuring DBT:
+    - Install DBT.
+    - Create and test a DBT profile.
+    - Design and implement models.
+    - Implement Star Schema.
+    - Create tasks in Airflow for DBT and test them.
+    - Emphasize creating tests within dbt for data validation.
+  - Alerting and Monitoring:
+    - Install Slack and set up integrations.
+    - Create and test Slack alerts for each significant step (S3 ingestion, transformations in Snowflake, etc.).
+    - Implement monitoring for data anomalies or volume changes.
+- `Ingestion Approach:`
+  - Python Scripting with Jupyter Lab:
+    - Design the Python script to:
+    - Read CSV files.
+    - Cleanse and validate data for consistency.
+    - Handle missing values or anomalies.
+    - Implement logging for transparency and easier debugging.
+    - Set up an automated routine to execute scripts. Consider scheduling tools or triggering mechanisms.
+  - AWS S3:
+    - Determine folder structures in S3 to organize the data efficiently. You might need landing, processing, and archive areas.
+    - Develop naming conventions for S3 objects for easier traceability.
+    - Implement S3 bucket policies for data retention and security.
+    - Slack notification on successful data push to S3 or failure.
+  - `Orchestration Approach:`
+    - Apache Airflow:
+      - Design DAGs for different workflows – data ingestion, transformation, and reporting.
+      - Set up error handling mechanisms in Airflow to handle failures or inconsistencies.
+      - Implement logging and monitoring to keep track of DAG runs.
+      - Implement retries and alert mechanisms in case of DAG failures.
+      - Ensure there's a solid connection setup between Airflow and Snowflake.
+  - `Storage & Preprocessing Approach:`
+    - Snowflake:
+      - Design Snowflake schemas to hold raw and transformed data.
+      - Create roles and grant permissions to ensure data security and compliance.
+      - Implement Snowflake best practices such as using time-travel, fail-safe, and zero-copy cloning.
+      - Load raw data from S3 to Snowflake tables.
+      - Slack notification post successful load or upon failure.
+  - `Transformation & Modeling Approach:`
+    - dbt:
+      - Set up dbt projects and profiles.
+      - Design dbt models to transform raw data into a star schema, creating dimensions and fact tables.
+      - Implement dbt tests to ensure data quality and consistency.
+      - Integrate dbt runs with Airflow to automate transformations.
+      - Ensure that the transformed data in Snowflake matches the EMR system reports.
+  - `Alerting & Monitoring:`
+    - Slack:
+      - Integrate Slack with every major component for instant alerts.
+      - Design alerts for both successful processes and failures.
+      - Include error messages or anomalies in Slack alerts for quick troubleshooting.
+      - Consider setting up dashboards or monitoring tools to visualize pipeline health and data metrics.
+  - `Reporting Approach:`
+    - Tableau:
+      - Tableau Server/Online Setup:
+      - If you haven’t already, set up Tableau Server or Tableau Online based on your requirements.
+      - Ensure you have the necessary infrastructure and licensing in place.
+      - Consider setting up projects, sites, and permission structures for better organization and security.
+    - Connectivity to Snowflake:
+      - Establish a connection between Tableau and Snowflake. Make use of the native Snowflake connector in Tableau.
+      - Ensure your Snowflake user has the required permissions to access the relevant data for reporting.
+      - Regularly update the connection credentials to maintain security.
+    - Dashboard Design:
+      - Begin by understanding the reporting requirements and KPIs from the business teams.
+      - Create calculated fields, parameters, and sets in Tableau, if required, to match your KPI definitions.
+      - Design your dashboards keeping the end-user in mind. Use intuitive layouts, meaningful color schemes, and clear visualizations.
+    - Optimization:
+      - Implement Extracts instead of Live Connections if you notice performance issues. Schedule refreshes according to business needs.
+      - Optimize your Snowflake views or tables for faster query performance. Consider using materialized views or aggregated tables for reporting.
+    - Collaboration:
+      - Share your dashboards with the stakeholders using Tableau Server or Online.
+      - Enable subscriptions to dashboards for key stakeholders to receive automated updates.
+    - Feedback Loop:
+     - Collect feedback from users regarding the reports. This can help in refining and making necessary adjustments to the dashboards for better decision-making.
+    - Documentation:
+     - It's crucial to document the design, business logic, and any other technical details of your Tableau dashboards. This ensures clarity and makes any future transitions or troubleshooting more manageable.
+    - Integration with Slack (Optional):
+     - If you want to share insights directly in Slack or notify users when a new report is available, consider integrating Tableau with Slack using webhooks or third-party integrations.
 
 
 #### <font color="green"><left>PHASE ONE: Data Ingestion, Data Storage, Data Warehouse Layers</left></font>
