@@ -18,43 +18,17 @@ My intention with this project is to replicate some of the more important aspect
 
 - Cloud-Based Solutions: Healthcare Data Warehouse
   - `Configuration Approach:`
-    - Setting up Jupyter Lab:
-      - Environment setup and configuration.
-      - Best practices for Python scripting for ETL processes.
-    - Installing and Configuring S3:
-      - Set up AWS S3 and Service Manager: Parameter Store.
-      - Emphasize versioning or timestamping files in S3.
-      - Security and data access controls.
-    - Setting Up Snowflake:
-      - Install Snowflake.
-      - Determine stakeholders and required levels of access.
-      - Create Snowflake Data Warehouse and Database.
-      - Set up bulk loading mechanisms for efficient data ingestion.
-    - Installing and Configuring Airflow:
-      - Installing and initializing Airflow.
-      - Create Airflow test script for troubleshooting and testing.
-      - Test and validate each task.
-      - Integrate with Snowflake and validate their relationship.
-    - Installing and Configuring DBT:
-      - Install DBT.
-      - Create and test a DBT profile.
-      - Design and implement models.
-      - Implement Star Schema.
-      - Create tasks in Airflow for DBT and test them.
-      - Emphasize creating tests within dbt for data validation.
-    - Alerting and Monitoring:
-      - Install Slack and set up integrations.
-      - Create and test Slack alerts for each significant step (S3 ingestion, transformations in Snowflake, etc.).
-      - Implement monitoring for data anomalies or volume changes.
-	- Cloud-Based Solutions: Healthcare Data Warehouse
+    - **Jupyter Lab**: Setting up Jupyter Lab
+    - **Airflow**: Manages ETL workflows.
+    - **AWS S3**: Acts as data storage.
+    - **AWS Systems Manager Parameter Store**: Secures configurations.
+    - **Snowflake**: Our cloud data warehouse.
+    - **DBT**: Handles data transformations.
+    - **Slack**: Delivers process notifications.
   - `Ingestion Approach:`
-    - Python Scripting with Jupyter Lab:
-      - Design the Python script to:
-	      - Read CSV files.
-	      - Cleanse and validate data for consistency.
-	      - Handle missing values or anomalies.
-	      - Implement logging for transparency and easier debugging.
-	      - Set up an automated routine to execute scripts. Consider scheduling tools or triggering mechanisms.
+    - **Explore Dataframe**: Using Python to exploreing data.
+    - **File Process**: Takes the Dataframe and load as a csv file to S3 buckets.
+    - **Create Folders**: Two folders are created for errors and processed.
     - AWS S3:
       - Determine folder structures in S3 to organize the data efficiently. You might need landing, processing, and archive areas.
       - Develop naming conventions for S3 objects for easier traceability.
@@ -67,13 +41,7 @@ My intention with this project is to replicate some of the more important aspect
 	      - Implement logging and monitoring to keep track of DAG runs.
 	      - Implement retries and alert mechanisms in case of DAG failures.
 	      - Ensure there's a solid connection setup between Airflow and Snowflake.
-  - `Storage & Preprocessing Approach:`
-    - Snowflake:
-      - Design Snowflake schemas to hold raw and transformed data.
-      - Create roles and grant permissions to ensure data security and compliance.
-      - Implement Snowflake best practices such as using time-travel, fail-safe, and zero-copy cloning.
-      - Load raw data from S3 to Snowflake tables.
-      - Slack notification post successful load or upon failure.
+        - Integrate Slack with every major component for instant alerts.
   - `Transformation & Modeling Approach:`
     - dbt:
       - Set up dbt projects and profiles.
@@ -81,12 +49,8 @@ My intention with this project is to replicate some of the more important aspect
       - Implement dbt tests to ensure data quality and consistency.
       - Integrate dbt runs with Airflow to automate transformations.
       - Ensure that the transformed data in Snowflake matches the EMR system reports.
-  - `Alerting & Monitoring:`
-    - Slack:
       - Integrate Slack with every major component for instant alerts.
-      - Design alerts for both successful processes and failures.
-      - Include error messages or anomalies in Slack alerts for quick troubleshooting.
-      - Consider setting up dashboards or monitoring tools to visualize pipeline health and data metrics.
+  
   - `Reporting Approach:`
     - Tableau:
       - Tableau Server/Online Setup:
@@ -101,54 +65,140 @@ My intention with this project is to replicate some of the more important aspect
       - Begin by understanding the reporting requirements and KPIs from the business teams.
       - Create calculated fields, parameters, and sets in Tableau, if required, to match your KPI definitions.
       - Design your dashboards keeping the end-user in mind. Use intuitive layouts, meaningful color schemes, and clear visualizations.
-    - Optimization:
-      - Implement Extracts instead of Live Connections if you notice performance issues. Schedule refreshes according to business needs.
-      - Optimize your Snowflake views or tables for faster query performance. Consider using materialized views or aggregated tables for reporting.
-    - Collaboration:
-      - Share your dashboards with the stakeholders using Tableau Server or Online.
-      - Enable subscriptions to dashboards for key stakeholders to receive automated updates.
-    - Feedback Loop:
-      - Collect feedback from users regarding the reports. This can help in refining and making necessary adjustments to the dashboards for better decision-making.
-    - Documentation:
-      - It's crucial to document the design, business logic, and any other technical details of your Tableau dashboards. This ensures clarity and makes any future transitions or troubleshooting more manageable.
-    - Integration with Slack (Optional):
-      - If you want to share insights directly in Slack or notify users when a new report is available, consider integrating Tableau with Slack using webhooks or third-party integrations.
 
-#### <font color="green"><left>PHASE ONE: Data Ingestion, Data Storage, Data Warehouse Layers</left></font>
----------------------------------------------------------------------------------------------------------------------
-<img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 700px;"><br>
 
-<details>
-<summary>
 
-##### Cloud Technology: [Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/),[S3](https://aws.amazon.com/), [Snowflake](https://www.snowflake.com/en/),[DBT](https://www.getdbt.com/)
+# Cloud Technology Project
 
-</summary>
-
-### Ingestion Approach
-The Ingestion Approach serves as the foundation for ensuring all components of your data pipeline are correctly installed and configured. The primary components include:
-
-- **Airflow**: Handles ETL orchestration.
-- **AWS S3**: Serves as the data storage.
-- **AWS Systems Manager Parameter Store**: Manages secure configuration.
-- **Snowflake**: Functions as the cloud data warehouse solution.
-- **DBT**: Used for data transformation tasks.
-- **Slack**: Sends process notifications.
-
-#### Ingestion Approach Diagram
-![Ingestion Architecture](images/IngestionArchitecture.png)
+A comprehensive guide on setting up a data pipeline leveraging key cloud technologies: 
+[Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/), [Snowflake](https://www.snowflake.com/en/), and [DBT](https://www.getdbt.com/).
 
 ---
 
+
+
+# Configuration Approach
+
+The Configuration Approach ensures that all data pipeline components are appropriately set up.
+
+### Components:
+
+- **Airflow**: Manages ETL workflows.
+- **AWS S3**: Acts as data storage.
+- **AWS Systems Manager Parameter Store**: Secures configurations.
+- **Snowflake**: Our cloud data warehouse.
+- **DBT**: Handles data transformations.
+- **Slack**: Delivers process notifications.
+
+
+---
+
+## 1. Dockerized Airflow Setup
+
 <details>
-<summary>
-    
-##### Setting Up the AWS Environment
-</summary>
+<summary>Click to Expand</summary>
 
-1. **Environment Setup and Configuration**:
+### 1. Introduction:
 
-   - **S3 bucket**:
+- **Overview**: Dockerized Airflow with PostgreSQL backend, aiming for scalability and modularity.
+
+### 2. Prerequisites:
+
+- Docker & Docker Compose
+- Ample storage and RAM
+
+### 3. File Structure:
+
+-- **data_eng**: My primary configuration directory for your data engineering tasks.
+  - `docker-compose.yml`: Orchestrates the services using Docker Compose.
+  - `mnt/airflow/airflow.cfg`: Airflow's configuration file.
+- **docker/airflow**:
+  - `Dockerfile`: Steps to build the Airflow image.
+  - `start-airflow.sh`: A bash script initializing and launching Airflow services.
+- **docker/postgres**:
+  - `Dockerfile`: Instructions to generate the PostgreSQL image.
+  - `init-postgres-db.sh`: Sets up the PostgreSQL database.
+------
+
+### 4. **Documentation for Individual Components**:
+
+#### 4.1 **Airflow Dockerfile (`docker/airflow/Dockerfile`)**:
+This Dockerfile provides the blueprint to create a Docker image for Airflow. It begins with a base image of Python 3.8, installs necessary system packages and Python libraries, and sets up the environment for Airflow.
+
+#### 4.2 **start-airflow.sh Script (`docker/airflow/start-airflow.sh`)**:
+This script automates multiple steps:
+- Navigates to the AIRFLOW_HOME directory.
+- Exports environment variables, including deactivating the loading of example DAGs.
+- Initializes the metadata database.
+- Creates a default user for the Airflow web UI.
+- Launches the Airflow scheduler and web server.
+
+#### 4.3 **PostgreSQL Dockerfile (`docker/postgres/Dockerfile`)**:
+Using the PostgreSQL base image (version 15.3 based on Alpine), this Dockerfile prepares a PostgreSQL instance tailored for integration with Airflow. It also includes a script (`init-postgres-db.sh`) to initialize the PostgreSQL database.
+
+#### 4.4 **init-postgres.sh Script (`docker/postgres/init-postgres.sh`)**:
+This script sets up the environment within the PostgreSQL container. It performs the following:
+- Drops the existing database and role if they exist.
+- Creates a new user and database.
+- Grants privileges to the new user.
+
+### 5. **Setting Up Airflow with Docker**:
+- **Docker Compose File (`docker-compose.yml`)**:
+  - **Version**: Docker Compose version (2.1).
+  - **Airflow Service**: Details pertaining to the Airflow service's Docker configuration.
+  - **Volumes**: Configuration files and other necessary directories mounted inside the container.
+  - **Ports**: Port mapping details.
+  - **Healthcheck**: Monitors the health of the Airflow service.
+
+### 6. **Setting Up PostgreSQL with Docker**:
+- **Docker Compose File (`docker-compose.yml`)**:
+  - **Version**: Docker Compose version (2.1).
+  - **PostgreSQL Service**: Information about the Docker configuration for the PostgreSQL service.
+  - **Ports**: Port mapping details.
+  - **Environment Variables**: Default credentials and database specifications.
+  - **Healthcheck**: Ensures PostgreSQL's health using `pg_isready`.
+
+
+### 7. Execution:
+
+- **Change Directory where airflow is located**: `cd data_eng/`
+
+   - **Start.sh**:Build the base images from which are based the Dockerfiles (hen Startup all the containers at once )
+     ```shell
+      docker-compose up -d --build
+     ```
+
+   - **Stop.sh**: Stop all the containers at once
+     ```shell
+      docker-compose down
+     ```
+
+   - **Restart.sh**:
+     ```shell
+     ./stop.sh
+     ./start.sh
+     ```
+
+   - **reset.sh**:
+     ```shell
+      docker-compose down
+      docker system prune -f
+      docker volume prune -f
+      docker network prune -f
+      rm -rf ./mnt/postgres/*
+      docker rmi -f $(docker images -a -q)
+     ```
+</details>
+
+
+## 2. AWS Environment Setup
+
+<details>
+<summary>Click to Expand</summary>
+
+### 1. Basic Environment Configuration:
+
+   - **S3 Bucket**: 
      ```shell
      aws s3api create-bucket --bucket YOUR_BUCKET_NAME --region YOUR_REGION
      ```
@@ -158,7 +208,7 @@ The Ingestion Approach serves as the foundation for ensuring all components of y
      aws iam create-user --user-name testjay
      ```
 
-   - **S3 bucket policy for the user**:
+   - **S3 Bucket Policy**:
      ```shell
      aws iam list-policies
      aws iam attach-user-policy --user-name jay --policy-arn YOUR_BUCKET_POLICY_ARN
@@ -169,18 +219,18 @@ The Ingestion Approach serves as the foundation for ensuring all components of y
      aws iam create-role --role-name developer --assume-role-policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]}'
      ```
 
-   - **SSM policy for the role**:
+   - **SSM Policy for Role**:
      ```shell
      aws iam list-policies
      aws iam attach-role-policy --role-name developer --policy-arn YOUR_SSM_POLICY_ARN
      ```
 
-   - **Link the role to the user**:
+   - **Associate Role to User**:
      ```shell
      aws iam put-user-policy --user-name jay --policy-name AssumeDeveloperRole --policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Action": "sts:AssumeRole","Resource": "arn:aws:iam::YOUR-AWS-ACCOUNT-ID:role/developer"}]}'
      ```
 
-2. **EMR Full Access for S3 Bucket**:
+### 2. EMR Full Access for S3:
 
    - **Bucket Policy**:
      ```json
@@ -199,14 +249,14 @@ The Ingestion Approach serves as the foundation for ensuring all components of y
      }
      ```
 
-   - **Apply the policy**:
+   - **Apply Policy**:
      ```shell
      aws s3api put-bucket-policy --bucket YOUR_BUCKET_NAME --policy file://path/to/your/emr-policy.json
      ```
 
-3. **AWS Systems Manager Parameter Store**:
+### 3. AWS Systems Manager Parameter Store:
 
-   - **Setup Parameters**:
+   - **Parameter Setup**:
      ```shell
      aws ssm put-parameter --name "SnowflakeUsername" --type "String" --value "YourUsername"
      aws ssm put-parameter --name "SnowflakePassword" --type "SecureString" --value "YourPassword"
@@ -216,21 +266,24 @@ The Ingestion Approach serves as the foundation for ensuring all components of y
 
 </details>
 
+---
+
+## 3. Snowflake Setup
+
 <details>
-<summary>
+<summary>Click to Expand</summary>
 
-##### Setting Up Snowflake
-</summary>
+### 1. Starting with Snowflake:
 
-1. **Getting Started with Snowflake**: 
-   - **Setting up an Account**: Snowflake operates as a cloud-native data platform, eliminating the need for traditional installations.
-      - Navigate to the [Snowflake website](https://www.snowflake.com/).
-      - Opt for 'Start for Free' or 'Get Started'.
-      - Complete the on-screen registration.
-      - Access the Snowflake Web UI with your account credentials.
+   - Snowflake offers a cloud-native data platform.
+      - [Register on Snowflake](https://www.snowflake.com/)
+      - Choose 'Start for Free' or 'Get Started'.
+      - Complete the registration.
+      - Use credentials to access Snowflake's UI.
 
-2. **Structural Setup**:
-   - **Create a Data Warehouse**:
+### 2. Structure Configuration:
+
+   - **Data Warehouse**:
      ```sql
      CREATE WAREHOUSE IF NOT EXISTS my_warehouse 
         WITH WAREHOUSE_SIZE = 'XSMALL' 
@@ -238,13 +291,13 @@ The Ingestion Approach serves as the foundation for ensuring all components of y
         AUTO_RESUME = TRUE 
         INITIALLY_SUSPENDED = TRUE;
      ```
-     
-   - **Generate a Database**:
+
+   - **Database**:
      ```sql
      CREATE DATABASE IF NOT EXISTS my_database;
      ```
 
-   - **Construct Roles and Users**:
+   - **Roles and Users**:
      ```sql
      -- Role Creation
      CREATE ROLE IF NOT EXISTS my_role;
@@ -256,22 +309,21 @@ The Ingestion Approach serves as the foundation for ensuring all components of y
         MUST_CHANGE_PASSWORD = FALSE;
      ```
 
-3. **Data Organization**:
-   - **Establish Schemas**:
+### 3. Organize Data:
+
+   - **Schemas**:
      ```sql
      USE DATABASE my_database;
-
      CREATE SCHEMA IF NOT EXISTS chart;
      CREATE SCHEMA IF NOT EXISTS register;
      CREATE SCHEMA IF NOT EXISTS billing;
      ```
 
-   - **Develop Tables**:
+   - **Tables**:
      ```sql
      -- Chart Schema
      CREATE TABLE IF NOT EXISTS chart.code (
         id INT AUTOINCREMENT PRIMARY KEY
-        -- Additional fields as necessary
      );
 
      -- Register Schema
@@ -279,442 +331,475 @@ The Ingestion Approach serves as the foundation for ensuring all components of y
         id INT AUTOINCREMENT PRIMARY KEY,
         name STRING,
         email STRING UNIQUE
-        -- Additional fields as necessary
      );
-
-     ... [Continue with the rest of the table creation commands]
      ```
 
-4. **Allocate Permissions**:
-   - **Role Assignments and Privileges**:
-     ```sql
-     -- Role assignment to user
-     GRANT ROLE my_role TO USER jay;
+### 4. Permissions:
 
-     -- Database and warehouse privileges
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
      GRANT USAGE ON DATABASE my_database TO ROLE my_role;
      GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-
-     -- Schema permissions
      GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT USAGE ON SCHEMA register TO ROLE my_role;
-     GRANT USAGE ON SCHEMA billing TO ROLE my_role;
-
-     -- Table permissions within schemas
      GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA register TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA billing TO ROLE my_role;
      ```
 
-**Note**: Make sure to replace placeholders (like `<YourSecurePassword>`) with actual values before executing the commands.
+**Note**: Replace placeholders (like `<YourSecurePassword>`) with actual values.
 
 </details>
 
---            
- 
+## 4. DBT (Data Build Tool) Setup
+
+
+<details>
+<summary>Click to Expand</summary>
+
+**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
+
+   - **Installation**: To get started with DBT, you first need to install it 
+
+     ```shell
+      pip install dbt
+     ```
+
+   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
+
+     ```shell
+     dbt init your_project_name
+     ```
+
+   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
+     ```shell
+        your_project_name:
+      target: dev
+      outputs:
+        dev:
+          type: snowflake
+          account: your_account
+          user: your_username
+          password: your_password
+          role: your_role
+          database: your_database
+          warehouse: your_warehouse
+          schema: your_schema
+          threads: [desired_number_of_threads]
+     ```
+     - **Running and Testing:
+
+     ```shell
+     dbt debug
+     ```
 </details>
 
-  <details>
-<summary>
-  
- ##### Installing and Configuring Airflow:
-</summary>
-    
-- Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
-- ***FTP LOCATION***: I used python script to create a `timestamp` and `increment count` for each file.
-  - `Python Script`:[Script](code): I also implement `Slack` to notify me that the file reachs `2:AM Before work and 7:PM `
-  - To integrate the Incoming `Webhooks` feature into the code, you'll need to make the following modifications:
-    1. Install the slack_sdk library if you haven't already: `pip install slack_sdk`
-    2. Import the necessary modules: `from slack_sdk import WebClient`,`from slack_sdk.errors import SlackApiError`
-    3. Set up the Slack webhook URL: `slack_webhook_url = 'YOUR_SLACK_WEBHOOK_URL'`: Click here to view script [Script](code)
+---
+# Ingestion Approach
 
-- Automate configuration file within parameter-context 
-    - ***Create two folders***: Process-Nifi and parameter_context
-    - /opt/nifi-toolkit/nifi-envs/`Process-Nifi/parameter_context` and add the files [`postgres-config.json`](parameter-context) to the folder
-    - ***Start Nifi-toolkit***: `/opt/nifi-toolkit/bin/cli.sh`
-    - ***Create the parameter Context for database***:
-    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/postgres-config.json' -u http://localhost:8443`
-    - ***Create the parameter Context for file Tracker***:
-    `nifi import-param-context -i /opt/nifi-toolkit/nifi-envs/Excel-NiFi/parameter_context/excell-healthcare-tracker-config.json' -u http://localhost:8443`
-    - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
-    - ***Open Nifi***: In the top right corner click the icon and click on `Parameter Contexts` to confirm that the above files are loaded
-    - *** Global Gear***: Click on it and search in the `Process Group Parameter Context` for your loaded files and click apply
-        - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
-        - Drag another `Process Group` and name it `File Extraction to Databases`
-            - Click the process group `File Extraction to Database` and then Drag the Processor and type `List File`
-                - In the ListFile processor the file configuration should be loaded inplace automatically
-                - ***Input Directory*** : `#{source_directory}`
-                - ***File Filter*** : `#{file_list}`
-                - ***Entity Tracking Node Identifier*** : `${hostname()}`
+Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
-            - Drag the Processor and type `FetchFile`
-                - ***File to Fetch*** : `${absolute.path}/${filename}`
-                - ***Move Conflict Strategy*** : `Rename`
+---
+
+## Components:
+
+- **Explore Dataframe**: Investigate data using Python scripts.
+- **File Process**: Load dataframes as CSV files to S3 buckets.
+- **Folder Management**: Creation of folders for errors and processed files.
+
+---
+
+## 1. Setup DataFrame Exploring
+
+<details>
+<summary>Click to Expand</summary>
+
+### a. Data Exploring Code Setup:
+
+- **Overview**: I utilized Jupyter Lab as my primary exploration tool.
+
+- **Explore_Files.ipynb**:
+
+    ```python
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    from tabulate import tabulate
+    import io
+
+    def explore_csv(filename):
+        # Read the CSV file
+        df = pd.read_csv(filename)
+        
+        # Display the shape of the dataframe
+        print(f"Shape of the dataframe: {df.shape} (rows, columns)\n")
+        
+        # Display the first 5 rows of the dataframe
+        print("Head of the dataframe:")
+        print(tabulate(df.head(), headers='keys', tablefmt='grid'))
+        
+        # Display concise summary of the dataframe
+        buffer = io.StringIO()
+        df.info(buf=buffer)
+        s = buffer.getvalue()
+        print("\nDataframe Info:")
+        print(s)
+        
+        # Display basic statistics
+        print("\nBasic statistics:")
+        print(tabulate(df.describe(include='all'), headers='keys', tablefmt='grid'))
+        
+        # Display null values per column
+        print("\nNull values per column:")
+        print(tabulate(pd.DataFrame(df.isnull().sum(), columns=['Null Count']), headers='keys', tablefmt='grid'))
+        
+        # Display number of unique values per column
+        print("\nNumber of unique values per column:")
+        print(tabulate(pd.DataFrame(df.nunique(), columns=['Unique Count']), headers='keys', tablefmt='grid'))
+        
+        # Plot histograms for numeric columns
+        df.hist(figsize=(15, 10))
+        plt.tight_layout()
+        plt.show()
+
+    # Example
+    filename = 'code.csv'
+    explore_csv(filename)
+
+    ```
+
+    **Best Practice Recommendations**:
+      - **Data Cleansing**: Ensure data consistency across records.
+      - **Missing Data Handling**: Address nulls or gaps in data.
+      - **Logging**: Implement logging for transparency and easier debugging.
+      - **Routine Automation**: Consider tools or triggers for script execution scheduling.
+
+### b. File Processing Code Setup:
+
+- **Overview**: Jupyter Lab was used for this step as well.
+
+- **Process_Files.ipynb**:
+
+    ```python
+    import pandas as pd
+    from datetime import datetime
+    import boto3
+    from io import StringIO
+    import logging
+
+    # Setup logging
+    logging.basicConfig(level=logging.INFO)
+
+    # Get AWS credentials from environment variables
+    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+    session = boto3.Session(
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        region_name='us-east-1'  # Change this to your AWS region
+    )
+
+    s3 = session.resource('s3')
+    bucket_name = 'snowflake-emr'  # Name of your bucket
+    s3_folder = 'raw_files/'
+
+    def process_dataframe(df, row_limit, filename):
+        num_files = (len(df) + row_limit - 1) // row_limit
+
+        for i in range(num_files):
+            start_index = i * row_limit
+            end_index = start_index + row_limit
+            df_subset = df.iloc[start_index:end_index]
             
-            - Drag the Processor and type `ConvertRecord`: Read CSV files and convert to `JSON`
-                - ***Record Reader*** :`CSVReader`: we needed configure a `Controller Service Details` click on `properties`
-                    - ***Schema Access Strategys*** : `Infer Schema`
-                    - ***CSV Parse*** : `Apache Commons CSV`
-                    - ***CSV Format*** : `Microsoft Excel`
-                - ***Record Writer*** : `JsonRecordSetWriter`
-                    - ***Schema Write Strategy*** : `Set 'avro.schema' Attribute`
-                    - ***Schema Access Strategy*** : `Inherit Record Schema`
-                    - ***Output Grouping*** : `Array`
-                    - ***Compression Format*** : `None`
+            try:
+                csv_buffer = StringIO()
+                df_subset.to_csv(csv_buffer, index=False)
+                timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
+                s3_file_path = s3_folder + f"{filename}_{timestamp_str}-{i+1}.csv"
+                s3.Object(bucket_name, s3_file_path).put(Body=csv_buffer.getvalue())
+                logging.info(f"Processed DataFrame (Part {i+1}) saved to s3://{bucket_name}/{s3_file_path}")
+            except Exception as e:
+                logging.error(f"Error while processing DataFrame part {i+1}: {str(e)}")
 
-            - Drag the Processor and type `ConvertJSONToSQL`: Read JSON files and convert to `SQL Queries`
-                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
+    # Example usage:
+    row_limit = 7000
+    filename = 'users'
+    input_df = users  # Assume you've loaded users dataframe before this
+    process_dataframe(input_df.copy(), row_limit, filename)
 
-                - NIFI upload JSON config file for Database: `JPostgreSQL-DBCPConnectionPool`
-                -----------------------------------------------------------------------------
-                <img src="images/DBCPConnectionConfig.png" alt="header" style="width: 700px; height: 400px;"> <br>
-                
-                - ***Statement Type*** : `INSERT`
-                - ***File Filter*** : `#{filename:replace('.csv')}`
-              
+    ```
 
-            - Drag the Processor and type `PUTSQL`: Read JSON files and convert to `SQL Queries INSERT`
-                - ***JDBC Connection Pool*** :`JPostgreSQL-DBCPConnectionPool`: we needed configure a `Controller Service Details` click on `properties`
-                - ***Batch Size*** : `1000`
-                - ***Rollback On Failure*** : `true`
-
-               - NIFI Data Flow `Set up scheduled or event-driven processes to load data from NiFi into PostgreSQL`
-                -----------------------------------------------------------------------------
-                <img src="images/File_Database.png" alt="header" style="width: 700px; height: 800px;"> <br>
-
-               - ***Stage Database***: `PostgreSQL Database` Ingest Results
-                -----------------------------------------------------------------------------
-              <img src="images/Stage_Database1.png" alt="header" style="width: 1200px; height: 600px;"> <br>
-                
-</details>
-
-  <details>
-<summary>
-  
- ##### 4) Goto [NIFI](http:/localhost:8443/nifi/): Automate PostgreSQL Database to Store JSON File in AWS (S3)
-</summary>
-    
-- ***Staging Database (PostgreSQL)***: The staging database acts as an intermediary storage area where the raw data from the ingestion layer is initially stored. It provides a temporary storage location for data cleansing, validation, and transformation processes.
-***Cloud Storage (S3)***: The cloud storage, such as Amazon S3, is used to store the processed and transformed data. It provides scalable and cost-effective storage for large volumes of data, ensuring durability and availability.
-- ***Data Transformation and Staging***: A Guide below but`Beyond the scope of the project`
-    - Install and configure PostgreSQL database on a dedicated server or cluster
-    - Create the necessary tables and schemas in PostgreSQL to stage the incoming data
-    - Design SQL scripts or stored procedures to perform data transformation, standardization, and cleansing based on specific business rules
-    - Implement data validation and quality checks to ensure the integrity of the staged data
-    - Set up scheduled or event-driven processes to load data from `NiFi PostgreSQL to Storage (S3)`.
--AWS S3 CONFIGURATION
-----------------------------------------
-- **Create a User**:
-    - Login to the `AWS Management Console`
-    - In the search bar, type `IAM` and click on `IAM (Identity and Access Management)`
-    - Click on `Users` from the left-hand menu and then click on `Add User`
-    - Enter a name for the user and select `Programmatic access` for the `Access type`
-    - Click on `Next: Permissions` and then select `Attach existing policies directly`
-    - Search for and select the `AmazonS3FullAccess` policy
-    - Click on `Next: Tags` (optional) and then click on `Next: Review`
-    - Review the user details and click on `Create user`
-    - Take note of the `Access key ID` and `Secret access key` as you will need them in the Nifi configuration
-
-- **Create an S3 Bucket**:
-    - Go to the `AWS Management Console`
-    - In the search bar, type `S3` and click on `S3`
-    - Click on `Create bucket`
-    - Enter a unique name for the bucket and choose the region
-    - Click on `Next` and leave the rest of the settings as default
-    - Click on `Next` and review the bucket settings
-    - Click on `Create bucket`
-
- - ***Start Nifi***: `/opt/nifi-prd/bin/nifi.sh start`
- - ***Goto your nifi web location***: `http:/localhost:8443/nifi/`
-    - Drag another `Process Group` and name it `Database Extraction to AWS(S3)`
-    - Click the process group `Database Extraction to AWS(S3)` and then Drag the Processor and type `ExecuteSQL`
-    - In the `ExecuteSQL processor` we need to query the tables
-        - ***Database Connection Pooling Service*** : `PostgreSQL-DBCPConnectionPool`
-            - ***SQL select query*** : `SELECT * FROM CHARGES` -> `We can make this more dynamic however, Its beyond the Scope`
-        - Drag the Processor and type `ConvertRecord`: follow the previous config 
-        - Drag the Processor and type `UpdateAttribute`: Reads the table names
-            - ***Click `+` and name `filename`*** :`${sql.tablename}.json`: returns json file
-        - Drag the Processor and type `PutS3Object`: sends the file to Storage (S3)
-            - ***Object Key***: `${filename}`
-            - ***Bucket*** : The Name you gave your `S3 Storage`
-            - ***Access Key ID*** : `Sensitive value set`
-            - ***Secret Access key*** :  `Sensitive value set`
-            - ***Storage Class*** : `Standard`
-            - ***Region*** : `Where your AWS Account is located`
-
-              - ***Stage Database***: `PostgreSQL Database`-> Click [Here](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/code/Load.ipynb) To View Code
-
-              - ***NIFI Data Flow***: `PostgreSQL Database`
-            -----------------------------------------------------------------------------
-            <img src="images/Database_S3.png" alt="header" style="width: 700px; height: 800px;"> <br>
-
-              - ***AWS Storage***: `S3`
-            -----------------------------------------------------------------------------
-            <img src="images/Storage_S3.png" alt="header" style="width: 600px; height: 400px;"> <br>
-
+    **Best Practice Recommendations**:
+      - **Error Handling**: Incorporate try-except blocks for robust error handling.
+      - **Logging**: Utilize Python's logging library over simple print statements.
+      - **Parameterization**: Make the script versatile to handle any DataFrame and path.
+      - **Efficient Data Handling**: Stream data in chunks instead of splitting the dataframe in-memory.
 
 </details>
-</details>
 
-#### <font color="green"><left>PHASE TWO: Data Transformation, Documentation Layers</left></font>
----------------------------------------------------------------------------------------------------------------------
+---
+
+## 2. AWS S3 Code Structure
+
 <details>
-    
-<summary>
+<summary>Click to Expand</summary>
 
+### a. S3 Folder Structure:
 
-##### Cloud Technology: [S3](https://aws.amazon.com/) and [Snowflake](https://www.snowflake.com/en/) (SQL)
+- Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
 
-</summary>
+   Folders in S3:
+   
+    ```shell
+    PRE error_files/
+    PRE processed/
+    PRE raw_files/
+    ```
 
-##### 5) Goto [Snowflake](https://app.snowflake.com/): AWS (S3) to Snowflake
+### b. Naming Conventions:
 
-### Load Approach
------------------------
+- Timestamps are used for file naming:
 
-<p>
-The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.
-</p><br>
-<p>
-  - **Implementing Slowly Changing Dimensions*** `(SCD) Type 2` in healthcare can provide invaluable insights and support
-    data integrity in various use-cases. 
-    Here are a few scenarios where it might be relevant:
-    Patient Information Tracking: Patients' personal details or health status might change over time. SCD Type 2 would help keep track of these changes without losing the history. For example, if a patient's address changes or a patient's health condition improves or worsens, the latest information is always available and the history is preserved for any trend or recovery analysis.
-  </p>
+    ```python
+    timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
+    ```
 
-- `PROCESS TRACKING TYPE 2`
-<p>
-  ***Healthcare Provider Details***: Information about healthcare providers, like doctors or nurses, can also change. For instance, a doctor might change their specialty or a nurse might move to a different department or hospital. SCD Type 2 can be used to track these changes over time.
-</p>
+### c. Slack Notifications:
 
-- `Table: provider_details`
-<p>
-***Healthcare Plan Changes***: Healthcare insurance plans can change. With SCD Type 2, changes can be tracked effectively, including coverage details or costs. This can be important for patient billing and understanding how plans have evolved over time.
-</p>
-- `Table: insurance_plan_details`
+- Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
 
-In each of these cases, a change to the current record results in an update to the end_date of the current record (with the current_flag set to FALSE) and the insertion of a new record with the updated details (with the current_flag set to TRUE and end_date as NULL). This allows the system to always have a pointer to the most current information while retaining historical changes.
+    ```python
+    SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
 
-- 1) ***Creating a Snowflake Account***: `First`, you need to create a Snowflake account, if you don't already have one.
-
-
-- ### Implementing Dedicated Virtual Warehouse
-- 2) ***Create Warehouse***: for this example we create a Warehouse called `HEALTHCARE_WH` SEE BELOW!
-
-<table>
-<tr> 
-    <th><h5>CREATE DATA WAREHOUSE (SQL)</h5></th>
-</tr>
-<tr>
-<td>  
-<pre lang="js">
-USE ROLE ACCOUNTADMIN;
-
-    CREATE WAREHOUSE HEALTHCARE_WH 
-    WITH WAREHOUSE_SIZE = 'XSMALL'
-    WAREHOUSE_TYPE = 'STANDARD' 
-    AUTO_SUSPEND = 300 
-    AUTO_RESUME = TRUE 
-    MIN_CLUSTER_COUNT = 1 
-    MAX_CLUSTER_COUNT = 1 
-    SCALING_POLICY = 'STANDARD'
-    COMMENT = 'This is  a Data Warehouse for Healthcare';
-
-</pre>
-</td>
-</tr>
-</table>
-
-- 3) ***Creating Roles and Users***: `You can create roles` and users by executing the following commands:
-
-  ```
-  CREATE ROLE dev_role;
-  GRANT ROLE dev_role TO USER your_username;
-  CREATE USER dev_user PASSWORD = 'YourPassword' MUST_CHANGE_PASSWORD = TRUE DEFAULT_ROLE = dev_role;
-  ```
-
-- 4) ***House Work***: Best practice is to create your own `ROLE` and give correct 
-permission`HEALTHCARE_WH` SEE BELOW!
-<table>
-<tr> 
-    <th><h5>CREATE PERMISSION FOR ROLES (SQL)</h5></th>
-</tr>
-<tr>
-<td>  
-<pre lang="js">
-
-  - ***CREATE ROLE FOR TRANSFOMATION***:`CREATE ROLE TRANSFORM_ROLE;`
-  - ***GRANT PRIV SYSADMIN***: `GRANT MODIFY ON WAREHOUSE HEALTHCARE_WH TO ROLE ACCOUNTADMIN;`    
-  - ***Create Databases (SQL)***: 
-    - `CREATE DATABASE HEALTHCARE_RAW;` AND 
-    - `CREATE DATABASE HEALTHCARE_DEV;` AND 
-    - `CREATE DATABASE HEALTHCARE_PROD;`
-  - ***MODFIY DATABASE PRIV (SQL)***:
-    - `GRANT MODIFY ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;` AND 
-    - `GRANT MODIFY ON DATABASE HEALTHCARE_DEV TO ROLE TRANSFORM_ROLE;`AND
-    - `GRANT MODIFY ON DATABASE HEALTHCARE_PROD TO ROLE TRANSFORM_ROLE;`
-  - ***GRANT PRIVALEGE ON RAW DATABASE FOR SCHEMA,TABLES AND VIEWS(SQL)***:
-    - `GRANT USAGE ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`AND
-    - `GRANT USAGE ON DATABASE HEALTHCARE_DEV TO ROLE TRANSFORM_ROLE;` AND
-    - `GRANT USAGE ON DATABASE HEALTHCARE_PROD TO ROLE TRANSFORM_ROLE;`
-  - ***GRANT PRIVALEGE ON HEALTHCARE_RAW DATABASE FOR SCHEMA,TABLES AND VIEWS(SQL)***:
-    - `GRANT CREATE SCHEMA ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;` AND
-    - `GRANT MODIFY ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;` AND 
-    - `GRANT MODIFY ON ALL SCHEMAS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`
-  - ***GRANT USAGE ON DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;***
-    - `GRANT USAGE ON ALL SCHEMAS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`AND
-    - `GRANT SELECT ON ALL TABLES IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`AND
-    - `GRANT SELECT ON ALL VIEWS IN DATABASE HEALTHCARE_RAW TO ROLE TRANSFORM_ROLE;`
-  - ***CREATE SCHEMA***: `CREATE SCHEMA HEALTHCARE_RAW.EMR;`
-
-
-</pre>
-</td>
-</tr>
-</table>
-
-<table>
-<tr> 
-    <th><h5>CREATE TABLES (SQL)</h5></th>
-</tr>
-<tr>
-<td>  
-<pre lang="js">
-    
-
-  - ***CREATE TABLE EMR.patient(***
-    - patientPK varchar(255)	    NOT NULL
-    - ,PatientNumber varchar(255)	NULL
-    - ,FirstName varchar(255)	    NULL
-    - ,LastName varchar(255)      NULL
-    - ,Email varchar(255)	        NULL
-    - ,PatientGender varchar(255)	NULL
-    - ,PatientAge int	            NULL
-    - ,City varchar(255)          NULL
-    - ,State varchar(255)		      NULL); 
-
-  - ***CREATE TABLE EMR.doctor(***
-	   - doctorPK varchar(255)	Not NULL 
-	   - ,ProviderNpi varchar(255)	NULL
-	   - ,ProviderName varchar(255) NULL
-	   - ,ProviderSpecialty varchar(255)	NULL
-	   - ,ProviderFTE decimal(10,2)	NULL Default 0);
-
-  - ***CREATE TABLE EMR.charge(***
-    - chargePK varchar(255)	Not NULL
-    - ,TransactionType varchar(255)	NULL
-    - ,Transaction varchar(255)	NULL
-    - ,AdjustmentReason varchar(255) NULL);
-
-  - ***CREATE TABLE EMR.payer(***
-	 - payerPK varchar(255)	Not NULL
-	 - ,PayerName varchar(255)	NULL ); 
-    
-  - ***CREATE TABLE EMR.location(***
-	 - locationPK varchar(255)	Not NULL 
-	 - ,LocationName varchar(255) NULL);
-
-  - ***CREATE TABLE EMR.diagnosis(***
-	 - CodePK varchar(255)	Not NULL 
-	 - ,DiagnosisCode varchar(255)	NULL
-	 - ,DiagnosisCodeDescription varchar(255) NULL
-	 - ,DiagnosisCodeGroup varchar(255)       NULL
-   - ,effective_date CURRENT_TIMESTAMP()    NOT NULL
-   - ,end_date DATE                         NULL
-   - ,current_flag BOOLEAN                  NOT NULL);
-    
-  - ***CREATE TABLE EMR.Code(***
-    - CodePK varchar(255)				          NOT NULL
-    - ,CptCode varchar(255)				        NULL
-    - ,CptDesc varchar(255)				        NULL
-    - ,CptGrouping varchar(255)			      NULL
-    - ,effective_date CURRENT_TIMESTAMP() NOT NULL
-    - ,end_date DATE                      NULL
-    - ,current_flag BOOLEAN               NOT NULL);
-
-  - ***CREATE TABLE insurance_plan_details (***
-    - plan_PK varchar(255)				          NOT NULL
-    - ,plan_id varchar(255)                 NULL
-    - ,coverage_details varchar(255)        NULL
-    - ,costs INT                            NULL
-    - ,effective_date CURRENT_TIMESTAMP() NOT NULL
-    - ,end_date DATE
-    - ,current_flag BOOLEAN);
-
-  </pre>
-</td>
-</tr>
-</table>
-
+    def send_slack_message(message):
+        #... [rest of the code]
+    ```
 
 </details>
 
+----
 
-</details> 
+# Orchestration Approach
+
+The Configuration Approach ensures that all data pipeline components are appropriately set up.
+
+### Components:
+
+- Design DAGs for different workflows – `data ingestion`, `transformation`, and `reporting`.
+  - Set up troubleshooting script
+  - Set up error handling mechanisms in Airflow to handle failures or inconsistencies.
+  - Implement logging and monitoring to keep track of DAG runs.
+  - Implement retries and alert mechanisms in case of DAG failures.
+  - Ensure there's a solid connection setup between Airflow and Snowflake.
+
+---
+
+## 1. Set up troubleshooting script
+
+<details>
+<summary>Click to Expand</summary>
+
+### 1. Ensure there's a solid connection setup between Airflow and Snowflake.:
+
+- **Overview**: Dockerized Airflow with PostgreSQL backend, aiming for scalability and modularity.
+
+### 2. Prerequisites:
+
+- Docker & Docker Compose
+- Ample storage and RAM
+
+### 3. File Structure:
+
+-- **data_eng**: My primary configuration directory for your data engineering tasks.
+  - `docker-compose.yml`: Orchestrates the services using Docker Compose.
+  - `mnt/airflow/airflow.cfg`: Airflow's configuration file.
+- **docker/airflow**:
+  - `Dockerfile`: Steps to build the Airflow image.
+  - `start-airflow.sh`: A bash script initializing and launching Airflow services.
+- **docker/postgres**:
+  - `Dockerfile`: Instructions to generate the PostgreSQL image.
+  - `init-postgres-db.sh`: Sets up the PostgreSQL database.
+------
+
+
+
+### 7. Execution:
+
+- **Change Directory where airflow is located**: `cd data_eng/`
+
+   - **Start.sh**:Build the base images from which are based the Dockerfiles (hen Startup all the containers at once )
+     ```shell
+      docker-compose up -d --build
+     ```
+
+   - **Stop.sh**: Stop all the containers at once
+     ```shell
+      docker-compose down
+     ```
+
+   - **Restart.sh**:
+     ```shell
+     ./stop.sh
+     ./start.sh
+     ```
+
+   - **reset.sh**:
+     ```shell
+      docker-compose down
+      docker system prune -f
+      docker volume prune -f
+      docker network prune -f
+      rm -rf ./mnt/postgres/*
+      docker rmi -f $(docker images -a -q)
+     ```
+</details>
+
+
+## 2. Set up error handling.
+
+<details>
+<summary>Click to Expand</summary>
+
+### 1. Basic Environment Configuration:
+
+   - **S3 Bucket**: 
+     ```shell
+     aws s3api create-bucket --bucket YOUR_BUCKET_NAME --region YOUR_REGION
+     ```
+
+   - **IAM User 'testjay'**:
+     ```shell
+     aws iam create-user --user-name testjay
+     ```
+
+   - **S3 Bucket Policy**:
+     ```shell
+     aws iam list-policies
+     aws iam attach-user-policy --user-name jay --policy-arn YOUR_BUCKET_POLICY_ARN
+     ```
+
+</details>
+
+---
+
+## 3. Implement retries and alert mechanisms in case of DAG failures
+
+<details>
+<summary>Click to Expand</summary>
+
+### 1. Starting with Snowflake:
+
+   - Snowflake offers a cloud-native data platform.
+      - [Register on Snowflake](https://www.snowflake.com/)
+      - Choose 'Start for Free' or 'Get Started'.
+      - Complete the registration.
+      - Use credentials to access Snowflake's UI.
+
+### 2. Structure Configuration:
+
+   - **Data Warehouse**:
+     ```sql
+     CREATE WAREHOUSE IF NOT EXISTS my_warehouse 
+        WITH WAREHOUSE_SIZE = 'XSMALL' 
+        AUTO_SUSPEND = 60 
+        AUTO_RESUME = TRUE 
+        INITIALLY_SUSPENDED = TRUE;
+     ```
+
+   - **Database**:
+     ```sql
+     CREATE DATABASE IF NOT EXISTS my_database;
+     ```
+
+   - **Roles and Users**:
+     ```sql
+     -- Role Creation
+     CREATE ROLE IF NOT EXISTS my_role;
+     
+     -- User Creation
+     CREATE USER IF NOT EXISTS jay 
+        PASSWORD = '<YourSecurePassword>' 
+        DEFAULT_ROLE = my_role
+        MUST_CHANGE_PASSWORD = FALSE;
+     ```
+
+### 3. Organize Data:
+
+   - **Schemas**:
+     ```sql
+     USE DATABASE my_database;
+     CREATE SCHEMA IF NOT EXISTS chart;
+     CREATE SCHEMA IF NOT EXISTS register;
+     CREATE SCHEMA IF NOT EXISTS billing;
+     ```
+
+   - **Tables**:
+     ```sql
+     -- Chart Schema
+     CREATE TABLE IF NOT EXISTS chart.code (
+        id INT AUTOINCREMENT PRIMARY KEY
+     );
+
+     -- Register Schema
+     CREATE TABLE IF NOT EXISTS register.users (
+        id INT AUTOINCREMENT PRIMARY KEY,
+        name STRING,
+        email STRING UNIQUE
+     );
+     ```
+
+### 4. Permissions:
+
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```
+
+**Note**: Replace placeholders (like `<YourSecurePassword>`) with actual values.
+
+</details>
+
+## 4. DBT (Data Build Tool) Setup
 
 
 <details>
-    
-<summary>
+<summary>Click to Expand</summary>
 
-##### Cloud Technology: [DBT](https://www.getdbt.com/)(***SQL***)
+**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
 
-</summary>
+   - **Installation**: To get started with DBT, you first need to install it 
 
-##### 6) Goto [DBT](https://auth.cloud.getdbt.com/login): Snowflake and DBT 
+     ```shell
+      pip install dbt
+     ```
 
-### Transformation, Documentation,  Approach
------------------------------------------------------
-<p>
-Another requirement was implementing a Data Warehouse that enabled the stakeholders to view and compare the reports and KPIs. Since Data Warehouse usage is mainly for analytical purposes rather than transactional, I decided to design a Star Schema because the structure is less complex and provides better query performance. Documenting wasn’t required, however, adding the Data Build Tool (DBT) to this process allowed us to document each dimension, columns, and visualize the Star Schema. DBT also allowed us to neatly organize all data transformations into discrete models.
-</p>
+   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
 
-- DBT: Documentation and Transformation
-  - Tables
-    - Dimensions
-    - Facts
-    - SCD
-      - Type-1
-      - Type-2
-    - build operational reports (push to BI Tool)
-      
-</details>
-</details>
+     ```shell
+     dbt init your_project_name
+     ```
 
-#### <font color="green"><left>PHASE THREE: Data Visualization & Reporting Layers</left></font>
----------------------------------------------------------------------------------------------------------------------
-<details>
-<summary>
+   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
+     ```shell
+        your_project_name:
+      target: dev
+      outputs:
+        dev:
+          type: snowflake
+          account: your_account
+          user: your_username
+          password: your_password
+          role: your_role
+          database: your_database
+          warehouse: your_warehouse
+          schema: your_schema
+          threads: [desired_number_of_threads]
+     ```
+     - **Running and Testing:
 
-#####  Cloud Technology: [Jupter Lab & Tableau](https://www.getdbt.com/)(***Python & SQL***)
-
-</summary>
-
-##### 7) Goto [DBT](https://auth.cloud.getdbt.com/login):  Python and Tableau 
-
-### Analyze Approach
---------------------
-
-<p>
-My intention with this project is to replicate some of the more important aspects of the above scenario. <font color="red">Please note that the healthcare dataset is fake and is being used only for demonstration purposes.</font>
-</p>
-
-  - ***Jupyter Lab****
-  ---------------------
-  - `Revenue Cycle`
-    - [Explore Data](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/exploring.ipynb)
-        - RVU
-        - Denial Analysis
-        - Writeoffs
-      - Visualization
-        - LOS
-    - Data Exploring
-    - Data Cleansing
-    - Recycle Revenue Reports
-  - Tableau Healthcare Reports
-    - Revenue Reports
-    - PMI Reports
-    - CMS Reports
-
-
+     ```shell
+     dbt debug
+     ```
 </details>
