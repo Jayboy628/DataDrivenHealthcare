@@ -33,7 +33,6 @@ My intention with this project is to replicate some of the more important aspect
     - Installing and Configuring Airflow:
       - Installing and initializing Airflow.
       - Create Airflow test script for troubleshooting and testing.
-      - Design and create DAGs and Tasks.
       - Test and validate each task.
       - Integrate with Snowflake and validate their relationship.
     - Installing and Configuring DBT:
@@ -48,44 +47,14 @@ My intention with this project is to replicate some of the more important aspect
       - Create and test Slack alerts for each significant step (S3 ingestion, transformations in Snowflake, etc.).
       - Implement monitoring for data anomalies or volume changes.
 	- Cloud-Based Solutions: Healthcare Data Warehouse
-  - `Configuration Approach:`
-    - Setting up Jupyter Lab:
-      - Environment setup and configuration.
-      - Best practices for Python scripting for ETL processes.
-    - Installing and Configuring S3:
-      - Set up AWS S3 and Service Manager: Parameter Store.
-      - Emphasize versioning or timestamping files in S3.
-      - Security and data access controls.
-    - Setting Up Snowflake:
-      - Install Snowflake.
-      - Determine stakeholders and required levels of access.
-      - Create Snowflake Data Warehouse and Database.
-      - Set up bulk loading mechanisms for efficient data ingestion.
-    - Installing and Configuring Airflow:
-      - Installing and initializing Airflow.
-      - Create Airflow test script for troubleshooting and testing.
-      - Design and create DAGs and Tasks.
-      - Test and validate each task.
-      - Integrate with Snowflake and validate their relationship.
-    - Installing and Configuring DBT:
-      - Install DBT.
-      - Create and test a DBT profile.
-      - Design and implement models.
-      - Implement Star Schema.
-      - Create tasks in Airflow for DBT and test them.
-      - Emphasize creating tests within dbt for data validation.
-    - Alerting and Monitoring:
-      - Install Slack and set up integrations.
-      - Create and test Slack alerts for each significant step (S3 ingestion, transformations in Snowflake, etc.).
-      - Implement monitoring for data anomalies or volume changes.
   - `Ingestion Approach:`
     - Python Scripting with Jupyter Lab:
       - Design the Python script to:
-      - Read CSV files.
-      - Cleanse and validate data for consistency.
-      - Handle missing values or anomalies.
-      - Implement logging for transparency and easier debugging.
-      - Set up an automated routine to execute scripts. Consider scheduling tools or triggering mechanisms.
+	      - Read CSV files.
+	      - Cleanse and validate data for consistency.
+	      - Handle missing values or anomalies.
+	      - Implement logging for transparency and easier debugging.
+	      - Set up an automated routine to execute scripts. Consider scheduling tools or triggering mechanisms.
     - AWS S3:
       - Determine folder structures in S3 to organize the data efficiently. You might need landing, processing, and archive areas.
       - Develop naming conventions for S3 objects for easier traceability.
@@ -94,10 +63,10 @@ My intention with this project is to replicate some of the more important aspect
   - `Orchestration Approach:`
     - Apache Airflow:
       - Design DAGs for different workflows – data ingestion, transformation, and reporting.
-      - Set up error handling mechanisms in Airflow to handle failures or inconsistencies.
-      - Implement logging and monitoring to keep track of DAG runs.
-      - Implement retries and alert mechanisms in case of DAG failures.
-      - Ensure there's a solid connection setup between Airflow and Snowflake.
+	      - Set up error handling mechanisms in Airflow to handle failures or inconsistencies.
+	      - Implement logging and monitoring to keep track of DAG runs.
+	      - Implement retries and alert mechanisms in case of DAG failures.
+	      - Ensure there's a solid connection setup between Airflow and Snowflake.
   - `Storage & Preprocessing Approach:`
     - Snowflake:
       - Design Snowflake schemas to hold raw and transformed data.
@@ -152,160 +121,203 @@ My intention with this project is to replicate some of the more important aspect
 <details>
 <summary>
 
-##### Cloud Technology: [Apache Nifi](https://nifi.apache.org/), [Slack](https://slack.com/),[S3](https://aws.amazon.com/) and [PostgreSQL](https://www.postgresql.org/)
+##### Cloud Technology: [Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/),[S3](https://aws.amazon.com/), [Snowflake](https://www.snowflake.com/en/),[DBT](https://www.getdbt.com/)
 
 </summary>
 
 ### Ingestion Approach
------------------------
-The Ingestion (Apache Nifi) is designed to automate data across systems. In real-time, it will load (PutFile) the files into a local database (Postgres) before pushing the files to the cloud storage (S3) environment.<br><br>
-The next step is to populate the cloud database. Snowpipe will pull the normalized JSON files from AWS into tables. As previously stated, the agreement with the EMR company was to FTP the files twice a day. I would be required to configure the load by creating a Task (Acron) and a Stream (CDC). This would enable triggers for a scheduled load and would continuously update the appropriate tables.<br><br>
+The Ingestion Approach serves as the foundation for ensuring all components of your data pipeline are correctly installed and configured. The primary components include:
 
-#### Diagram Shows `Ingestion Approach`
+- **Airflow**: Handles ETL orchestration.
+- **AWS S3**: Serves as the data storage.
+- **AWS Systems Manager Parameter Store**: Manages secure configuration.
+- **Snowflake**: Functions as the cloud data warehouse solution.
+- **DBT**: Used for data transformation tasks.
+- **Slack**: Sends process notifications.
 
-  <img src="images/IngestionArchitecture.png" alt="header" style="width: 900px; height: 400px;"><br>
-  
-  
+#### Ingestion Approach Diagram
+![Ingestion Architecture](images/IngestionArchitecture.png)
 
+---
 
 <details>
 <summary>
     
-##### 1) Goto [NIFI](http:/localhost:8443/nifi/): Setup Nifi Environment
+##### Setting Up the AWS Environment
 </summary>
 
-- Setup Nifi Environment: (I am using a MAC)
-  - Open Terminal
-  - Move to the following folder: `cd /opt`
-- Installing Nifi Toolkit: You can download the Apache Nifi [here](https://nifi.apache.org/download.html) or follow these steps:
-  - Create the following variables:
-    - `export version='1.22.0'`
-    - `export nifi_registry_port='18443'` (I am keeping the illustration simple. However, install registry, prod, dev stg is recommended)
-    - `export nifi_prd_port='8443'`
-  - Download Nifi Toolkit: I am using a MAC and my environment location is `cd/opt`
-    - `wget https://dlcdn.apache.org/nifi/${version}/nifi-toolkit-${version}-bin.zip cd /opt`
-    - `unzip nifi-toolkit-${version}-bin.zip -d /opt/nifi-toolkit && cd /opt/nifi-toolkit/nifi-toolkit-${version} && mv * .. && cd .. && rm -rf nifi-toolkit-${version}`
-  - Configuration Files
-  
-    Using the variables created above to configure Loop
-    ----------------------------------------------------
-    
-    ```shell
-    prop_replace () {
-      target_file=${3:-${nifi_props_file}}
-      echo 'replacing target file ' ${target_file}
-      sed -i -e "s|^$1=.*$|$1=$2|" ${target_file}
-    }
+1. **Environment Setup and Configuration**:
 
-    mkdir -p /opt/nifi-toolkit/nifi-envs
-    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/nifi-PRD
-    prop_replace baseUrl http://localhost:${nifi_prd_port} /opt/nifi-toolkit/nifi-envs/nifi-PRD
-    cp /opt/nifi-toolkit/conf/cli.properties.example /opt/nifi-toolkit/nifi-envs/registry-PRD
-    prop_replace baseUrl http://localhost:${nifi_registry_port} /opt/nifi-toolkit/nifi-envs/registry-PRD
-    ```
-    
-    ### NIFI CLI STEPS:
-    
-    <strong>The config files have the following properties</strong>
-    -----------------------------------------------------------------------------
-    
-    - Configure this nifi-PRD
-      - Type the following: `cd /opt/nifi-toolkit/nifi-envs`
-      - Add the following to `baseUrl`: `baseUrl=http://localhost:8443` 
-    - Type the following and enter Nifi Toolkit env: `/opt/nifi-toolkit/bin/cli.sh`
-    - Show Session Keys: `session keys`
-    - Add session: `session set nifi.props /opt/nifi-toolkit/nifi-envs/nifi-DEV`
+   - **S3 bucket**:
+     ```shell
+     aws s3api create-bucket --bucket YOUR_BUCKET_NAME --region YOUR_REGION
+     ```
 
-    <strong>View the nifi Environment</strong>
-    ---------------------------------------------------------------
-     
-    - Start Nifi: `/opt/nifi-prd/bin/nifi.sh start` 
-    - Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`                 `
-    - View current Session: `session show`
-    - Find the root PG Id: `nifi get-root-id`
-    - List all Process Groups: `nifi pg-list` (its empty,but will be used in `Files to Postgres Database` section)
-    - Find the current user: `nifi current-user`
-    - List all available templates: `nifi list-templates` (its empty, haven't add any template as yet)
+   - **IAM User 'testjay'**:
+     ```shell
+     aws iam create-user --user-name testjay
+     ```
 
-     <strong>Below is a basic view of Nifi Environment</strong>
-    ---------------------------------------------------------------
-     
-    <img src="images/fileconfig.png" alt="header" style="width: 1000px; height: 700px;"><br> 
+   - **S3 bucket policy for the user**:
+     ```shell
+     aws iam list-policies
+     aws iam attach-user-policy --user-name jay --policy-arn YOUR_BUCKET_POLICY_ARN
+     ```
+
+   - **IAM Role 'developer'**:
+     ```shell
+     aws iam create-role --role-name developer --assume-role-policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Principal": {"Service": "ec2.amazonaws.com"},"Action": "sts:AssumeRole"}]}'
+     ```
+
+   - **SSM policy for the role**:
+     ```shell
+     aws iam list-policies
+     aws iam attach-role-policy --role-name developer --policy-arn YOUR_SSM_POLICY_ARN
+     ```
+
+   - **Link the role to the user**:
+     ```shell
+     aws iam put-user-policy --user-name jay --policy-name AssumeDeveloperRole --policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Action": "sts:AssumeRole","Resource": "arn:aws:iam::YOUR-AWS-ACCOUNT-ID:role/developer"}]}'
+     ```
+
+2. **EMR Full Access for S3 Bucket**:
+
+   - **Bucket Policy**:
+     ```json
+     {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "elasticmapreduce.amazonaws.com"
+                },
+                "Action": "s3:*",
+                "Resource": "arn:aws:s3:::YOUR_BUCKET_NAME/*"
+            }
+        ]
+     }
+     ```
+
+   - **Apply the policy**:
+     ```shell
+     aws s3api put-bucket-policy --bucket YOUR_BUCKET_NAME --policy file://path/to/your/emr-policy.json
+     ```
+
+3. **AWS Systems Manager Parameter Store**:
+
+   - **Setup Parameters**:
+     ```shell
+     aws ssm put-parameter --name "SnowflakeUsername" --type "String" --value "YourUsername"
+     aws ssm put-parameter --name "SnowflakePassword" --type "SecureString" --value "YourPassword"
+     aws ssm put-parameter --name "SnowflakeAccount" --type "String" --value "YourAccount"
+     aws ssm put-parameter --name "SnowflakeRole" --type "String" --value "YourRole"
+     ```
 
 </details>
 
-
 <details>
 <summary>
-  
-##### 2) Goto [NIFI](http:/localhost:8443/nifi/): Automate Log parsing
+
+##### Setting Up Snowflake
 </summary>
 
-<strong> Setup Log parsing inside NIFI</strong>
----------------------------------------------------------------
+1. **Getting Started with Snowflake**: 
+   - **Setting up an Account**: Snowflake operates as a cloud-native data platform, eliminating the need for traditional installations.
+      - Navigate to the [Snowflake website](https://www.snowflake.com/).
+      - Opt for 'Start for Free' or 'Get Started'.
+      - Complete the on-screen registration.
+      - Access the Snowflake Web UI with your account credentials.
 
-- Log file location: `/opt/nifi-prd/logs` we can view the log files `nifi-app.log`
-- Start Nifi: `/opt/nifi-prd/bin/nifi.sh start` 
-- Start Nifi-toolkit: `/opt/nifi-toolkit/bin/cli.sh`
-- Goto your nifi web location: `http:/localhost:8443/nifi/`
-    - Drag Process Group icon onto the plane and name it `Healthcare Data Process` then double click to open another plane
-    - Drag another `Process Group` and name it `LOGS`
+2. **Structural Setup**:
+   - **Create a Data Warehouse**:
+     ```sql
+     CREATE WAREHOUSE IF NOT EXISTS my_warehouse 
+        WITH WAREHOUSE_SIZE = 'XSMALL' 
+        AUTO_SUSPEND = 60 
+        AUTO_RESUME = TRUE 
+        INITIALLY_SUSPENDED = TRUE;
+     ```
+     
+   - **Generate a Database**:
+     ```sql
+     CREATE DATABASE IF NOT EXISTS my_database;
+     ```
 
-<strong> Create the Log Flow in Nifi</strong>
----------------------------------------------------------------
+   - **Construct Roles and Users**:
+     ```sql
+     -- Role Creation
+     CREATE ROLE IF NOT EXISTS my_role;
+     
+     -- User Creation
+     CREATE USER IF NOT EXISTS jay 
+        PASSWORD = '<YourSecurePassword>' 
+        DEFAULT_ROLE = my_role
+        MUST_CHANGE_PASSWORD = FALSE;
+     ```
 
-- Drag the `Processor` onto the plane and type `TailFile` and Relationship is success
-- Open the TailFaile Configure page and click on the `SETTINGS` and click on `Bulletin Level`
-    - Will mirror the flow base on the `Bulletin Level` Then click on `PROPERTIES`
-    - In `Property` column  `Tailing mode` choose Value `Single file` and in column `File(s) to Tail` add the log path
-    - ***Log file Path**: `/opt/nifi-prd/logs/nifi-app.log`<br><br>
+3. **Data Organization**:
+   - **Establish Schemas**:
+     ```sql
+     USE DATABASE my_database;
 
-    - TailFile Configure Processor: `Bulltin Level`
-    ------------------------------------------
-    <img src="images/Bulletin.png" alt="header" style="width: 700px; height: 400px;"> <br>
+     CREATE SCHEMA IF NOT EXISTS chart;
+     CREATE SCHEMA IF NOT EXISTS register;
+     CREATE SCHEMA IF NOT EXISTS billing;
+     ```
 
-    - TailFile Configure Processor: `PROPERTIES`
-    ------------------------------------------
-    <img src="images/TailFile.png" alt="header" style="width: 700px; height: 500px;"> <br>
+   - **Develop Tables**:
+     ```sql
+     -- Chart Schema
+     CREATE TABLE IF NOT EXISTS chart.code (
+        id INT AUTOINCREMENT PRIMARY KEY
+        -- Additional fields as necessary
+     );
 
-    - Connect `TailFile` RELATIONSHIPS to Success `SplitText`
-    - Configure Processor for `SplitText`: Line Split Count `1`this split the `Bulltin Level type`
-        - ***Header Line Count***: `0`
-        - ***Removing Trailing Newlines***: `True`
-    - Connect `SplitText` RELATIONSHIPS to Success `RouteOnContent` and Terminate: `failure` and `original`
-    - Configure Processor for `RouteOnContent`
-        - ***Match Requirement***: `content must contain match`
-        - ***Character Set***: `UTF`
-        - ***Content Buffer Size*** : `1 MB`
-        - ***Click*** the `+` and manually add the following:
-            - DEBUG : connect to LongAttribute
-            - ERROR : connect to `ExtractGrok`
-            - INFO : connect to LongAttribute
-            - WARN : connect to LongAttribute
-            - See Below <br>
-                - <img src="images/AddBulltin.png" alt="header" style="width: 600px; height: 400px;"> <br>
-    - Connect `RouteOnContent` RELATIONSHIPS to Success `ExtractGrok` and Terminate: `unmatched`
-    - Configure Processor for `ExtractGrok`
-        - ***Grok Expression***: `%{TIMESTAMP_ISO8601:timestamp} %{LOGLEVEL:level} \[%{DATA:thread}\] %{DATA:class} %{GREEDYDATA:message}`
-        - ***Character Set***: `flowfile-attribute`
+     -- Register Schema
+     CREATE TABLE IF NOT EXISTS register.users (
+        id INT AUTOINCREMENT PRIMARY KEY,
+        name STRING,
+        email STRING UNIQUE
+        -- Additional fields as necessary
+     );
 
-    - If you have a `Slack` account Connect `RouteOnContent` RELATIONSHIPS to Success `PutSlack`
-    - Configure Processor for `RouteOnContent`
-        - ***Webhook URL***: `Sensitive value set`
-        - ***Webhook Text***: ` An Error occoured at ${grok.timestamp} with Service ${grok.thread}. Error msg ${grok.message}`
-        - Channel: <Your slack Channel>
+     ... [Continue with the rest of the table creation commands]
+     ```
 
-    NIFI: LOG DATA FLOW
-    ------------------------------------------
-    <img src="images/logfile.png" alt="header" style="width: 700px; height: 500px;"> <br>   
-            
+4. **Allocate Permissions**:
+   - **Role Assignments and Privileges**:
+     ```sql
+     -- Role assignment to user
+     GRANT ROLE my_role TO USER jay;
+
+     -- Database and warehouse privileges
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+
+     -- Schema permissions
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT USAGE ON SCHEMA register TO ROLE my_role;
+     GRANT USAGE ON SCHEMA billing TO ROLE my_role;
+
+     -- Table permissions within schemas
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA register TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA billing TO ROLE my_role;
+     ```
+
+**Note**: Make sure to replace placeholders (like `<YourSecurePassword>`) with actual values before executing the commands.
+
+</details>
+
+--            
  
 </details>
 
   <details>
 <summary>
   
- ##### 3) Goto [NIFI](http:/localhost:8443/nifi/): Ingest Data to Staging Database (PostgreSQL)
+ ##### Installing and Configuring Airflow:
 </summary>
     
 - Incorporating a staging database may seem like an unnecessary step since the files are already standardized. However, there are several benefits to consider. Firstly, it provides cost-effectiveness. Utilizing the cloud for repeated SELECT operations can be expensive. Secondly, the staging database allows for the identification of any unforeseen data issues and enables additional data cleansing and standardization processes. The ultimate goal is to minimize the number of updates and inserts into Snowflake, ensuring optimal efficiency.
