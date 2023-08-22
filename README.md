@@ -14,7 +14,7 @@ My job was to design and implement a data warehouse from these files. The requir
 My intention with this project is to replicate some of the more important aspects of the above scenario. Please note that the healthcare dataset is fake and is being used only for demonstration purposes.
 
 ---------------------------------------------------------------------------------------------------------------------
-### Agenda test
+#### Agenda test
 
 - Cloud-Based Solutions: Healthcare Data Warehouse
   - Configuration Approach
@@ -35,7 +35,7 @@ My intention with this project is to replicate some of the more important aspect
 
 
 
-# Cloud Technology Project
+## Cloud Technology Project
 
 A comprehensive guide on setting up a data pipeline leveraging key cloud technologies: 
 [Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/), [Snowflake](https://www.snowflake.com/en/), and [DBT](https://www.getdbt.com/).
@@ -44,11 +44,11 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 
 
-# Configuration Approach
+### Configuration Approach
 
 The Configuration Approach ensures that all data pipeline components are appropriately set up.
 
-### Components:
+#### Components:
 
 - **Airflow**: Manages ETL workflows.
 - **AWS S3**: Acts as data storage.
@@ -60,21 +60,21 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 ---
 
-## 1. Dockerized Airflow Setup
+### 1. Dockerized Airflow Setup
 
 <details>
 <summary>Click to Expand</summary>
 
-### 1. Introduction:
+#### 1. Introduction:
 
 - **Overview**: Dockerized Airflow with PostgreSQL backend, aiming for scalability and modularity.
 
-### 2. Prerequisites:
+#### 2. Prerequisites:
 
 - Docker & Docker Compose
 - Ample storage and RAM
 
-### 3. File Structure:
+#### 3. File Structure:
 
 -- **data_eng**: My primary configuration directory for your data engineering tasks.
   - `docker-compose.yml`: Orchestrates the services using Docker Compose.
@@ -87,12 +87,12 @@ The Configuration Approach ensures that all data pipeline components are appropr
   - `init-postgres-db.sh`: Sets up the PostgreSQL database.
 ------
 
-### 4. **Documentation for Individual Components**:
+#### 4. **Documentation for Individual Components**:
 
-#### 4.1 **Airflow Dockerfile (`docker/airflow/Dockerfile`)**:
+##### 4.1 **Airflow Dockerfile (`docker/airflow/Dockerfile`)**:
 This Dockerfile provides the blueprint to create a Docker image for Airflow. It begins with a base image of Python 3.8, installs necessary system packages and Python libraries, and sets up the environment for Airflow.
 
-#### 4.2 **start-airflow.sh Script (`docker/airflow/start-airflow.sh`)**:
+##### 4.2 **start-airflow.sh Script (`docker/airflow/start-airflow.sh`)**:
 This script automates multiple steps:
 - Navigates to the AIRFLOW_HOME directory.
 - Exports environment variables, including deactivating the loading of example DAGs.
@@ -100,16 +100,16 @@ This script automates multiple steps:
 - Creates a default user for the Airflow web UI.
 - Launches the Airflow scheduler and web server.
 
-#### 4.3 **PostgreSQL Dockerfile (`docker/postgres/Dockerfile`)**:
+##### 4.3 **PostgreSQL Dockerfile (`docker/postgres/Dockerfile`)**:
 Using the PostgreSQL base image (version 15.3 based on Alpine), this Dockerfile prepares a PostgreSQL instance tailored for integration with Airflow. It also includes a script (`init-postgres-db.sh`) to initialize the PostgreSQL database.
 
-#### 4.4 **init-postgres.sh Script (`docker/postgres/init-postgres.sh`)**:
+##### 4.4 **init-postgres.sh Script (`docker/postgres/init-postgres.sh`)**:
 This script sets up the environment within the PostgreSQL container. It performs the following:
 - Drops the existing database and role if they exist.
 - Creates a new user and database.
 - Grants privileges to the new user.
 
-### 5. **Setting Up Airflow with Docker**:
+#### 5. **Setting Up Airflow with Docker**:
 - **Docker Compose File (`docker-compose.yml`)**:
   - **Version**: Docker Compose version (2.1).
   - **Airflow Service**: Details pertaining to the Airflow service's Docker configuration.
@@ -117,7 +117,7 @@ This script sets up the environment within the PostgreSQL container. It performs
   - **Ports**: Port mapping details.
   - **Healthcheck**: Monitors the health of the Airflow service.
 
-### 6. **Setting Up PostgreSQL with Docker**:
+#### 6. **Setting Up PostgreSQL with Docker**:
 - **Docker Compose File (`docker-compose.yml`)**:
   - **Version**: Docker Compose version (2.1).
   - **PostgreSQL Service**: Information about the Docker configuration for the PostgreSQL service.
@@ -126,7 +126,7 @@ This script sets up the environment within the PostgreSQL container. It performs
   - **Healthcheck**: Ensures PostgreSQL's health using `pg_isready`.
 
 
-### 7. Execution:
+#### 7. Execution:
 
 - **Change Directory where airflow is located**: `cd data_eng/`
 
@@ -158,12 +158,12 @@ This script sets up the environment within the PostgreSQL container. It performs
 </details>
 
 
-## 2. AWS Environment Setup
+### 2. AWS Environment Setup
 
 <details>
 <summary>Click to Expand</summary>
 
-### 1. Basic Environment Configuration:
+#### 1. Basic Environment Configuration:
 
    - **S3 Bucket**: 
      ```shell
@@ -197,7 +197,7 @@ This script sets up the environment within the PostgreSQL container. It performs
      aws iam put-user-policy --user-name jay --policy-name AssumeDeveloperRole --policy-document '{"Version": "2012-10-17","Statement": [{"Effect": "Allow","Action": "sts:AssumeRole","Resource": "arn:aws:iam::YOUR-AWS-ACCOUNT-ID:role/developer"}]}'
      ```
 
-### 2. EMR Full Access for S3:
+#### 2. EMR Full Access for S3:
 
    - **Bucket Policy**:
      ```json
@@ -221,7 +221,7 @@ This script sets up the environment within the PostgreSQL container. It performs
      aws s3api put-bucket-policy --bucket YOUR_BUCKET_NAME --policy file://path/to/your/emr-policy.json
      ```
 
-### 3. AWS Systems Manager Parameter Store:
+#### 3. AWS Systems Manager Parameter Store:
 
    - **Parameter Setup**:
      ```shell
@@ -235,12 +235,12 @@ This script sets up the environment within the PostgreSQL container. It performs
 
 ---
 
-## 3. Snowflake Setup
+### 3. Snowflake Setup
 
 <details>
 <summary>Click to Expand</summary>
 
-### 1. Starting with Snowflake:
+#### 1. Starting with Snowflake:
 
    - Snowflake offers a cloud-native data platform.
       - [Register on Snowflake](https://www.snowflake.com/)
@@ -248,7 +248,7 @@ This script sets up the environment within the PostgreSQL container. It performs
       - Complete the registration.
       - Use credentials to access Snowflake's UI.
 
-### 2. Structure Configuration:
+#### 2. Structure Configuration:
 
    - **Data Warehouse**:
      ```sql
@@ -276,7 +276,7 @@ This script sets up the environment within the PostgreSQL container. It performs
         MUST_CHANGE_PASSWORD = FALSE;
      ```
 
-### 3. Organize Data:
+#### 3. Organize Data:
 
    - **Schemas**:
      ```sql
@@ -301,7 +301,7 @@ This script sets up the environment within the PostgreSQL container. It performs
      );
      ```
 
-### 4. Permissions:
+#### 4. Permissions:
 
    - **Assign Roles and Grant Privileges**:
      ```sql
@@ -316,7 +316,7 @@ This script sets up the environment within the PostgreSQL container. It performs
 
 </details>
 
-## 4. DBT (Data Build Tool) Setup
+### 4. DBT (Data Build Tool) Setup
 
 
 <details>
@@ -360,13 +360,13 @@ This script sets up the environment within the PostgreSQL container. It performs
 </details>
 
 ---
-# Ingestion Approach
+## Ingestion Approach
 
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
 ---
 
-## Components:
+### Components:
 
 - **Explore Dataframe**: Investigate data using Python scripts.
 - **File Process**: Load dataframes as CSV files to S3 buckets.
@@ -374,12 +374,12 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ---
 
-## 1. Setup DataFrame Exploring
+### 1. Setup DataFrame Exploring
 
 <details>
 <summary>Click to Expand</summary>
 
-### a. Data Exploring Code Setup:
+#### a. Data Exploring Code Setup:
 
 - **Overview**: I utilized Jupyter Lab as my primary exploration tool.
 
@@ -438,7 +438,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
       - **Logging**: Implement logging for transparency and easier debugging.
       - **Routine Automation**: Consider tools or triggers for script execution scheduling.
 
-### b. File Processing Code Setup:
+#### b. File Processing Code Setup:
 
 - **Overview**: Jupyter Lab was used for this step as well.
 
@@ -504,12 +504,12 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ---
 
-## 2. AWS S3 Code Structure
+### 2. AWS S3 Code Structure
 
 <details>
 <summary>Click to Expand</summary>
 
-### a. S3 Folder Structure:
+#### a. S3 Folder Structure:
 
 - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
 
@@ -529,7 +529,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
     timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
     ```
 
-### c. Slack Notifications:
+#### c. Slack Notifications:
 
 - Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
 
@@ -544,11 +544,11 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ----
 
-# Orchestration Approach
+## Orchestration Approach
 
 The Configuration Approach ensures that all data pipeline components are appropriately set up.
 
-### Components:
+#### Components:
 
 - Design DAGs for different workflows – `data ingestion`, `transformation`, and `reporting`.
   - Set up troubleshooting script
@@ -557,216 +557,3 @@ The Configuration Approach ensures that all data pipeline components are appropr
   - Implement retries and alert mechanisms in case of DAG failures.
   - Ensure there's a solid connection setup between Airflow and Snowflake.
 
----
-
-## 1. Set up troubleshooting script
-
-<details>
-<summary>Click to Expand</summary>
-
-### 1. Ensure there's a solid connection setup between Airflow and Snowflake.:
-
-- **Overview**: Dockerized Airflow with PostgreSQL backend, aiming for scalability and modularity.
-
-### 2. Prerequisites:
-
-- Docker & Docker Compose
-- Ample storage and RAM
-
-### 3. File Structure:
-
--- **data_eng**: My primary configuration directory for your data engineering tasks.
-  - `docker-compose.yml`: Orchestrates the services using Docker Compose.
-  - `mnt/airflow/airflow.cfg`: Airflow's configuration file.
-- **docker/airflow**:
-  - `Dockerfile`: Steps to build the Airflow image.
-  - `start-airflow.sh`: A bash script initializing and launching Airflow services.
-- **docker/postgres**:
-  - `Dockerfile`: Instructions to generate the PostgreSQL image.
-  - `init-postgres-db.sh`: Sets up the PostgreSQL database.
-------
-
-
-
-### 7. Execution:
-
-- **Change Directory where airflow is located**: `cd data_eng/`
-
-   - **Start.sh**:Build the base images from which are based the Dockerfiles (hen Startup all the containers at once )
-     ```shell
-      docker-compose up -d --build
-     ```
-
-   - **Stop.sh**: Stop all the containers at once
-     ```shell
-      docker-compose down
-     ```
-
-   - **Restart.sh**:
-     ```shell
-     ./stop.sh
-     ./start.sh
-     ```
-
-   - **reset.sh**:
-     ```shell
-      docker-compose down
-      docker system prune -f
-      docker volume prune -f
-      docker network prune -f
-      rm -rf ./mnt/postgres/*
-      docker rmi -f $(docker images -a -q)
-     ```
-</details>
-
-
-## 2. Set up error handling.
-
-<details>
-<summary>Click to Expand</summary>
-
-### 1. Basic Environment Configuration:
-
-   - **S3 Bucket**: 
-     ```shell
-     aws s3api create-bucket --bucket YOUR_BUCKET_NAME --region YOUR_REGION
-     ```
-
-   - **IAM User 'testjay'**:
-     ```shell
-     aws iam create-user --user-name testjay
-     ```
-
-   - **S3 Bucket Policy**:
-     ```shell
-     aws iam list-policies
-     aws iam attach-user-policy --user-name jay --policy-arn YOUR_BUCKET_POLICY_ARN
-     ```
-
-</details>
-
----
-
-## 3. Implement retries and alert mechanisms in case of DAG failures
-
-<details>
-<summary>Click to Expand</summary>
-
-### 1. Starting with Snowflake:
-
-   - Snowflake offers a cloud-native data platform.
-      - [Register on Snowflake](https://www.snowflake.com/)
-      - Choose 'Start for Free' or 'Get Started'.
-      - Complete the registration.
-      - Use credentials to access Snowflake's UI.
-
-### 2. Structure Configuration:
-
-   - **Data Warehouse**:
-     ```sql
-     CREATE WAREHOUSE IF NOT EXISTS my_warehouse 
-        WITH WAREHOUSE_SIZE = 'XSMALL' 
-        AUTO_SUSPEND = 60 
-        AUTO_RESUME = TRUE 
-        INITIALLY_SUSPENDED = TRUE;
-     ```
-
-   - **Database**:
-     ```sql
-     CREATE DATABASE IF NOT EXISTS my_database;
-     ```
-
-   - **Roles and Users**:
-     ```sql
-     -- Role Creation
-     CREATE ROLE IF NOT EXISTS my_role;
-     
-     -- User Creation
-     CREATE USER IF NOT EXISTS jay 
-        PASSWORD = '<YourSecurePassword>' 
-        DEFAULT_ROLE = my_role
-        MUST_CHANGE_PASSWORD = FALSE;
-     ```
-
-### 3. Organize Data:
-
-   - **Schemas**:
-     ```sql
-     USE DATABASE my_database;
-     CREATE SCHEMA IF NOT EXISTS chart;
-     CREATE SCHEMA IF NOT EXISTS register;
-     CREATE SCHEMA IF NOT EXISTS billing;
-     ```
-
-   - **Tables**:
-     ```sql
-     -- Chart Schema
-     CREATE TABLE IF NOT EXISTS chart.code (
-        id INT AUTOINCREMENT PRIMARY KEY
-     );
-
-     -- Register Schema
-     CREATE TABLE IF NOT EXISTS register.users (
-        id INT AUTOINCREMENT PRIMARY KEY,
-        name STRING,
-        email STRING UNIQUE
-     );
-     ```
-
-### 4. Permissions:
-
-   - **Assign Roles and Grant Privileges**:
-     ```sql
-     GRANT ROLE my_role TO USER jay;
-     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```
-
-**Note**: Replace placeholders (like `<YourSecurePassword>`) with actual values.
-
-</details>
-
-## 4. DBT (Data Build Tool) Setup
-
-
-<details>
-<summary>Click to Expand</summary>
-
-**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
-
-   - **Installation**: To get started with DBT, you first need to install it 
-
-     ```shell
-      pip install dbt
-     ```
-
-   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
-
-     ```shell
-     dbt init your_project_name
-     ```
-
-   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
-     ```shell
-        your_project_name:
-      target: dev
-      outputs:
-        dev:
-          type: snowflake
-          account: your_account
-          user: your_username
-          password: your_password
-          role: your_role
-          database: your_database
-          warehouse: your_warehouse
-          schema: your_schema
-          threads: [desired_number_of_threads]
-     ```
-     - **Running and Testing:
-
-     ```shell
-     dbt debug
-     ```
-</details>
