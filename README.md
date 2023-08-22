@@ -17,54 +17,21 @@ My intention with this project is to replicate some of the more important aspect
 ### Agenda test
 
 - Cloud-Based Solutions: Healthcare Data Warehouse
-  - `Configuration Approach:`
-    - **Jupyter Lab**: Setting up Jupyter Lab
-    - **Airflow**: Manages ETL workflows.
-    - **AWS S3**: Acts as data storage.
-    - **AWS Systems Manager Parameter Store**: Secures configurations.
-    - **Snowflake**: Our cloud data warehouse.
-    - **DBT**: Handles data transformations.
-    - **Slack**: Delivers process notifications.
-  - `Ingestion Approach:`
-    - **Explore Dataframe**: Using Python to exploreing data.
-    - **File Process**: Takes the Dataframe and load as a csv file to S3 buckets.
-    - **Create Folders**: Two folders are created for errors and processed.
-    - AWS S3:
-      - Determine folder structures in S3 to organize the data efficiently. You might need landing, processing, and archive areas.
-      - Develop naming conventions for S3 objects for easier traceability.
-      - Implement S3 bucket policies for data retention and security.
-      - Slack notification on successful data push to S3 or failure.
-  - `Orchestration Approach:`
-    - Apache Airflow:
-      - Design DAGs for different workflows – data ingestion, transformation, and reporting.
-	      - Set up error handling mechanisms in Airflow to handle failures or inconsistencies.
-	      - Implement logging and monitoring to keep track of DAG runs.
-	      - Implement retries and alert mechanisms in case of DAG failures.
-	      - Ensure there's a solid connection setup between Airflow and Snowflake.
-        - Integrate Slack with every major component for instant alerts.
-  - `Transformation & Modeling Approach:`
-    - dbt:
-      - Set up dbt projects and profiles.
-      - Design dbt models to transform raw data into a star schema, creating dimensions and fact tables.
-      - Implement dbt tests to ensure data quality and consistency.
-      - Integrate dbt runs with Airflow to automate transformations.
-      - Ensure that the transformed data in Snowflake matches the EMR system reports.
-      - Integrate Slack with every major component for instant alerts.
-  
-  - `Reporting Approach:`
-    - Tableau:
-      - Tableau Server/Online Setup:
-      - If you haven’t already, set up Tableau Server or Tableau Online based on your requirements.
-      - Ensure you have the necessary infrastructure and licensing in place.
-      - Consider setting up projects, sites, and permission structures for better organization and security.
-    - Connectivity to Snowflake:
-      - Establish a connection between Tableau and Snowflake. Make use of the native Snowflake connector in Tableau.
-      - Ensure your Snowflake user has the required permissions to access the relevant data for reporting.
-      - Regularly update the connection credentials to maintain security.
-    - Dashboard Design:
-      - Begin by understanding the reporting requirements and KPIs from the business teams.
-      - Create calculated fields, parameters, and sets in Tableau, if required, to match your KPI definitions.
-      - Design your dashboards keeping the end-user in mind. Use intuitive layouts, meaningful color schemes, and clear visualizations.
+  - Configuration Approach
+    - Jupyter Lab: Setting up Jupyter Lab
+    - Airflow: Manages ETL workflows.
+    - AWS S3: Acts as data storage.
+    - Snowflake: Our cloud data warehouse.
+    - Others: Includes AWS Systems Manager Parameter Store, DBT for data transformations, and Slack for process notifications.
+  - Ingestion Approach
+    - Explore Dataframe: Using Python to explore data. Load it as a CSV file to S3 buckets.
+    - AWS S3: Organize data with efficient folder structures, naming conventions, bucket policies, and Slack notifications.
+  - Orchestration Approach
+    - Apache Airflow: Design workflows, handle errors, log and monitor DAG runs, integrate with Snowflake, and set alerts via Slack.
+    - Transformation & Modeling Approach
+    - dbt: Transform raw data, ensure data quality, automate transformations, and ensure data integrity in Snowflake. Slack notifications included.
+  - Reporting Approach
+    - Tableau: Setup, connectivity to Snowflake, and dashboard design.
 
 
 
