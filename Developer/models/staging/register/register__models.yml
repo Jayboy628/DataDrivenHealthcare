@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: stg_register__patients
+  - name: stg_register__providers
+  - name: stg_register__locations
+  - name: stg_register__dates
+
