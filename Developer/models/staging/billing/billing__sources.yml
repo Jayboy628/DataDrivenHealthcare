@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: billing
+    database: healthcare_raw
+    schema: billing
+    tables:
+      - name: transactiondetails
+      - name: transactiontype
+      - name: payer
