@@ -71,9 +71,7 @@ services:
 
     ports:
       - 8080:8080
-    # environment:
-    #   - AWS_ACCESS_KEY_ID="AKIAZR7JJXSOZVQAI6EO"
-    #   - AWS_SECRET_ACCESS_KEY="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"
+    
     healthcheck:
       test: [ "CMD", "nc", "-z", "airflow", "8080" ]
       timeout: 45s

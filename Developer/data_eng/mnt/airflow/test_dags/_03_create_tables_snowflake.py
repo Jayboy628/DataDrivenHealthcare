@@ -17,12 +17,12 @@ csv_file = "temp_file.csv"
 df.to_csv(csv_file, index=False)
 
 conn = snowflake.connector.connect(
-    account = 'shxnusq-bbb65355',
-        user = 'rayboy',
-        password = '@Password78!',
-        database = 'healthcare_raw',
+    account = 'manually_enter_for_test',
+        user = 'manually_enter_for_test',
+        password = 'manually_enter_for_test',
+        database = 'manually_enter_for_test',
         schema = 'public',
-        warehouse = 'healthcare_wh',
+        warehouse = 'manually_enter_for_test',
         role='accountadmin'
 )
 

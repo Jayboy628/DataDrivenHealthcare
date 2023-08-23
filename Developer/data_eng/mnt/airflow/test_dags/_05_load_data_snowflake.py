@@ -3,12 +3,12 @@ import snowflake.connector
 def test_snowflake_connection():
     # Create a connection object
     con = snowflake.connector.connect(
-        user='rayboy',
-        password='@Password78!',
-        account='shxnusq-bbb65355',
-        warehouse='HEALTHCARE_WH',
-        database='HEALTHCARE_RAW',
-        role='ACCOUNTADMIN',
+        user='manually_enter_for_test',
+        password='manually_enter_for_test',
+        account='manually_enter_for_test',
+        warehouse='manually_enter_for_test',
+        database='manually_enter_for_test',
+        role='manually_enter_for_test',
         schema='public'
     )
 

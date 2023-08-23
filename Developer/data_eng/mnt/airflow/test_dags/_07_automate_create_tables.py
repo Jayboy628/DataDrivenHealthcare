@@ -30,11 +30,11 @@ def create_table_from_df(cursor, df, table_name):
 
 # Snowflake setup (please replace the placeholders with your actual Snowflake details)
 con = snowflake.connector.connect(
-    user='rayboy',
-    password='@Password78!',
-    account='shxnusq-bbb65355',
-    warehouse='HEALTHCARE_WH',
-    database='HEALTHCARE_RAW',
+    user='manually_enter_for_test',
+    password='manually_enter_for_test',
+    account='manually_enter_for_test',
+    warehouse='manually_enter_for_test',
+    database='manually_enter_for_test',
     schema='PUBLIC'
 )
 cur = con.cursor()
