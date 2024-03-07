@@ -18,7 +18,7 @@ My intention with this project is to replicate some of the more important aspect
 
 - Cloud-Based Solutions: Healthcare Data Warehouse
   - Configuration Approach
-    - Jupyter Lab: Setting up Jupyter Lab
+    - Jupyter Lab: Set up Jupyter Lab like a troubleshoot tool
     - Airflow: Manages ETL workflows.
     - AWS S3: Acts as data storage.
     - Snowflake: Our cloud data warehouse.
