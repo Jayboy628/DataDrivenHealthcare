@@ -19,7 +19,7 @@ My intention with this project is to replicate some of the more important aspect
 ## Cloud Technology Project
 
 A comprehensive guide on setting up a data pipeline leveraging key cloud technologies: 
-[Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/), [Snowflake](https://www.snowflake.com/en/), [DBT](https://www.getdbt.com/) and [Tableau](https://www.tableau.com/).
+[Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/),[SODA](https://www.soda.com/),[Snowflake](https://www.snowflake.com/en/), [COSMOS](https://www.astronomer.io/cosmos/), [DBT](https://www.getdbt.com/) and [Tableau](https://www.tableau.com/).
 
 ---
 ### AGENDA
@@ -41,7 +41,9 @@ The Configuration Approach ensures that all data pipeline components are appropr
 - **Airflow**: Manages ETL workflows.
 - **AWS S3**: Acts as data storage.
 - **AWS Systems Manager Parameter Store**: Secures configurations.
+- **SODA**:Data Quality.
 - **Snowflake**: Our cloud data warehouse.
+- **COSMOS**: Integrate with DBT allow airflow to run
 - **DBT**: Handles data transformations.
 - **Slack**: Delivers process notifications.
 - **Tableau**: Deliver reports and Dashboard
