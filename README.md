@@ -19,10 +19,17 @@ My intention with this project is to replicate some of the more important aspect
 ## Cloud Technology Project
 
 A comprehensive guide on setting up a data pipeline leveraging key cloud technologies: 
-[Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/), [Snowflake](https://www.snowflake.com/en/), and [DBT](https://www.getdbt.com/).
+[Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/), [Snowflake](https://www.snowflake.com/en/), [DBT](https://www.getdbt.com/) and [Tableau](https://www.tableau.com/).
 
 ---
-
+### AGENDA
+- DATA MODELING
+- DATA QUALITY
+- NOTIFICATION
+- INGEST
+- LOAD
+- TRANSFORMATION
+- REPORT
 
 
 ### Configuration Approach
@@ -42,14 +49,14 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 ---
 
-### 1. Dockerized Airflow Setup
+### 1. Modern Data Moderling
 
 <details>
 <summary>Click to Expand</summary>
 
 #### 1. Introduction:
 
-- **Overview**: Dockerized Airflow with PostgreSQL backend, aiming for scalability and modularity.
+- **Overview**: The data model approach we will use is the Ralph Kimball.
 
 #### 2. Prerequisites:
 
