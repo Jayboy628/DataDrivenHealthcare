@@ -14,25 +14,6 @@ My job was to design and implement a data warehouse from these files. The requir
 My intention with this project is to replicate some of the more important aspects of the above scenario. Please note that the healthcare dataset is fake and is being used only for demonstration purposes.
 
 ---------------------------------------------------------------------------------------------------------------------
-#### Agenda test
-
-- Cloud-Based Solutions: Healthcare Data Warehouse
-  - Configuration Approach
-    - Jupyter Lab: Set up Jupyter Lab like a troubleshoot tool
-    - Airflow: Manages ETL workflows.
-    - AWS S3: Acts as data storage.
-    - Snowflake: Our cloud data warehouse.
-    - Others: Includes AWS Systems Manager Parameter Store, DBT for data transformations, and Slack for process notifications.
-  - Ingestion Approach
-    - Explore Dataframe: Using Python to explore data. Load it as a CSV file to S3 buckets.
-    - AWS S3: Organize data with efficient folder structures, naming conventions, bucket policies, and Slack notifications.
-  - Orchestration Approach
-    - Apache Airflow: Design workflows, handle errors, log and monitor DAG runs, integrate with Snowflake, and set alerts via Slack.
-    - Transformation & Modeling Approach
-    - dbt: Transform raw data, ensure data quality, automate transformations, and ensure data integrity in Snowflake. Slack notifications included.
-  - Reporting Approach
-    - Tableau: Setup, connectivity to Snowflake, and dashboard design.
-
 
 
 ## Cloud Technology Project
@@ -56,6 +37,7 @@ The Configuration Approach ensures that all data pipeline components are appropr
 - **Snowflake**: Our cloud data warehouse.
 - **DBT**: Handles data transformations.
 - **Slack**: Delivers process notifications.
+- **Tableau**: Deliver reports and Dashboard
 
 
 ---
