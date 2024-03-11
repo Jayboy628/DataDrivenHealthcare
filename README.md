@@ -26,7 +26,14 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 - Data Modeling
 - AWS Environment Setup
 - Snowflake Setup
-- Data Lake and Orachestrator
+- [Data Quality](https://www.montecarlodata.com/blog-data-quality-checks-in-etl/): example
+  - Null values tests
+  - Volume tests
+  - Numeric distribution tests
+  - Uniqueness tests
+  - Referential integrity test
+  - Freshness checks
+- Data Lake and Orachestrator:example
   - Ingest and Notification
     - Files and Database
       - Raw
@@ -43,7 +50,7 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 - **Airflow**: Manages ETL workflows.
 - **AWS S3**: Acts as data storage.
-- **AWS Systems Manager Parameter Store**: Secures configurations.
+- **AWS Systems Manager Parameter Store**: Secures configurations.`optional`
 - **SODA**:Data Quality.
 - **Snowflake**: Our cloud data warehouse.
 - **COSMOS**: Integrate with DBT allow airflow to run
