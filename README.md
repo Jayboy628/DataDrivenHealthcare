@@ -24,8 +24,18 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 ---
 ### AGENDA
 - [Data Modeling](https://towardsdatascience.com/data-modelling-for-data-engineers-93d058efa302)
-- AWS Environment Setup
+  - Star Schema
+- AWS Environment Setup:`Optional AWS CLI`
+  - Create user
+  - Create admin group
+  - Create S3 bucket
+  - Systems Manager Parameter: Optinal
 - Snowflake Setup
+  - Create Databases
+  - Create Roles
+  - Privilages
+- DBT Setup:
+  - Create Profile
 - [Data Quality](https://www.montecarlodata.com/blog-data-quality-checks-in-etl/): example
   - Null values tests
   - Volume tests
@@ -33,7 +43,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
   - Uniqueness tests
   - Referential integrity test
   - Freshness checks
-- Data Lake and Orachestrator:example
+- Data Lake:example
   - Ingest and Notification
     - Files and Database
       - Raw
