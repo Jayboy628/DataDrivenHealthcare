@@ -23,14 +23,17 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 ---
 ### AGENDA
-- DATA MODELING
-- DATA QUALITY
-- NOTIFICATION
-- INGEST
-- LOAD
-- TRANSFORMATION
-- REPORT
-
+- Data Modeling
+- AWS Environment Setup
+- Snowflake Setup
+- Data Lake and Orachestrator
+  - Ingest and Notification
+    - Files and Database
+      - Raw
+- Data Warehouse
+  - Stage
+  - Transform
+  - Report
 
 ### Configuration Approach
 
