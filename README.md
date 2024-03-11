@@ -23,7 +23,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 ---
 ### AGENDA
-- Data Modeling
+- [Data Modeling](https://towardsdatascience.com/data-modelling-for-data-engineers-93d058efa302)
 - AWS Environment Setup
 - Snowflake Setup
 - [Data Quality](https://www.montecarlodata.com/blog-data-quality-checks-in-etl/): example
