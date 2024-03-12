@@ -373,7 +373,7 @@ The Configuration Approach ensures that all data pipeline components are appropr
 </details>
 
 ---
-## Ingestion Approach
+## Ingestion into Data Lake (AIRFLOW)
 
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
@@ -381,13 +381,15 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ### Components:
 
-- **Explore Dataframe**: Investigate data using Python scripts.
-- **File Process**: Load dataframes as CSV files to S3 buckets.
-- **Folder Management**: Creation of folders for errors and processed files.
+- **Airflow**: Orcahstrate the following:
+  - **File Process**: Load dataframes as CSV files to S3 buckets.
+  - **Folder Management**: Creation of folders for errors and processed files.
+  - **Notification***
+
 
 ---
 
-### 1. Setup DataFrame Exploring
+### 1. Aiflow Dag: Ingest
 
 <details>
 <summary>Click to Expand</summary>
