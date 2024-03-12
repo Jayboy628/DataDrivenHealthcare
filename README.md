@@ -378,7 +378,7 @@ This script sets up the environment within the PostgreSQL container. It performs
 
 **Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
 
-   - **Null Values Tests**: These checks ensure that essential columns do not contain null values. For the dim_provider table, it's crucial that primary key, NPI, first and last names, specialty, and email don't have nulls as they are essential for identifying and contacting the provider.
+   - **1) Null Values Tests**: These checks ensure that essential columns do not contain null values. For the `dim_provider` table, it's crucial that primary key, NPI, first and last names, specialty, and email don't have nulls as they are essential for identifying and contacting the provider.
      ```shell
       checks for dim_provider:
         - missing_count(PROVIDER_PK) = 0
@@ -388,7 +388,24 @@ This script sets up the environment within the PostgreSQL container. It performs
         - missing_count(PROVIDER_SPECIALTY) = 0
         - missing_count(EMAIL) = 0
      ```
-
+ - **2) Volume Tests**: Volume tests ensure the table contains a reasonable number of records, which can indicate whether the data loading process worked correctly.
+     ```shell
+      checks for dim_provider:
+        - row_count between 100 and 10000
+     ```
+ - **3) Numeric Distribution Tests**: These tests can validate that numeric columns like `AGE` have values within expected ranges and distributions.
+     ```shell
+      checks for dim_provider:
+        - invalid_percent(AGE) < 5%:
+            valid min: 25
+            valid max: 100
+     ```
+ - **4) Uniqueness Tests**: Uniqueness tests verify that columns that should be unique, such as `PROVIDER_NPI` and `EMAIL`, do not have duplicate values.
+     ```shell
+      checks for dim_provider:
+        - duplicate_count(PROVIDER_NPI) = 0
+        - duplicate_count(EMAIL) = 0
+     ```     
    - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
 
      ```shell
