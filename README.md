@@ -674,19 +674,19 @@ Our ingestion approach is meticulously designed to ensure all components of the 
 	etl_dag = load_file_s3_etl()
     ```
     #### Task
-  	1. `upload_csv_files_to_s3`:
-   	   - Scans a specified local directory for CSV files.
-           - Uploads each found CSV file to a specified S3 bucket and key location, replacing the file if it already exists.
-  	   - Records information about the uploaded files, such as their names and sizes, then deletes the local copies of these files.
-  	   - Returns a list of dictionaries, each containing information about an uploaded file.
-  	2. `notify_slack`:
-  	   - Takes the list of uploaded file information as input.
-  	   - If files were uploaded, constructs a message listing the names and sizes of the uploaded files.
-  	   - If no files were uploaded, prepares a message indicating that no new files were uploaded.
-  	   - Sends the prepared message to a specified Slack channel using the `SlackAPIPostOperator`.
-  	3. `trigger_ingest_snowflake`:
-  	   - Configured to trigger another DAG, presumably for processing the uploaded files in Snowflake, upon successful completion of the `notify_slack task`.
-  	   - Allows for additional configuration via the conf parameter, and offers options to reset the DAG run, wait for completion, and specify poke intervals and allowed/failed states for more controlled execution flow.
+	1. `upload_csv_files_to_s3`:
+	   - Scans a specified local directory for CSV files.
+	   - Uploads each found CSV file to a specified S3 bucket and key location, replacing the file if it already exists.
+	   - Records information about the uploaded files, such as their names and sizes, then deletes the local copies of these files.
+	   - Returns a list of dictionaries, each containing information about an uploaded file.
+	2. `notify_slack`:
+	   - Takes the list of uploaded file information as input.
+	   - If files were uploaded, constructs a message listing the names and sizes of the uploaded files.
+	   - If no files were uploaded, prepares a message indicating that no new files were uploaded.
+	   - Sends the prepared message to a specified Slack channel using the `SlackAPIPostOperator`.
+	3. `trigger_ingest_snowflake`:
+	   - Configured to trigger another DAG, presumably for processing the uploaded files in Snowflake, upon successful completion of the `notify_slack task`.
+	   - Allows for additional configuration via the conf parameter, and offers options to reset the DAG run, wait for completion, and specify poke intervals and allowed/failed states for more controlled execution flow.
 
    #### Workflow
   	- The DAG starts with the `upload_csv_files_to_s3` task to upload CSV files from the local directory to S3.
@@ -826,24 +826,24 @@ Our ingestion approach is meticulously designed to ensure all components of the 
   ```
   #### Tasks:
   
-  1. `check_s3_for_file (S3KeySensor)`: Monitors the S3 bucket for files matching a specific pattern, ensuring that the DAG proceeds only when the expected files are present. This sensor plays a crucial role in managing workflow execution based on data availability.
-  2. `list_s3_files`: Lists all files in the specified S3 prefix, acting as the initial step to identify which files will be processed. This task is vital for dynamic file processing, accommodating varying numbers and names of files.
-  3. `load_to_snowflake`: Processes each file from the list, attempting to load it into Snowflake. This task checks if the file name matches any table names specified in the Snowflake configuration, performs a COPY operation for matching files, and logs the outcome (SUCCESS, FAILURE, SKIPPED). This conditional loading is particularly useful for targeted data ingestion.
-  4. `notify_and_move_file`: For each file processed, this task moves the file to a processed or error path based on the load outcome and sends a notification to Slack. It involves complex logic to accurately move files and report the status, showcasing the pipeline's ability to handle post-load management and communication.
+   1. `check_s3_for_file (S3KeySensor)`: Monitors the S3 bucket for files matching a specific pattern, ensuring that the DAG proceeds only when the expected files are present. This sensor plays a crucial role in managing workflow execution based on data availability.
+   2. `list_s3_files`: Lists all files in the specified S3 prefix, acting as the initial step to identify which files will be processed. This task is vital for dynamic file processing, accommodating varying numbers and names of files.
+   3. `load_to_snowflake`: Processes each file from the list, attempting to load it into Snowflake. This task checks if the file name matches any table names specified in the Snowflake configuration, performs a COPY operation for matching files, and logs the outcome (SUCCESS, FAILURE, SKIPPED). This conditional loading is particularly useful for targeted data ingestion.
+   4. `notify_and_move_file`: For each file processed, this task moves the file to a processed or error path based on the load outcome and sends a notification to Slack. It involves complex logic to accurately move files and report the status, showcasing the pipeline's ability to handle post-load management and communication.
 
  #### Workflow:
   
- - The DAG initiates by checking for the presence of files in S3.
- - Upon confirming file availability, it lists all files in the specified prefix.
- - For each file, the DAG attempts to load it into Snowflake, based on naming conventions that match Snowflake tables.
- - After attempting to load each file, it moves the file to an appropriate directory (processed or error) and notifies a Slack channel about the operation's result.
+  - The DAG initiates by checking for the presence of files in S3.
+  - Upon confirming file availability, it lists all files in the specified prefix.
+  - For each file, the DAG attempts to load it into Snowflake, based on naming conventions that match Snowflake tables.
+  - After attempting to load each file, it moves the file to an appropriate directory (processed or error) and notifies a Slack channel about the operation's result.
 
  #### Features:
  
- - **Dynamic File Handling**: The DAG is designed to dynamically handle multiple files, determining actions based on file names and processing outcomes. This flexibility is crucial for workflows dealing with variable data inputs.
- - **Integration with External Services**: Demonstrates robust integration with AWS S3 for data storage, Snowflake for data warehousing, and Slack for notifications, providing a comprehensive approach to data pipeline management.
- - **Error Handling and Notifications**: Includes sophisticated error handling mechanisms, such as moving files to an error directory and notifying team members via Slack, enhancing the pipeline's reliability and maintainability.
- - **Expandable Tasks**: Utilizes the .expand method for the load_to_snowflake and notify_and_move_file tasks, enabling parallel processing of multiple files. This feature optimizes performance and scalability.
+  - **Dynamic File Handling**: The DAG is designed to dynamically handle multiple files, determining actions based on file names and processing outcomes. This flexibility is crucial for workflows dealing with variable data inputs.
+  - **Integration with External Services**: Demonstrates robust integration with AWS S3 for data storage, Snowflake for data warehousing, and Slack for notifications, providing a comprehensive approach to data pipeline management.
+  - **Error Handling and Notifications**: Includes sophisticated error handling mechanisms, such as moving files to an error directory and notifying team members via Slack, enhancing the pipeline's reliability and maintainability.
+  - **Expandable Tasks**: Utilizes the .expand method for the load_to_snowflake and notify_and_move_file tasks, enabling parallel processing of multiple files. This feature optimizes performance and scalability.
 
 </details>
 
