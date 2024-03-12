@@ -52,9 +52,11 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
   - Transform
 - Reporting Approach
   
-### Configuration Approach
+### Data Warehouse Architecture Approach
 
 The Configuration Approach ensures that all data pipeline components are appropriately set up.
+<br>
+<img src="images/ModernDataWarehouse.png" alt="header" style="width: 1100px; height: 900px;"><br>
 
 #### Components:
 
@@ -82,10 +84,10 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 - **Star Schema**:n this structure, data is organized into fact tables and dimension tables. Fact tables contain the quantitative metrics of the business process, while dimension tables contain descriptive attributes related to the measurements in the fact tables.
 
-#### Below Demonstrate Star Schema
+#### Below is a simplified example of a healthcare star schema model
 
 <br>
-<img src="images/DataModel.png" alt="header" style="width: 900px; height: 400px;"><br>
+<img src="images/DataModel.png" alt="header" style="width: 1100px; height: 900px;"><br>
 
 
 </details>
