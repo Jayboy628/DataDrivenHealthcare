@@ -824,7 +824,7 @@ Our ingestion approach is meticulously designed to ensure all components of the 
 	
 	dynamic_s3_to_snowflake_etl_dag = dynamic_s3_to_snowflake_etl()
   ```
-  #### Tasks:
+ #### Tasks:
   
    1. `check_s3_for_file (S3KeySensor)`: Monitors the S3 bucket for files matching a specific pattern, ensuring that the DAG proceeds only when the expected files are present. This sensor plays a crucial role in managing workflow execution based on data availability.
    2. `list_s3_files`: Lists all files in the specified S3 prefix, acting as the initial step to identify which files will be processed. This task is vital for dynamic file processing, accommodating varying numbers and names of files.
