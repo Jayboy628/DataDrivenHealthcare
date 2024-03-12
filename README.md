@@ -406,33 +406,19 @@ This script sets up the environment within the PostgreSQL container. It performs
         - duplicate_count(PROVIDER_NPI) = 0
         - duplicate_count(EMAIL) = 0
      ```     
-   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
+- **5) Referential Integrity Test**: These tests ensure that values in a column match values in a column in another table, for example, ensuring that the `PROVIDER_SPECIALTY` exists in a `dim_specialty` table.
+   ```shell
+    checks for dim_provider:
+      - duplicate_count(PROVIDER_NPI) = 0
+      - duplicate_count(EMAIL) = 0
+   ```
 
-     ```shell
-     dbt init your_project_name
-     ```
+- **6) Freshness Checks**: Freshness checks are useful for tables that are expected to be updated regularly. If your table includes a timestamp column (not shown in your schema), you could implement a check like:
+    ```shell
+      checks for dim_provider:
+        - freshness (LAST_UPDATE_TIMESTAMP) < 2d
+    ``` 
 
-   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
-     ```shell
-        your_project_name:
-      target: dev
-      outputs:
-        dev:
-          type: snowflake
-          account: your_account
-          user: your_username
-          password: your_password
-          role: your_role
-          database: your_database
-          warehouse: your_warehouse
-          schema: your_schema
-          threads: [desired_number_of_threads]
-     ```
-     - **Running and Testing:
-
-     ```shell
-     dbt debug
-     ```
 </details>
 
 ---
