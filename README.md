@@ -395,6 +395,13 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
         PRE processed/
         PRE raw_files/
     ```
+#### a. Naming Conventions:
+  
+  - Timestamps are used for file naming:
+  
+      ```python
+        timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
+      ```
 </details>
 <details>
   <summary>Click to Expand: Data Quality checks environment(SODA)</summary>
@@ -470,36 +477,9 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 				 ```
 </details>
 <details>
-  <summary>Click to Expand: DBT</summary>
+  <summary>Click to Expand: Slack Notification </summary>
   
-  - Command to list dbt: `aws s3 ls s3://snowflake-emr`
-     
-      ```shell
-        PRE error_files/
-        PRE processed/
-        PRE raw_files/
-    ```
-</details>
-<details>
-  <summary>Click to Expand: S3 Folder Structure</summary>
-  
-  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
-     
-      ```shell
-        PRE error_files/
-        PRE processed/
-        PRE raw_files/
-      ```
-  
-  #### a. Naming Conventions:
-  
-  - Timestamps are used for file naming:
-  
-      ```python
-        timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
-      ```
-  
-  #### b. Slack Notifications:
+  #### a. Slack Notifications:
   
   - Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
   
@@ -612,7 +592,87 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
     ```
 </details>
 
+### 3. Aiflow(Astro) dag
 
+<details>
+ <summary>Click to Expand: Load data into data lake </summary>
+	
+- **Overview Load_s3.py**
+    ```python
+      	from airflow.decorators import dag, task
+	from datetime import datetime
+	from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+	from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
+	from airflow.providers.slack.operators.slack import SlackAPIPostOperator
+	from airflow.operators.dagrun_operator import TriggerDagRunOperator  # Added import
+	from airflow.models import Variable
+	import glob
+	import os
+	import logging
+
+	# Configuration variables
+	S3_CONN_ID = 'aws_default'
+	S3_BUCKET = Variable.get('S3_BUCKET')
+	S3_KEY = Variable.get('S3_KEY').rstrip('*.csv')
+	LOCAL_DIRECTORY = Variable.get('LOCAL_DIRECTORY')
+	SLACK_CHANNEL = Variable.get('SLACK_CHANNEL')  # Ensure this is set in Airflow Variables
+	
+	@dag(start_date=datetime(2023, 1, 1), schedule_interval='@daily', catchup=False, tags=['s3', 'slack'])
+	def load_file_s3_etl():
+	    @task
+	    def upload_csv_files_to_s3(bucket: str, key: str, local_directory: str, aws_conn_id: str):
+	        s3_hook = S3Hook(aws_conn_id=aws_conn_id)
+	        uploaded_files_info = []
+	        for filepath in glob.glob(os.path.join(local_directory, '*.csv')):
+	            if not os.path.exists(filepath):
+	                logging.error(f"File not found: {filepath}")
+	                continue
+	            filename = os.path.basename(filepath)
+	            dest_key = os.path.join(key, filename)
+	            s3_hook.load_file(filename=filepath, key=dest_key, bucket_name=bucket, replace=True)
+	            file_size = os.path.getsize(filepath)
+	            uploaded_files_info.append({'filename': filename, 'size': file_size})
+	            os.remove(filepath)
+	        return uploaded_files_info
+	
+	    @task
+	    def notify_slack(uploaded_files_info):
+	        if uploaded_files_info:
+	            message = "Files successfully uploaded to S3:\n"
+	            message += "\n".join([f"{file_info['filename']} (Size: {file_info['size']} bytes)" for file_info in uploaded_files_info])
+	        else:
+	            message = "No new files were uploaded to S3."
+	        
+	        SlackAPIPostOperator(
+	                task_id="notify_slack",
+	                channel=SLACK_CHANNEL,
+	                text=message,
+	                slack_conn_id="slack_default"  # Ensure this Slack connection is configured in Airflow
+	            ).execute({})
+	
+	    
+	    trigger_ingest_snowflake = TriggerDagRunOperator(
+	    task_id="trigger_ingest_snowflake",
+	    trigger_dag_id="dynamic_s3_to_snowflake_etl",
+	    execution_date='{{ ds }}',  # Set the execution date explicitly
+	    conf={"some_key": "some_value"},  # Any additional configuration
+	    reset_dag_run=True,  # Optional: based on your need
+	    wait_for_completion=True,  # Optional: based on your need
+	    poke_interval=60,  # Optional: default is 60 seconds
+	    allowed_states=['success'],  # Optional: default is ['success']
+	    failed_states=['failed'],  # Optional
+	    deferrable=False,  # Optional: based on your need
+	)
+	
+	
+	    uploaded_files_info = upload_csv_files_to_s3(S3_BUCKET, S3_KEY, LOCAL_DIRECTORY, S3_CONN_ID)
+	    notify_slack_result = notify_slack(uploaded_files_info)
+	    
+	    notify_slack_result >> trigger_ingest_snowflake
+	
+	etl_dag = load_file_s3_etl()
+    ```
+</details>
 
 ## Transform Approach
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
