@@ -428,180 +428,98 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 #### a. airflow_setting:
 
-- **Overview**: I want to automate my airflow configuration so I dont have add the configure information everytime I start airflow. This file allows you to configure Airflow Connections, Pools, and Variables in a single place for local development only.
-- Variables to consider
-  - aws login
-  - snowflake login
-  - slack connection
-  - s3 bucket name
-  - s3 key
-  - s3 prefix
-  - s3 processed
-  - s3 error
-  - snowflake tables
-  - snowflake schema
-  - snowflake databases
-  - snowflake stage
-  - slack channel
-  - slack token
-  - local file path
+- **Overview**:  Automate your Airflow configuration to avoid repetitive setup tasks each time Airflow is initiated. This approach enables configuring Airflow Connections, Pools, and Variables all in one place, specifically tailored for local development environments.
+- **Variables to consider**
+  - AWS login credentials
+  - Snowflake login credentials
+  - Slack connection details
+  - S3 bucket specifics (name, key, prefix, processed, error paths)
+  - Snowflake configurations (tables, schema, databases, stage)
+  - Slack notifications (channel, token)
+  - Local file path for datasets
 
-- **airflow_setting.yaml**:
+- **Configuration in `airflow_setting.yaml`**: This YAML snippet defines essential Airflow configurations for seamless integration with AWS, Snowflake, and Slack, alongside managing S3 buckets and local datasets. Note: Ensure sensitive information like login credentials is securely managed and not hard-coded.
 
     ```python
-    airflow:
-    connections:
-      - conn_id: aws_default
-        conn_type: aws
-        conn_login: AKIAZR7JJXSOZVQAI6EO
-        conn_password: RaFmorMOnPAsw/a1ocHJSiaoTp3zHYkgILQYGIa8
-        conn_extra:
-          region_name: us-east-1
-    
-      - conn_id: snowflake_default
-        conn_type: snowflake
-        conn_login: TRANSFORM_USER #rayboy  # TRANSFORM_USER Replace with your Snowflake username
-        conn_password: OneBlood123 #'@Password78!' #OneBlood123  # Replace with your Snowflake passwordOneBlood123
-        conn_schema: DATA_RAW
-        conn_extra:
-          extra__snowflake__account: xub44819  # Replace with your Snowflake account
-          extra__snowflake__warehouse: HEALTHCARE_WH  # Replace with your Snowflake warehouse
-          extra__snowflake__database: HEALTHCARE_RAW  # Replace with your Snowflake database
-          extra__snowflake__role: DEVELOPER #ACCOUNTADMIN  # Replace with your Snowflake role
-          extra__snowflake__region: us-east-1  # Optional: Replace with your Snowflake region if needed
-    
-      - conn_id: slack_default
-        conn_type: slack
-        conn_password: xoxb-3460478712757-5752442545975-M84CAN01wIeUdrZ1Qtqx1qp9
-    # Defining Airflow Variables
-    variables:
-      - variable_name: SNOWFLAKE_CONN_ID 
-        variable_value: "snowflake_default"
-      # S3 Bucket Name
-      - variable_name: S3_BUCKET
-        variable_value: "snowflake-emr"
-    
-      # S3 Key (Path in the bucket)
-      - variable_name: S3_KEY
-        variable_value: "raw_files/"
-    
-       # S3 Key (Path in the bucket)
-      - variable_name: S3_PREFIX
-        variable_value: "raw_files/"  
-    
-         # S3 Key (Path in the bucket)
-      - variable_name: S3_PROCESSED
-        variable_value: "processed/"  
-    
-      - variable_name: S3_ERROR
-        variable_value: "error_files/"  
-    
-      # S3 Key (Path in the bucket)
-      - variable_name: SNOWFLAKE_TABLES
-        variable_value: '[ "RAW_AR", "RAW_ADDRESS", "RAW_ADJUSTMENT", "RAW_CPTCODE", "RAW_DATE", "RAW_PAYER",
-         "RAW_DIAGNOSISCODE", "RAW_GROSSCHARGE", "RAW_LOCATION", "RAW_PAYMENT", "RAW_TRANSACTION_TYPE", "RAW_USER"]'
-    
-      # Snowflake schema name regsiter
-      - variable_name: REGISTER_TABLES
-        variable_value: '["RAW_ADDRESS", "RAW_DATE", "RAW_LOCATION", "RAW_USER"]'
-    
-     # Snowflake schema  name chart
-      - variable_name: CHART_TABLES
-        variable_value: '[ "RAW_CPTCODE", "RAW_DIAGNOSISCODE"]'   
-    
-      # Snowflake schema name bill
-      - variable_name: BILL_TABLES
-        variable_value: '[ "RAW_AR", "RAW_ADJUSTMENT", "RAW_PAYER","RAW_GROSSCHARGE", "RAW_PAYMENT", "RAW_TRANSACTION_TYPE"]'
-    
-     
-      # Snowflake Stage database
-      - variable_name: SNOWFLAKE_STAGE_DATABASE 
-        variable_value: "MANAGE_DB"
-    
-      # Snowflake Stage Schema
-      - variable_name: SNOWFLAKE_STAGE_SCHEMA 
-        variable_value: "external_stages"
-      # Snowflake Stage
-      - variable_name: SNOWFLAKE_STAGE 
-        variable_value: "aws_stage"
-    
-      # Stage Name
-      - variable_name: STAGE_NAME 
-        variable_value: "MANAGE_DB.external_stages.aws_stage"
-      # Slack Channel
-      - variable_name: SLACK_CHANNEL
-        variable_value: "#airflowalerting" 
-    
-      # Slack Username
-      - variable_name: SLACK_USERNAME
-        variable_value: "sjay-dev"
-    
-      # Slack Token
-      - variable_name: SLACK_TOKEN
-        variable_value: "xoxb-3460478712757-5752442545975-M84CAN01wIeUdrZ1Qtqx1qp9"
-      # Local File Path
-      - variable_name: FILE_PATH
-        variable_value: "/usr/local/airflow/include/dataset/*."
-    
-      - variable_name: LOCAL_DIRECTORY
-        variable_value: "/usr/local/airflow/include/dataset/"  
+      airflow:
+        connections:
+          - conn_id: aws_default
+            conn_type: aws
+            login: <aws_access_key_id>
+            password: <aws_secret_access_key>
+            extra:
+              region_name: us-east-1
+      
+          - conn_id: snowflake_default
+            conn_type: snowflake
+            login: <your_snowflake_username>
+            password: <your_snowflake_password>
+            schema: DATA_RAW
+            extra:
+              account: <your_snowflake_account>
+              warehouse: <your_snowflake_warehouse>
+              database: <your_snowflake_database>
+              role: <your_snowflake_role>
+              region: us-east-1
+      
+          - conn_id: slack_default
+            conn_type: slack
+            password: <your_slack_bot_token>
+      
+        variables:
+          # Snowflake and S3 configurations
+          - variable_name: S3_BUCKET
+            variable_value: "your_s3_bucket_name"
+      
+          # Additional configurations...
+      
+          # Slack notifications
+          - variable_name: SLACK_CHANNEL
+            variable_value: "#your_slack_channel"
+      
+          # Local dataset configurations
+          - variable_name: LOCAL_DIRECTORY
+            variable_value: "/path/to/your/local/dataset/"
     ```
 
-    **Best Practice Recommendations**:
-      - **Data Cleansing**: Ensure data consistency across records.
-      - **Missing Data Handling**: Address nulls or gaps in data.
-      - **Logging**: Implement logging for transparency and easier debugging.
-      - **Routine Automation**: Consider tools or triggers for script execution scheduling.
 
-#### b. Config Dockerfile:
+#### b. Dockerfile Configuration:
 
-- **Overview**: Allows you to add installation.
-
-- **Dockerfile**:
+- **Overview**: Customize the Dockerfile to include necessary installations for your Airflow environment.
+- **Dockerfile Content**: This Dockerfile extends the Astronomer Astro Runtime image, incorporating additional packages and tools required for your workflows, such as AWS CLI, specific Airflow providers, and the Slack SDK.
 
     ```python
         FROM quay.io/astronomer/astro-runtime:10.4.0
 
         USER root
         
-        # Install AWS CLI using apt-get to ensure it is globally available
+        # Install AWS CLI
         RUN apt-get update && \
             apt-get install -y awscli && \
             rm -rf /var/lib/apt/lists/*
         
         USER astro
         
-        # Install specific Airflow providers and slack_sdk
+        # Install Airflow providers and the Slack SDK
         RUN pip install --no-cache-dir apache-airflow-providers-slack apache-airflow-providers-amazon==8.11.0 slack_sdk
         
-        # Enable test connection configuration (if applicable)
-        ENV AIRFLOW__CORE__TEST_CONNECTION="Enabled"
+        # Configure environment variables for sensitive information
+        ENV AIRFLOW__CORE__ENABLE_XCOM_PICKLING=True
         
-        # Install soda and dbt in separate virtual environments
-        RUN python -m venv soda_venv && . soda_venv/bin/activate && \
-            pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
-        
-        RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
-            pip install dbt-snowflake==1.7.0 pendulum 
-        
-        # It's recommended to use Airflow connections or secret management tools for sensitive information
-        ENV SNOWFLAKE_USER='TRANSFORM_USER'
-        ENV SNOWFLAKE_PASSWORD='OneBlood123'  
-        ENV SNOWFLAKE_ACCOUNT='xub44819.us-east-1'
+        # Additional configuration...
     ```
 
-#### c. requirements :
+#### c. Requirements :
 
-- **Overview**: Allows you to add installation.
-
-```python
-  # Astro Runtime includes the following pre-installed providers packages: https://docs.astronomer.io/astro/runtime-image-architecture#provider-packages
-  astro-sdk-python[amazon, snowflake] >= 1.1.0
-  astronomer-cosmos[dbt.snowflake]
-  apache-airflow-providers-snowflake==4.4.0
-  soda-core-snowflake==3.2.1
-  protobuf==3.20.0
-```
+- **Overview**: Define additional dependencies and packages required for your Airflow setup.
+    ```python
+      # Astro Runtime includes the following pre-installed providers packages: https://docs.astronomer.io/astro/runtime-image-architecture#provider-packages
+      astro-sdk-python[amazon, snowflake] >= 1.1.0
+      astronomer-cosmos[dbt.snowflake]
+      apache-airflow-providers-snowflake==4.4.0
+      soda-core-snowflake==3.2.1
+      protobuf==3.20.0
+    ```
 </details>
 
 
