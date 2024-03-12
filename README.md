@@ -85,7 +85,7 @@ The Configuration Approach ensures that all data pipeline components are appropr
 #### Below Demonstrate Star Schema
 
 <br>
-<img src="images/Data Model.jpeg" alt="header" style="width: 900px; height: 400px;"><br>
+<img src="images/DataModel.png" alt="header" style="width: 900px; height: 400px;"><br>
 
 
 </details>
