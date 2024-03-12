@@ -50,8 +50,8 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 - Data Warehouse
   - Stage
   - Transform
-  - Report
-
+- Report
+  
 ### Configuration Approach
 
 The Configuration Approach ensures that all data pipeline components are appropriately set up.
@@ -373,19 +373,61 @@ The Configuration Approach ensures that all data pipeline components are appropr
 </details>
 
 ---
-## Ingestion into Data Lake (AIRFLOW)
+## Ingestion Approach Data Lake
 
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
 ---
+
 
 ### Components:
 
 - **Airflow**: Orcahstrate the following:
   - **File Process**: Load dataframes as CSV files to S3 buckets.
   - **Folder Management**: Creation of folders for errors and processed files.
-  - **Notification***
+  - **Notification***: Alert files each step of 
 
+---
+
+### 2. AWS S3 Code Structure
+
+<details>
+<summary>Click to Expand</summary>
+
+#### a. S3 Folder Structure:
+
+- Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
+
+   Folders in S3:
+   
+    ```shell
+    PRE error_files/
+    PRE processed/
+    PRE raw_files/
+    ```
+
+### b. Naming Conventions:
+
+- Timestamps are used for file naming:
+
+    ```python
+    timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
+    ```
+
+#### c. Slack Notifications:
+
+- Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
+
+    ```python
+    SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
+
+    def send_slack_message(message):
+        #... [rest of the code]
+    ```
+
+</details>
+
+----
 
 ---
 
@@ -517,47 +559,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 </details>
 
----
 
-### 2. AWS S3 Code Structure
-
-<details>
-<summary>Click to Expand</summary>
-
-#### a. S3 Folder Structure:
-
-- Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
-
-   Folders in S3:
-   
-    ```shell
-    PRE error_files/
-    PRE processed/
-    PRE raw_files/
-    ```
-
-### b. Naming Conventions:
-
-- Timestamps are used for file naming:
-
-    ```python
-    timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
-    ```
-
-#### c. Slack Notifications:
-
-- Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
-
-    ```python
-    SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
-
-    def send_slack_message(message):
-        #... [rest of the code]
-    ```
-
-</details>
-
-----
 
 ## Orchestration Approach
 
