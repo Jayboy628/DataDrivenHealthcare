@@ -696,7 +696,155 @@ Our ingestion approach is meticulously designed to ensure all components of the 
    #### Features
   	- The DAG includes modern Airflow features, such as the use of the `@dag` and `@task` decorators for simplified DAG and task definitions.
   	- It showcases interaction with external systems (S3 and Slack) and the chaining of workflows via DAG triggering, making it a practical example of a data pipeline that incorporates data uploading, notification, and further data processing steps.
+
+- **Overview**: This DAG, `dynamic_s3_to_snowflake_etl`, is an advanced data pipeline designed for automating data flows from AWS S3 to Snowflake and involves Slack for notifications. Let's review its tasks, workflow, and features:
+  ```python
+  	from datetime import datetime
+	import pendulum
+	from airflow.decorators import dag, task
+	from airflow.models import Variable
+	from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+	from airflow.providers.snowflake.hooks.snowflake import SnowflakeHook
+	from airflow.operators.python import get_current_context
+	
+	from slack_sdk import WebClient
+	from slack_sdk.errors import SlackApiError
+	from airflow.operators.python import PythonOperator
+	import json
+	import logging
+	from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
+	
+	# Configuration variables
+	S3_BUCKET = Variable.get("S3_BUCKET")
+	SNOWFLAKE_CONN_ID = "snowflake_default"
+	SLACK_TOKEN = Variable.get("SLACK_TOKEN")
+	SLACK_CHANNEL = Variable.get("SLACK_CHANNEL")
+	SNOWFLAKE_STAGE_FULL_PATH = Variable.get("STAGE_NAME")
+	SNOWFLAKE_TABLES = json.loads(Variable.get("SNOWFLAKE_TABLES", "[]"))
+	S3_PREFIX = "raw_files/"
+	S3_PROCESSED = "processed/"
+	S3_ERROR = "error_files/"
+	
+	default_args = {
+	    "owner": "airflow",
+	    "depends_on_past": False,
+	    "start_date": datetime(2021, 1, 1),
+	}
+	
+	
+	@dag(schedule="@daily", default_args=default_args, catchup=False, tags=["snowflake", "slack"])
+	def dynamic_s3_to_snowflake_etl():
+	    
+	    is_file_available = S3KeySensor(
+	        task_id='check_s3_for_file',
+	        bucket_key=S3_PREFIX + '*.csv',  # Adjust the pattern to match your file naming
+	        bucket_name=S3_BUCKET,
+	        wildcard_match=True,
+	        aws_conn_id='aws_default',
+	    )
+	
+	
+	    @task
+	    def list_s3_files():
+	        """List files in the specified S3 bucket and prefix."""
+	        s3_hook = S3Hook(aws_conn_id="aws_default")
+	        return s3_hook.list_keys(bucket_name=S3_BUCKET, prefix=S3_PREFIX)
+	
+	    @task
+	    def load_to_snowflake(key: str) -> dict:
+	        """Load a file to Snowflake, returning the file name and load status."""
+	        file_name = key.split('/')[-1].split('.')[0].upper()  # Extract file name and convert to uppercase
+	        if file_name in [table.upper() for table in SNOWFLAKE_TABLES]:
+	            try:
+	                hook = SnowflakeHook(snowflake_conn_id=SNOWFLAKE_CONN_ID)
+	                copy_sql = f"""
+	                    COPY INTO {file_name}
+	                    FROM '@{SNOWFLAKE_STAGE_FULL_PATH}/{key.split('/')[-1]}'
+	                    FILE_FORMAT = (FORMAT_NAME = 'MANAGE_DB.EXTERNAL_STAGES.MY_CSV_FORMAT');
+	                """
+	                hook.run(copy_sql, autocommit=True)
+	                return {"file_name": file_name, "status": "SUCCESS"}
+	            except Exception as e:
+	                logging.error(f"Failed to load file {file_name} into Snowflake: {str(e)}")
+	                return {"file_name": file_name, "status": "FAILURE"}
+	        else:
+	            return {"file_name": file_name, "status": "SKIPPED"}
+	
+	
+	
+	    @task
+	    def notify_and_move_file(file_result: dict):
+	        context = get_current_context()
+	        execution_date = context['data_interval_start']  # Adjust based on your Airflow version
+	        execution_date = pendulum.instance(execution_date)  # Ensure execution_date is a pendulum instance
+	
+	        file_name, status = file_result["file_name"], file_result["status"].lower()
+	        s3_hook = S3Hook(aws_conn_id="aws_default")
+	
+	        # List files in the S3_PREFIX directory
+	        all_files = s3_hook.list_keys(bucket_name=S3_BUCKET, prefix=S3_PREFIX)
+	        # Find the exact filename by case-insensitive match
+	        exact_filename = next((f for f in all_files if f.lower() == f"{S3_PREFIX}{file_name}.csv".lower()), None)
+	
+	        if exact_filename:
+	            # Construct paths and keys with the exact filename
+	            source_key = exact_filename
+	            date_suffix = execution_date.strftime('%Y-%m-%d') + "/"
+	            processed_path = f"{S3_PROCESSED}{date_suffix}{exact_filename.split('/')[-1]}"
+	            error_path = f"{S3_ERROR}{date_suffix}{exact_filename.split('/')[-1]}"
+	            destination_key = processed_path if status == "success" else error_path
+	
+	            # Attempt to move file
+	            logging.info(f"Attempting to move file from {source_key} to {destination_key}")
+	            try:
+	                s3_hook.copy_object(source_bucket_key=source_key, dest_bucket_key=destination_key, source_bucket_name=S3_BUCKET, dest_bucket_name=S3_BUCKET)
+	                s3_hook.delete_objects(bucket=S3_BUCKET, keys=[source_key])
+	                logging.info(f"Moved {source_key} to {destination_key}")
+	            except Exception as e:
+	                logging.error(f"Failed to move file: {e}")
+	
+	            # Send notification to Slack
+	            message = "successfully processed and moved to the processed folder." if status == "success" else "failed to load and moved to the error folder."
+	            try:
+	                client = WebClient(token=SLACK_TOKEN)
+	                client.chat_postMessage(channel=SLACK_CHANNEL, text=f"File `{file_name}`: {message}")
+	                logging.info(f"Notification sent to Slack for file {file_name}: {message}")
+	            except SlackApiError as e:
+	                logging.error(f"Failed to send message to Slack: {e.response['error']}")
+	        else:
+	            logging.error(f"Could not find exact file matching {file_name} in S3.")
+	
+	    # Define your DAG flow
+	    s3_files = list_s3_files()
+	    load_results = load_to_snowflake.expand(key=s3_files)
+	    notify_and_move_files = notify_and_move_file.expand(file_result=load_results)
+	    
+	    is_file_available >> s3_files
+	    
+	
+	dynamic_s3_to_snowflake_etl_dag = dynamic_s3_to_snowflake_etl()
+  ```
+  #### Tasks:
   
+  1. `check_s3_for_file (S3KeySensor)`: Monitors the S3 bucket for files matching a specific pattern, ensuring that the DAG proceeds only when the expected files are present. This sensor plays a crucial role in managing workflow execution based on data availability.
+  2. `list_s3_files`: Lists all files in the specified S3 prefix, acting as the initial step to identify which files will be processed. This task is vital for dynamic file processing, accommodating varying numbers and names of files.
+  3. `load_to_snowflake`: Processes each file from the list, attempting to load it into Snowflake. This task checks if the file name matches any table names specified in the Snowflake configuration, performs a COPY operation for matching files, and logs the outcome (SUCCESS, FAILURE, SKIPPED). This conditional loading is particularly useful for targeted data ingestion.
+  4. `notify_and_move_file`: For each file processed, this task moves the file to a processed or error path based on the load outcome and sends a notification to Slack. It involves complex logic to accurately move files and report the status, showcasing the pipeline's ability to handle post-load management and communication.
+
+ #### Workflow:
+  
+ - The DAG initiates by checking for the presence of files in S3.
+ - Upon confirming file availability, it lists all files in the specified prefix.
+ - For each file, the DAG attempts to load it into Snowflake, based on naming conventions that match Snowflake tables.
+ - After attempting to load each file, it moves the file to an appropriate directory (processed or error) and notifies a Slack channel about the operation's result.
+
+ #### Features:
+ 
+ - **Dynamic File Handling**: The DAG is designed to dynamically handle multiple files, determining actions based on file names and processing outcomes. This flexibility is crucial for workflows dealing with variable data inputs.
+ - **Integration with External Services**: Demonstrates robust integration with AWS S3 for data storage, Snowflake for data warehousing, and Slack for notifications, providing a comprehensive approach to data pipeline management.
+ - **Error Handling and Notifications**: Includes sophisticated error handling mechanisms, such as moving files to an error directory and notifying team members via Slack, enhancing the pipeline's reliability and maintainability.
+ - **Expandable Tasks**: Utilizes the .expand method for the load_to_snowflake and notify_and_move_file tasks, enabling parallel processing of multiple files. This feature optimizes performance and scalability.
+
 </details>
 
 ## Transform Approach
