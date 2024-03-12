@@ -421,62 +421,130 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 </details>
 
-### 2. Aiflow Dag: Ingest
+### 2. Aiflow(Astro) configuration
 
 <details>
 <summary>Click to Expand</summary>
 
-#### a. Ingest dag:
+#### a. airflow_setting:
 
-- **Overview**: I utilized Jupyter Lab as my primary exploration tool.
+- **Overview**: I want to automate my airflow configuration so I dont have add the configure information everytime I start airflow. This file allows you to configure Airflow Connections, Pools, and Variables in a single place for local development only.
+- Variables to consider
+  - aws login
+  - snowflake login
+  - slack connection
+  - s3 bucket name
+  - s3 key
+  - s3 prefix
+  - s3 processed
+  - s3 error
+  - snowflake tables
+  - snowflake schema
+  - snowflake databases
+  - snowflake stage
+  - slack channel
+  - slack token
+  - local file path
 
-- **Explore_Files.ipynb**:
+- **airflow_setting.yaml**:
 
     ```python
-    import pandas as pd
-    import matplotlib.pyplot as plt
-    from tabulate import tabulate
-    import io
-
-    def explore_csv(filename):
-        # Read the CSV file
-        df = pd.read_csv(filename)
-        
-        # Display the shape of the dataframe
-        print(f"Shape of the dataframe: {df.shape} (rows, columns)\n")
-        
-        # Display the first 5 rows of the dataframe
-        print("Head of the dataframe:")
-        print(tabulate(df.head(), headers='keys', tablefmt='grid'))
-        
-        # Display concise summary of the dataframe
-        buffer = io.StringIO()
-        df.info(buf=buffer)
-        s = buffer.getvalue()
-        print("\nDataframe Info:")
-        print(s)
-        
-        # Display basic statistics
-        print("\nBasic statistics:")
-        print(tabulate(df.describe(include='all'), headers='keys', tablefmt='grid'))
-        
-        # Display null values per column
-        print("\nNull values per column:")
-        print(tabulate(pd.DataFrame(df.isnull().sum(), columns=['Null Count']), headers='keys', tablefmt='grid'))
-        
-        # Display number of unique values per column
-        print("\nNumber of unique values per column:")
-        print(tabulate(pd.DataFrame(df.nunique(), columns=['Unique Count']), headers='keys', tablefmt='grid'))
-        
-        # Plot histograms for numeric columns
-        df.hist(figsize=(15, 10))
-        plt.tight_layout()
-        plt.show()
-
-    # Example
-    filename = 'code.csv'
-    explore_csv(filename)
-
+    airflow:
+    connections:
+      - conn_id: aws_default
+        conn_type: aws
+        conn_login: AKIAZR7JJXSOZVQAI6EO
+        conn_password: RaFmorMOnPAsw/a1ocHJSiaoTp3zHYkgILQYGIa8
+        conn_extra:
+          region_name: us-east-1
+    
+      - conn_id: snowflake_default
+        conn_type: snowflake
+        conn_login: TRANSFORM_USER #rayboy  # TRANSFORM_USER Replace with your Snowflake username
+        conn_password: OneBlood123 #'@Password78!' #OneBlood123  # Replace with your Snowflake passwordOneBlood123
+        conn_schema: DATA_RAW
+        conn_extra:
+          extra__snowflake__account: xub44819  # Replace with your Snowflake account
+          extra__snowflake__warehouse: HEALTHCARE_WH  # Replace with your Snowflake warehouse
+          extra__snowflake__database: HEALTHCARE_RAW  # Replace with your Snowflake database
+          extra__snowflake__role: DEVELOPER #ACCOUNTADMIN  # Replace with your Snowflake role
+          extra__snowflake__region: us-east-1  # Optional: Replace with your Snowflake region if needed
+    
+      - conn_id: slack_default
+        conn_type: slack
+        conn_password: xoxb-3460478712757-5752442545975-M84CAN01wIeUdrZ1Qtqx1qp9
+    # Defining Airflow Variables
+    variables:
+      - variable_name: SNOWFLAKE_CONN_ID 
+        variable_value: "snowflake_default"
+      # S3 Bucket Name
+      - variable_name: S3_BUCKET
+        variable_value: "snowflake-emr"
+    
+      # S3 Key (Path in the bucket)
+      - variable_name: S3_KEY
+        variable_value: "raw_files/"
+    
+       # S3 Key (Path in the bucket)
+      - variable_name: S3_PREFIX
+        variable_value: "raw_files/"  
+    
+         # S3 Key (Path in the bucket)
+      - variable_name: S3_PROCESSED
+        variable_value: "processed/"  
+    
+      - variable_name: S3_ERROR
+        variable_value: "error_files/"  
+    
+      # S3 Key (Path in the bucket)
+      - variable_name: SNOWFLAKE_TABLES
+        variable_value: '[ "RAW_AR", "RAW_ADDRESS", "RAW_ADJUSTMENT", "RAW_CPTCODE", "RAW_DATE", "RAW_PAYER",
+         "RAW_DIAGNOSISCODE", "RAW_GROSSCHARGE", "RAW_LOCATION", "RAW_PAYMENT", "RAW_TRANSACTION_TYPE", "RAW_USER"]'
+    
+      # Snowflake schema name regsiter
+      - variable_name: REGISTER_TABLES
+        variable_value: '["RAW_ADDRESS", "RAW_DATE", "RAW_LOCATION", "RAW_USER"]'
+    
+     # Snowflake schema  name chart
+      - variable_name: CHART_TABLES
+        variable_value: '[ "RAW_CPTCODE", "RAW_DIAGNOSISCODE"]'   
+    
+      # Snowflake schema name bill
+      - variable_name: BILL_TABLES
+        variable_value: '[ "RAW_AR", "RAW_ADJUSTMENT", "RAW_PAYER","RAW_GROSSCHARGE", "RAW_PAYMENT", "RAW_TRANSACTION_TYPE"]'
+    
+     
+      # Snowflake Stage database
+      - variable_name: SNOWFLAKE_STAGE_DATABASE 
+        variable_value: "MANAGE_DB"
+    
+      # Snowflake Stage Schema
+      - variable_name: SNOWFLAKE_STAGE_SCHEMA 
+        variable_value: "external_stages"
+      # Snowflake Stage
+      - variable_name: SNOWFLAKE_STAGE 
+        variable_value: "aws_stage"
+    
+      # Stage Name
+      - variable_name: STAGE_NAME 
+        variable_value: "MANAGE_DB.external_stages.aws_stage"
+      # Slack Channel
+      - variable_name: SLACK_CHANNEL
+        variable_value: "#airflowalerting" 
+    
+      # Slack Username
+      - variable_name: SLACK_USERNAME
+        variable_value: "sjay-dev"
+    
+      # Slack Token
+      - variable_name: SLACK_TOKEN
+        variable_value: "xoxb-3460478712757-5752442545975-M84CAN01wIeUdrZ1Qtqx1qp9"
+      # Local File Path
+      - variable_name: FILE_PATH
+        variable_value: "/usr/local/airflow/include/dataset/*."
+    
+      - variable_name: LOCAL_DIRECTORY
+        variable_value: "/usr/local/airflow/include/dataset/"  
     ```
 
     **Best Practice Recommendations**:
@@ -485,68 +553,55 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
       - **Logging**: Implement logging for transparency and easier debugging.
       - **Routine Automation**: Consider tools or triggers for script execution scheduling.
 
-#### b. File Processing Code Setup:
+#### b. Config Dockerfile:
 
-- **Overview**: Jupyter Lab was used for this step as well.
+- **Overview**: Allows you to add installation.
 
-- **Process_Files.ipynb**:
+- **Dockerfile**:
 
     ```python
-    import pandas as pd
-    from datetime import datetime
-    import boto3
-    from io import StringIO
-    import logging
+        FROM quay.io/astronomer/astro-runtime:10.4.0
 
-    # Setup logging
-    logging.basicConfig(level=logging.INFO)
-
-    # Get AWS credentials from environment variables
-    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
-    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
-
-    session = boto3.Session(
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        region_name='us-east-1'  # Change this to your AWS region
-    )
-
-    s3 = session.resource('s3')
-    bucket_name = 'snowflake-emr'  # Name of your bucket
-    s3_folder = 'raw_files/'
-
-    def process_dataframe(df, row_limit, filename):
-        num_files = (len(df) + row_limit - 1) // row_limit
-
-        for i in range(num_files):
-            start_index = i * row_limit
-            end_index = start_index + row_limit
-            df_subset = df.iloc[start_index:end_index]
-            
-            try:
-                csv_buffer = StringIO()
-                df_subset.to_csv(csv_buffer, index=False)
-                timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
-                s3_file_path = s3_folder + f"{filename}_{timestamp_str}-{i+1}.csv"
-                s3.Object(bucket_name, s3_file_path).put(Body=csv_buffer.getvalue())
-                logging.info(f"Processed DataFrame (Part {i+1}) saved to s3://{bucket_name}/{s3_file_path}")
-            except Exception as e:
-                logging.error(f"Error while processing DataFrame part {i+1}: {str(e)}")
-
-    # Example usage:
-    row_limit = 7000
-    filename = 'users'
-    input_df = users  # Assume you've loaded users dataframe before this
-    process_dataframe(input_df.copy(), row_limit, filename)
-
+        USER root
+        
+        # Install AWS CLI using apt-get to ensure it is globally available
+        RUN apt-get update && \
+            apt-get install -y awscli && \
+            rm -rf /var/lib/apt/lists/*
+        
+        USER astro
+        
+        # Install specific Airflow providers and slack_sdk
+        RUN pip install --no-cache-dir apache-airflow-providers-slack apache-airflow-providers-amazon==8.11.0 slack_sdk
+        
+        # Enable test connection configuration (if applicable)
+        ENV AIRFLOW__CORE__TEST_CONNECTION="Enabled"
+        
+        # Install soda and dbt in separate virtual environments
+        RUN python -m venv soda_venv && . soda_venv/bin/activate && \
+            pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
+        
+        RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
+            pip install dbt-snowflake==1.7.0 pendulum 
+        
+        # It's recommended to use Airflow connections or secret management tools for sensitive information
+        ENV SNOWFLAKE_USER='TRANSFORM_USER'
+        ENV SNOWFLAKE_PASSWORD='OneBlood123'  
+        ENV SNOWFLAKE_ACCOUNT='xub44819.us-east-1'
     ```
 
-    **Best Practice Recommendations**:
-      - **Error Handling**: Incorporate try-except blocks for robust error handling.
-      - **Logging**: Utilize Python's logging library over simple print statements.
-      - **Parameterization**: Make the script versatile to handle any DataFrame and path.
-      - **Efficient Data Handling**: Stream data in chunks instead of splitting the dataframe in-memory.
+#### c. requirements :
 
+- **Overview**: Allows you to add installation.
+
+```python
+  # Astro Runtime includes the following pre-installed providers packages: https://docs.astronomer.io/astro/runtime-image-architecture#provider-packages
+  astro-sdk-python[amazon, snowflake] >= 1.1.0
+  astronomer-cosmos[dbt.snowflake]
+  apache-airflow-providers-snowflake==4.4.0
+  soda-core-snowflake==3.2.1
+  protobuf==3.20.0
+```
 </details>
 
 
@@ -555,7 +610,12 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
 ---
-
+- **Dockerfile**:
+    **Best Practice Recommendations**:
+      - **Error Handling**: Incorporate try-except blocks for robust error handling.
+      - **Logging**: Utilize Python's logging library over simple print statements.
+      - **Parameterization**: Make the script versatile to handle any DataFrame and path.
+      - **Efficient Data Handling**: Stream data in chunks instead of splitting the dataframe in-memory.
 <br>
 <img src="images/Dag.png" alt="header" style="width: 900px; height: 400px;"><br>
 
