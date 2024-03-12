@@ -402,7 +402,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
     PRE raw_files/
     ```
 
-### b. Naming Conventions:
+#### b. Naming Conventions:
 
 - Timestamps are used for file naming:
 
@@ -423,9 +423,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 </details>
 
-----
 
----
 
 ### 2. Aiflow Dag: Ingest
 
