@@ -410,98 +410,69 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
         raw_address.yml  raw_date.yml  raw_location.yml  raw_user.yml
         astro@cfabfee5ced1:/usr/local/airflow$ 
     ```
-  - **configuration_register.yml** : `ls include/soda/`
-   
-    ```shell
-      data_source healthcare_db:
-      type: snowflake
-      username: ${SNOWFLAKE_USER}
-      password: ${SNOWFLAKE_PASSWORD}
-      account: ${SNOWFLAKE_ACCOUNT}
-      database: RAW 
-      warehouse: HEALTHCARE_WH
-      connection_timeout: 240
-      role: DEVELOPER
-      client_session_keep_alive: true
-      authenticator: snowflake
-      session_params:
-        QUERY_TAG: soda-queries
-        QUOTED_IDENTIFIERS_IGNORE_CASE: false
-      schema: REGISTER
-    
-    data_source healthcare_dev:
-      type: snowflake
-      username: ${SNOWFLAKE_USER}
-      password: ${SNOWFLAKE_PASSWORD}
-      account: ${SNOWFLAKE_ACCOUNT}
-      database: DEV 
-      warehouse: HEALTHCARE_WH
-      connection_timeout: 240
-      role: DEVELOPER
-      client_session_keep_alive: true
-      authenticator: snowflake
-      session_params:
-        QUERY_TAG: soda-queries
-        QUOTED_IDENTIFIERS_IGNORE_CASE: false
-      schema: DBT_SBROWN
-      soda_cloud:
-      host: cloud.us.soda.io
-      api_key_id: soda id
-      api_key_secret: soda secret
-  ```- **check_function.py** : `ls include/soda/`
-
-  ```shell
-    def check(scan_name, config_suffix=None, checks_subpath=None, data_source='healthcare_db', project_root='include'):
-    from soda.scan import Scan
-    import os
-
-    print('Running Soda Scan ...')
-    
-    # Print the config_suffix to verify it's being passed correctly
-    print(f"Config suffix: {config_suffix}")
-
-    # Dynamically construct the configuration file path based on the provided suffix
-    config_file = os.path.join(project_root, f'soda/configuration_{config_suffix}.yml')
-    
-    # Print the constructed config file path to verify correctness
-    print(f"Config file path: {config_file}")
-
-    checks_path = os.path.join(project_root, 'soda/checks')
-    
-    # Print the checks path to verify it's constructed correctly
-    print(f"Checks path: {checks_path}")
-
-    if checks_subpath:
-        checks_path = os.path.join(checks_path, checks_subpath)
-        # Print the updated checks path if a subpath is provided
-        print(f"Updated checks path with subpath: {checks_path}")
-
-    scan = Scan()
-    scan.set_verbose()
-    scan.add_configuration_yaml_file(config_file)
-    scan.set_data_source_name(data_source)
-    scan.add_sodacl_yaml_files(checks_path)
-    scan.set_scan_definition_name(scan_name)
-
-    result = scan.execute()
-    print(scan.get_logs_text())
-
-    if result != 0:
-        raise ValueError('Soda Scan failed')
-
-    # Check if the configuration file exists after attempting to use it
-    if not os.path.exists(config_file):
-        raise FileNotFoundError(f"Configuration file not found: {config_file}")
-
-    return result
-```
-
-</details>
-
-<details>
-  <summary>Click to Expand: Data Quality checks environment</summary>
+  - **configuration_register.yml_** : `ls include/soda/` 
+     
+        ```shell
+	      data_source healthcare_db:
+	       type: snowflake
+	       username: ${SNOWFLAKE_USER}
+	       password: ${SNOWFLAKE_PASSWORD}
+	       account: ${SNOWFLAKE_ACCOUNT}
+	       database: RAW 
+	       warehouse: HEALTHCARE_WH
+	       connection_timeout: 240
+	       role: DEVELOPER
+	       client_session_keep_alive: true
+	       authenticator: snowflake
+	       session_params:
+	         QUERY_TAG: soda-queries
+	         QUOTED_IDENTIFIERS_IGNORE_CASE: false
+	       schema: REGISTER
+	      data_source healthcare_dev:
+	        type: snowflake
+	        username: ${SNOWFLAKE_USER}
+	        password: ${SNOWFLAKE_PASSWORD}
+	        account: ${SNOWFLAKE_ACCOUNT}
+	        database: DEV 
+	        warehouse: HEALTHCARE_WH
+	        connection_timeout: 240
+	        role: DEVELOPER
+	        client_session_keep_alive: true
+	        authenticator: snowflake
+	        session_params:
+	          QUERY_TAG: soda-queries
+	          QUOTED_IDENTIFIERS_IGNORE_CASE: false
+	        schema: DBT_SBROWN
+	        soda_cloud:
+	        host: cloud.us.soda.io
+	        api_key_id: soda id
+	        api_key_secret: soda secret
+      ```
+	
   
-  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
+ - **raw_usser.yml** : `cat include/soda/checks/register_tables/`
+    
+     ```shell
+	   checks for raw_user:
+	     - schema:
+	         fail:
+	           when required column missing: [UIDPK, UID, UFNAME, ULNAME, EMAIL, GENDER, AGE, USERTYPE, UPDATE_AT]
+	           when wrong column type:
+	             UIDPK: NUMBER
+	             UID: NUMBER
+	             UFNAME: VARCHAR
+	             ULNAME: VARCHAR
+	             EMAIL: VARCHAR
+	             GENDER: VARCHAR
+	             AGE: NUMBER
+	             USERTYPE: VARCHAR
+	             UPDATE_AT: TIMESTAMP_NTZ
+				 ```
+</details>
+<details>
+  <summary>Click to Expand: DBT</summary>
+  
+  - Command to list dbt: `aws s3 ls s3://snowflake-emr`
      
       ```shell
         PRE error_files/
