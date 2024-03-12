@@ -388,7 +388,6 @@ This script sets up the environment within the PostgreSQL container. It performs
       - missing_count(LAST_NAME) = 0
       - missing_count(PROVIDER_SPECIALTY) = 0
       - missing_count(EMAIL) = 0
-
      ```
 
    - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
