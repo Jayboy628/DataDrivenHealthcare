@@ -372,15 +372,14 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 
 ## Ingestion Approach for Data Lake
+Our ingestion approach is meticulously designed to ensure all components of the data pipeline are properly established and operational.
 
-Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
----
 ### Airflow: Orcahstrate the following:
-  - **Sources**: ingest data into raw_files folder (S3 buckets) and `alert`.
+  - **Sources**: ingest data into `raw_files` folder (S3 buckets) and issue an `alert`.
     - **Folder Management and Notification**:
-      - errors: error files store in the error_folder `Slack alert`.
-      - processed: processed data ingest into snowflake `Slack alert`
+      - errors: error files stored in the `error_folder` with a `Slack alert`.
+      - processed: processed data is ingested into snowflake with a`Slack alert`
 
 
 ### 1. Project Environment
@@ -409,13 +408,14 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
   - **Command to list** : `ls include/soda/` and `ls include/soda/checks/`
      
       ```shell
-        stro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/
-      __pycache__  check_function.py  check_transform.py  checks  config.py  configuration_bill.yml  configuration_chart.yml  configuration_register.yml  configuration_transform.yml
-        astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/
-        bill_tables  chart_tables  register_tables  transform
-        astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/register_tables/
-        raw_address.yml  raw_date.yml  raw_location.yml  raw_user.yml
-        astro@cfabfee5ced1:/usr/local/airflow$ 
+        ls include/soda/
+	__pycache__  check_function.py  check_transform.py  checks  config.py  configuration_bill.yml  configuration_chart.yml  configuration_register.yml  configuration_transform.yml
+	
+	ls include/soda/checks/
+	bill_tables  chart_tables  register_tables  transform
+	
+	ls include/soda/checks/register_tables/
+	raw_address.yml  raw_date.yml  raw_location.yml  raw_user.yml
     ```
   - **configuration_register.yml_** : `ls include/soda/` 
      
@@ -426,9 +426,9 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 	       password: ${SNOWFLAKE_PASSWORD}
 	       account: ${SNOWFLAKE_ACCOUNT}
 	       database: RAW 
-	       warehouse: HEALTHCARE_WH
+	       warehouse: your warehouse
 	       connection_timeout: 240
-	       role: DEVELOPER
+	       role: your role
 	       client_session_keep_alive: true
 	       authenticator: snowflake
 	       session_params:
@@ -441,15 +441,15 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 	        password: ${SNOWFLAKE_PASSWORD}
 	        account: ${SNOWFLAKE_ACCOUNT}
 	        database: DEV 
-	        warehouse: HEALTHCARE_WH
+	        warehouse: your warehouse
 	        connection_timeout: 240
-	        role: DEVELOPER
+	        role: your role
 	        client_session_keep_alive: true
 	        authenticator: snowflake
 	        session_params:
 	          QUERY_TAG: soda-queries
 	          QUOTED_IDENTIFIERS_IGNORE_CASE: false
-	        schema: DBT_SBROWN
+	        schema: your schema
 	        soda_cloud:
 	        host: cloud.us.soda.io
 	        api_key_id: soda id
