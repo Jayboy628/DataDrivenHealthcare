@@ -386,7 +386,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 ### 1. Project Environment
 
 <details>
-  <summary>Click to Expand: Data Quality checks environment</summary>
+  <summary>Click to Expand: AWS environment</summary>
   
   - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
      
@@ -448,19 +448,56 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
       host: cloud.us.soda.io
       api_key_id: soda id
       api_key_secret: soda secret
-  ```
-- **check_function.py** : `ls include/soda/`
- 
+  ```- **check_function.py** : `ls include/soda/`
+
   ```shell
-    stro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/
-  __pycache__  check_function.py  check_transform.py  checks  config.py  configuration_bill.yml  configuration_chart.yml  configuration_register.yml  configuration_transform.yml
-    astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/
-    bill_tables  chart_tables  register_tables  transform
-    astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/register_tables/
-    raw_address.yml  raw_date.yml  raw_location.yml  raw_user.yml
-    astro@cfabfee5ced1:/usr/local/airflow$ 
+    def check(scan_name, config_suffix=None, checks_subpath=None, data_source='healthcare_db', project_root='include'):
+    from soda.scan import Scan
+    import os
+
+    print('Running Soda Scan ...')
+    
+    # Print the config_suffix to verify it's being passed correctly
+    print(f"Config suffix: {config_suffix}")
+
+    # Dynamically construct the configuration file path based on the provided suffix
+    config_file = os.path.join(project_root, f'soda/configuration_{config_suffix}.yml')
+    
+    # Print the constructed config file path to verify correctness
+    print(f"Config file path: {config_file}")
+
+    checks_path = os.path.join(project_root, 'soda/checks')
+    
+    # Print the checks path to verify it's constructed correctly
+    print(f"Checks path: {checks_path}")
+
+    if checks_subpath:
+        checks_path = os.path.join(checks_path, checks_subpath)
+        # Print the updated checks path if a subpath is provided
+        print(f"Updated checks path with subpath: {checks_path}")
+
+    scan = Scan()
+    scan.set_verbose()
+    scan.add_configuration_yaml_file(config_file)
+    scan.set_data_source_name(data_source)
+    scan.add_sodacl_yaml_files(checks_path)
+    scan.set_scan_definition_name(scan_name)
+
+    result = scan.execute()
+    print(scan.get_logs_text())
+
+    if result != 0:
+        raise ValueError('Soda Scan failed')
+
+    # Check if the configuration file exists after attempting to use it
+    if not os.path.exists(config_file):
+        raise FileNotFoundError(f"Configuration file not found: {config_file}")
+
+    return result
 ```
+
 </details>
+
 <details>
   <summary>Click to Expand: Data Quality checks environment</summary>
   
