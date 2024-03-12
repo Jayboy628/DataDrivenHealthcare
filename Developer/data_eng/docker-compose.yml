@@ -1,10 +1,12 @@
-version: '2.1'
+version: '3'
+
 services:
 
 ######################################################
 # DATABASE SERVICE
 ######################################################
   postgres:
+    image: postgres:latest
     build: './docker/postgres'
     restart: always
     container_name: postgres
@@ -14,69 +16,49 @@ services:
           max-file: "5"
           max-size: "10m"
     ports:
-      - "5432:5432" #- "32769:5432"
-    #volumes:
-      #- ./mnt/postgres:/var/lib/postgresql/data/pgdata
+      - "5432:5432"
     environment:
       - POSTGRES_USER=airflow
       - POSTGRES_PASSWORD=airflow
       - POSTGRES_DB=airflow_db
-      #- PGDATA=/var/lib/postgresql/data/pgdata
+      - AWS_CONFIG_FILE=/opt/airflow/.aws/config
+      - AWS_SHARED_CREDENTIALS_FILE=/opt/airflow/.aws/credentials
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "airflow_db", "-U", "airflow" ]
       timeout: 45s
       interval: 10s
       retries: 10
-
-  # adminer:
-  #   image: wodby/adminer:latest
-  #   restart: always
-  #   container_name: adminer
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #         max-file: "5"
-  #         max-size: "10m"
-  #   ports:
-  #     - "32767:9000"
-  #   environment:
-  #     - ADMINER_DEFAULT_DB_DRIVER=psql
-  #     - ADMINER_DEFAULT_DB_HOST=postgres
-  #     - ADMINER_DEFAULT_DB_NAME=airflow_db
-  #   healthcheck:
-  #     test: [ "CMD", "nc", "-z", "adminer", "9000" ]
-  #     timeout: 45s
-  #     interval: 10s
-  #     retries: 10
-
-
+    volumes:
+          - postgres-data:/var/lib/postgresql/data # Add this line to persist PostgreSQL data
 
 ######################################################
 # AIRFLOW
 ######################################################
 
   airflow:
-    build: ./docker/airflow
-    restart: always
-    container_name: airflow
-    volumes:
-      - ./mnt/airflow/airflow.cfg:/opt/airflow/airflow.cfg
-      - ./mnt/airflow/dags:/opt/airflow/dags
-      - ~/.aws:/opt/airflow/.aws
-      - /Users/shaunjaybrown/.dbt:/opt/airflow/.dbt
-      - /Users/shaunjaybrown/projects/repo/DataDrivenHealthcare:/app
-      #-  ~/.aws:/root/.aws
-      # - ~/.aws/credentials:/root/.aws/credentials
-     # - ./mnt/airflow/dags:/opt/airflow/dags/source_load
-
-    ports:
-      - 8080:8080
-    
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "airflow", "8080" ]
-      timeout: 45s
-      interval: 10s
-      retries: 10
+      build: ./docker/airflow
+      restart: always
+      container_name: airflow
+      volumes:
+        - ./mnt/airflow/airflow.cfg:/opt/airflow/airflow.cfg
+        - ./mnt/airflow/dags:/opt/airflow/dags
+        - ~/.aws:/opt/airflow/.aws
+        - /Users/shaunjaybrown/.dbt:/opt/airflow/.dbt
+        - /Users/shaunjaybrown/projects/repo/DataDrivenHealthcare:/app
+      ports:
+        - 8080:8080
+      environment:
+        - PYTHONPATH=/opt/airflow/dags
+        - AWS_CONFIG_FILE=/opt/airflow/.aws/config
+        - AWS_SHARED_CREDENTIALS_FILE=/opt/airflow/.aws/credentials
+        - AIRFLOW_CONN_SNOWFLAKE_DEFAULT={"conn_type":"snowflake","login":"rayboy","password":"@Password78!","schema":"external_stages",
+          "extra":{"account":"xub44819","database":"MANAGE_DB","region":"us-east-1","warehouse":"healthcare_wh","role":"accountadmin"}}
+      command: /opt/airflow/start-airflow.sh  # Added this line
+      healthcheck:
+        test: [ "CMD", "nc", "-z", "airflow", "8080" ]
+        timeout: 45s
+        interval: 10s
+        retries: 10
 
 ######################################################
 # NETWORK
@@ -87,3 +69,6 @@ services:
 networks:
   default:
     name: airflow-network
+# Define the named volume here
+volumes:
+  postgres-data:

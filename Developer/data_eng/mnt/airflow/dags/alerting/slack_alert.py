@@ -1,79 +1,63 @@
+import logging
+import requests  # Assuming you're using requests to send messages to Slack
 
+# Setup logger
+log = logging.getLogger(__name__)
 
-
-# Imports
-
-# Importing the base book
-from airflow.hooks.base_hook import BaseHook
-# Importing the Slack Webhook
-from airflow.contrib.operators.slack_webhook_operator import SlackWebhookOperator
-# importing the common settings
-# Get the System Environment
-
-def task_fail_slack_alert(dag):
+def send_slack_notification(message, context=None, message_type='info'):
     """
-    This callback function would be called if any of the tasks fail in airflow DAG
-    which would inturn send a message to a slack channel.
-    :param context:
-    :return:
+    General function to send a Slack message.
+
+    :param message: The message to be sent.
+    :param context: Airflow context, if available.
+    :param message_type: Type of the message ('info', 'success', 'failure').
     """
+    slack_webhook_url = "YOUR_SLACK_WEBHOOK_URL"  # Replace with your Slack webhook URL
 
-    # Create the slack connection and get the web token
-    slack_web_hook_token = BaseHook.get_connection('Slack_Connection').password
+    # Customize the message based on the type
+    if message_type == 'success':
+        message = f":white_check_mark: {message}"
+    elif message_type == 'failure':
+        message = f":x: {message}"
+    else:
+        message = f":information_source: {message}"
 
-    # prepare the message which needs to be send to slack
-    slack_msg = """
-            :red_circle: {dag} Workflow Failed at task {task}
-            *Task*: {task}  
-            *Dag*: {dag} 
-            *Execution Time*: {exec_date}  
-            """.format(
-            task=context.get('task_instance').task_id,
-            dag=context.get('task_instance').dag_id,
-            exec_date=context.get('execution_date')
+    payload = {"text": message}
 
-        )
+    try:
+        response = requests.post(slack_webhook_url, json=payload)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+    except Exception as e:
+        log.error(f"Error sending Slack notification: {e}")
+        # Consider additional error handling if necessary
 
-
-    # Send the actual message to Slack.
-    failed_alert = SlackWebhookOperator(
-        task_id='SLACK_FAILED_ALERT',
-        http_conn_id='Slack_Connection',
-        webhook_token=slack_web_hook_token,
-        message=slack_msg)
-
-    # Execute the Slack WebHook Dag
-
-
-
-def task_success_slack_alert(dag):
+def start_dag_notification(context):
     """
-    Send Slack Success messages.
-    :param dag: Dag to which this task needs to be attached to.
-    :return:
+    Send a Slack notification at the start of the DAG execution.
+
+    :param context: Airflow context.
     """
+    try:
+        dag_id = context.get('dag', {}).get('dag_id', 'Unknown DAG')
+        message = f"DAG {dag_id} started."
+        send_slack_notification(message, context, message_type='info')
+    except KeyError as e:
+        log.error(f"Missing key in context: {e}")
 
-    # Create the slack connection and get the web token
-    slack_web_hook_token = BaseHook.get_connection('Slack_Connection').password
+def task_status_slack_alert(context, status):
+    """
+    Send a Slack alert based on task status.
 
-    # prepare the message which needs to be send to slack
-    slack_msg = """
-                :white_check_mark: {{ task_instance.dag_id }} Workflow completed successfully.
-                *Task*: {{ task_instance.task_id }} 
-                *Dag*: {{ task_instance.dag_id }}
-                *Execution Time*: {{ execution_date }} 
-                """
-
-    # Send the actual message to Slack.
-    task_success_alert = SlackWebhookOperator(
-        task_id='SLACK_SUCCESS_ALERT',
-        http_conn_id='Slack_Connection',
-        webhook_token=slack_web_hook_token,
-        on_failure_callback=None,
-        message=slack_msg,
-        dag=dag)
-
-    # Execute the Slack WebHook Dag
-    return task_success_alert
-	
-	
+    :param context: Airflow context.
+    :param status: Status of the task ('success' or 'failure').
+    """
+    try:
+        task_id = context['task_instance'].task_id
+        if status == 'success':
+            message = f"Task {task_id} completed successfully."
+            send_slack_notification(message, context, message_type='success')
+        elif status == 'failure':
+            message = f"Task {task_id} failed."
+            send_slack_notification(message, context, message_type='failure')
+    except KeyError as e:
+        log.error(f"Missing key in context: {e}")

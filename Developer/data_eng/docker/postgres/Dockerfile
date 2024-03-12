@@ -1,7 +1,7 @@
-FROM postgres:15.3-alpine
+FROM postgres:latest
 
-COPY init-hive-db.sh /docker-entrypoint-initdb.d/init-hive-db.sh
+# Copy initialization script
+COPY ./init-postgres-db.sh /docker-entrypoint-initdb.d/init-postgres-db.sh
 
-RUN chmod +x /docker-entrypoint-initdb.d/init-hive-db.sh
-
+# Expose the PostgreSQL port
 EXPOSE 5432
