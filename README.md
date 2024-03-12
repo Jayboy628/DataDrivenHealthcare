@@ -78,38 +78,16 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 #### 1. Introduction:
 
-- **Overview**: The data model approach we will use is the Ralph Kimball.
+- **Overview**: The data model approach we will use is based on Ralph Kimball's methodology, which emphasizes the design of data warehouses built around the concept of dimensional modeling. This approach is highly focused on making databases understandable and accessible to business users and is particularly well-suited for data analytics and business intelligence purposes.
+
+- **Star Schema**:n this structure, data is organized into fact tables and dimension tables. Fact tables contain the quantitative metrics of the business process, while dimension tables contain descriptive attributes related to the measurements in the fact tables.
+
+#### Below Demonstrate Star Schema
+
+<br>
+<img src="images/Data Model.jpeg" alt="header" style="width: 900px; height: 400px;"><br>
 
 
-#### 7. Execution:
-
-- **Change Directory where airflow is located**: `cd data_eng/`
-
-   - **Start.sh**:Build the base images from which are based the Dockerfiles (hen Startup all the containers at once )
-     ```shell
-      docker-compose up -d --build
-     ```
-
-   - **Stop.sh**: Stop all the containers at once
-     ```shell
-      docker-compose down
-     ```
-
-   - **Restart.sh**:
-     ```shell
-     ./stop.sh
-     ./start.sh
-     ```
-
-   - **reset.sh**:
-     ```shell
-      docker-compose down
-      docker system prune -f
-      docker volume prune -f
-      docker network prune -f
-      rm -rf ./mnt/postgres/*
-      docker rmi -f $(docker images -a -q)
-     ```
 </details>
 
 
