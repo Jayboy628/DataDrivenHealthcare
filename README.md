@@ -379,14 +379,14 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 ### Airflow: Orcahstrate the following:
   - **Sources**: ingest data into raw_files folder (S3 buckets) and `alert`.
     - **Folder Management and Notification**:
-      - errors: and processed files and `alert`.
-      - processed: ingest into snowflake and `alert`
+      - errors: error files store in the error_folder `Slack alert`.
+      - processed: processed data ingest into snowflake `Slack alert`
 
 
 ### 1. Project Environment
 
 <details>
-  <summary>Click to Expand: AWS environment</summary>
+  <summary>Click to Expand: AWS S3 environment</summary>
   
   - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
      
@@ -404,7 +404,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
       ```
 </details>
 <details>
-  <summary>Click to Expand: Data Quality checks environment(SODA)</summary>
+  <summary>Click to Expand: Data Quality checks environment (SODA)</summary>
   
   - **Command to list** : `ls include/soda/` and `ls include/soda/checks/`
      
@@ -595,7 +595,10 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 <details>
  <summary>Click to Expand: Load data into data lake </summary>
 	
-- **Overview Load_s3.py**
+- **Overview**: The DAG defined in your script, `load_file_s3_etl`, is designed to automate the process of uploading CSV files from a local directory to an Amazon S3 bucket, notify a Slack channel about the upload status, and subsequently trigger another DAG for processing the uploaded data. It's structured to run daily without catching up on past executions. Here's an overview of its components and workflow:
+- **Configuration**
+	- Utilizes Airflow's Variable feature to dynamically set the S3 connection ID, bucket name, key, local directory, and Slack channel.
+	- Employs Amazon AWS S3 and Slack providers for interactions with S3 and Slack, respectively.
     ```python
       	from airflow.decorators import dag, task
 	from datetime import datetime
@@ -670,6 +673,30 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 	
 	etl_dag = load_file_s3_etl()
     ```
+    #### Task
+  	1. `upload_csv_files_to_s3`:
+   	   - Scans a specified local directory for CSV files.
+           - Uploads each found CSV file to a specified S3 bucket and key location, replacing the file if it already exists.
+  	   - Records information about the uploaded files, such as their names and sizes, then deletes the local copies of these files.
+  	   - Returns a list of dictionaries, each containing information about an uploaded file.
+  	2. `notify_slack`:
+  	   - Takes the list of uploaded file information as input.
+  	   - If files were uploaded, constructs a message listing the names and sizes of the uploaded files.
+  	   - If no files were uploaded, prepares a message indicating that no new files were uploaded.
+  	   - Sends the prepared message to a specified Slack channel using the `SlackAPIPostOperator`.
+  	3. `trigger_ingest_snowflake`:
+  	   - Configured to trigger another DAG, presumably for processing the uploaded files in Snowflake, upon successful completion of the `notify_slack task`.
+  	   - Allows for additional configuration via the conf parameter, and offers options to reset the DAG run, wait for completion, and specify poke intervals and allowed/failed states for more controlled execution flow.
+
+   #### Workflow
+  	- The DAG starts with the `upload_csv_files_to_s3` task to upload CSV files from the local directory to S3.
+  	- Next, the `notify_slack` task executes, sending a notification to Slack about the status of the upload.
+  	- Finally, if the notification task succeeds, the trigger_ingest_snowflake task is executed to trigger another DAG for further processing, demonstrating a linear sequence of task dependencies.	  
+
+   #### Features
+  	- The DAG includes modern Airflow features, such as the use of the `@dag` and `@task` decorators for simplified DAG and task definitions.
+  	- It showcases interaction with external systems (S3 and Slack) and the chaining of workflows via DAG triggering, making it a practical example of a data pipeline that incorporates data uploading, notification, and further data processing steps.
+  
 </details>
 
 ## Transform Approach
