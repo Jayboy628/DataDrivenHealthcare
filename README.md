@@ -371,14 +371,12 @@ The Configuration Approach ensures that all data pipeline components are appropr
 </details>
 
 
-## Ingestion into Data Lake
+## Ingestion Approach for Data Lake
 
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
 ---
-### Approach:
-
-- **Airflow**: Orcahstrate the following:
+### Airflow: Orcahstrate the following:
   - **Sources**: ingest data into raw_files folder (S3 buckets) and `alert`.
     - **Folder Management and Notification**:
       - errors: and processed files and `alert`.
@@ -422,8 +420,6 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
     ```
 
 </details>
-
-
 
 ### 2. Aiflow Dag: Ingest
 
@@ -556,7 +552,9 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 
 ## Transform Approach
+Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
+---
 
 <br>
 <img src="images/Dag.png" alt="header" style="width: 900px; height: 400px;"><br>
