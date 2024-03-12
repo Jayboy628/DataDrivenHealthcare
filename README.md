@@ -370,6 +370,56 @@ This script sets up the environment within the PostgreSQL container. It performs
      ```
 </details>
 
+### 5. Data Quality (SodaCL ) 
+
+
+<details>
+<summary>Click to Expand</summary>
+
+**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
+
+   - **Null Values Tests**: These checks ensure that essential columns do not contain null values. For the dim_provider table, it's crucial that primary key, NPI, first and last names, specialty, and email don't have nulls as they are essential for identifying and contacting the provider.
+
+     ```shell
+    checks for dim_provider:
+      - missing_count(PROVIDER_PK) = 0
+      - missing_count(PROVIDER_NPI) = 0
+      - missing_count(FIRST_NAME) = 0
+      - missing_count(LAST_NAME) = 0
+      - missing_count(PROVIDER_SPECIALTY) = 0
+      - missing_count(EMAIL) = 0
+
+     ```
+
+   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
+
+     ```shell
+     dbt init your_project_name
+     ```
+
+   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
+     ```shell
+        your_project_name:
+      target: dev
+      outputs:
+        dev:
+          type: snowflake
+          account: your_account
+          user: your_username
+          password: your_password
+          role: your_role
+          database: your_database
+          warehouse: your_warehouse
+          schema: your_schema
+          threads: [desired_number_of_threads]
+     ```
+     - **Running and Testing:
+
+     ```shell
+     dbt debug
+     ```
+</details>
+
 ---
 ## Ingestion Approach
 
