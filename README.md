@@ -188,8 +188,6 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 </details>
 
----
-
 ### 3. Snowflake Setup
 
 <details>
@@ -372,24 +370,22 @@ The Configuration Approach ensures that all data pipeline components are appropr
 
 </details>
 
----
-## Ingestion Approach Data Lake
+
+## Ingestion into Data Lake
 
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
 ---
-
-
-### Components:
+### Approach:
 
 - **Airflow**: Orcahstrate the following:
-  - **File Process**: Load dataframes as CSV files to S3 buckets.
-  - **Folder Management**: Creation of folders for errors and processed files.
-  - **Notification***: Alert files each step of 
+  - **Sources**: ingest data into raw_files folder (S3 buckets) and `alert`.
+    - **Folder Management and Notification**:
+      - errors: and processed files and `alert`.
+      - processed: ingest into snowflake and `alert`
 
----
 
-### 2. AWS S3 Code Structure
+### 1. AWS S3 Code Structure
 
 <details>
 <summary>Click to Expand</summary>
@@ -431,12 +427,12 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ---
 
-### 1. Aiflow Dag: Ingest
+### 2. Aiflow Dag: Ingest
 
 <details>
 <summary>Click to Expand</summary>
 
-#### a. Data Exploring Code Setup:
+#### a. Ingest dag:
 
 - **Overview**: I utilized Jupyter Lab as my primary exploration tool.
 
@@ -561,9 +557,8 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 
 
-## Orchestration Approach
+## Transform Approach
 
-The Orchestration Approach ensures that all data pipeline components are appropriately set up.
 
 <br>
 <img src="images/Dag.png" alt="header" style="width: 900px; height: 400px;"><br>
