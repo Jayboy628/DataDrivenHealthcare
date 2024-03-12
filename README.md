@@ -56,7 +56,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 The Configuration Approach ensures that all data pipeline components are appropriately set up.
 <br>
-<img src="images/ModernDataWarehouse2.png" alt="header" style="width: 100px; height: 500px;">
+<img src="images/ModernDataWarehouse2.png" alt="header" style="width: 1110px; height: 500px;">
 
 #### Components:
 
