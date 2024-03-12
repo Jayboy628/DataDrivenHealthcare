@@ -43,14 +43,14 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
   - Uniqueness tests
   - Referential integrity test
   - Freshness checks
-- Data Lake:example
+- Ingestion Approach for Data Lake
   - Ingest and Notification
     - Files and Database
       - Raw
-- Data Warehouse
+- Transformation Approach
   - Stage
   - Transform
-- Report
+- Reporting Approach
   
 ### Configuration Approach
 
