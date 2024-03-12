@@ -383,42 +383,124 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
       - processed: ingest into snowflake and `alert`
 
 
-### 1. AWS S3 Code Structure
+### 1. Project Environment
 
 <details>
-<summary>Click to Expand</summary>
-
-#### a. S3 Folder Structure:
-
-- Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
-
-   Folders in S3:
+  <summary>Click to Expand: Data Quality checks environment</summary>
+  
+  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
+     
+      ```shell
+        PRE error_files/
+        PRE processed/
+        PRE raw_files/
+    ```
+</details>
+<details>
+  <summary>Click to Expand: Data Quality checks environment(SODA)</summary>
+  
+  - **Command to list** : `ls include/soda/` and `ls include/soda/checks/`
+     
+      ```shell
+        stro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/
+      __pycache__  check_function.py  check_transform.py  checks  config.py  configuration_bill.yml  configuration_chart.yml  configuration_register.yml  configuration_transform.yml
+        astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/
+        bill_tables  chart_tables  register_tables  transform
+        astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/register_tables/
+        raw_address.yml  raw_date.yml  raw_location.yml  raw_user.yml
+        astro@cfabfee5ced1:/usr/local/airflow$ 
+    ```
+  - **configuration_register.yml** : `ls include/soda/`
    
     ```shell
-    PRE error_files/
-    PRE processed/
-    PRE raw_files/
+      data_source healthcare_db:
+      type: snowflake
+      username: ${SNOWFLAKE_USER}
+      password: ${SNOWFLAKE_PASSWORD}
+      account: ${SNOWFLAKE_ACCOUNT}
+      database: RAW 
+      warehouse: HEALTHCARE_WH
+      connection_timeout: 240
+      role: DEVELOPER
+      client_session_keep_alive: true
+      authenticator: snowflake
+      session_params:
+        QUERY_TAG: soda-queries
+        QUOTED_IDENTIFIERS_IGNORE_CASE: false
+      schema: REGISTER
+    
+    data_source healthcare_dev:
+      type: snowflake
+      username: ${SNOWFLAKE_USER}
+      password: ${SNOWFLAKE_PASSWORD}
+      account: ${SNOWFLAKE_ACCOUNT}
+      database: DEV 
+      warehouse: HEALTHCARE_WH
+      connection_timeout: 240
+      role: DEVELOPER
+      client_session_keep_alive: true
+      authenticator: snowflake
+      session_params:
+        QUERY_TAG: soda-queries
+        QUOTED_IDENTIFIERS_IGNORE_CASE: false
+      schema: DBT_SBROWN
+      soda_cloud:
+      host: cloud.us.soda.io
+      api_key_id: soda id
+      api_key_secret: soda secret
+  ```
+- **check_function.py** : `ls include/soda/`
+ 
+  ```shell
+    stro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/
+  __pycache__  check_function.py  check_transform.py  checks  config.py  configuration_bill.yml  configuration_chart.yml  configuration_register.yml  configuration_transform.yml
+    astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/
+    bill_tables  chart_tables  register_tables  transform
+    astro@cfabfee5ced1:/usr/local/airflow$ ls include/soda/checks/register_tables/
+    raw_address.yml  raw_date.yml  raw_location.yml  raw_user.yml
+    astro@cfabfee5ced1:/usr/local/airflow$ 
+```
+</details>
+<details>
+  <summary>Click to Expand: Data Quality checks environment</summary>
+  
+  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
+     
+      ```shell
+        PRE error_files/
+        PRE processed/
+        PRE raw_files/
     ```
-
-#### b. Naming Conventions:
-
-- Timestamps are used for file naming:
-
-    ```python
-    timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
-    ```
-
-#### c. Slack Notifications:
-
-- Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
-
-    ```python
-    SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
-
-    def send_slack_message(message):
-        #... [rest of the code]
-    ```
-
+</details>
+<details>
+  <summary>Click to Expand: S3 Folder Structure</summary>
+  
+  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
+     
+      ```shell
+        PRE error_files/
+        PRE processed/
+        PRE raw_files/
+      ```
+  
+  #### a. Naming Conventions:
+  
+  - Timestamps are used for file naming:
+  
+      ```python
+        timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
+      ```
+  
+  #### b. Slack Notifications:
+  
+  - Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
+  
+      ```python
+        SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
+    
+        def send_slack_message(message):
+            #... [rest of the code]
+      ```
 </details>
 
 ### 2. Aiflow(Astro) configuration
