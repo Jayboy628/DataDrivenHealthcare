@@ -454,9 +454,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 	        host: cloud.us.soda.io
 	        api_key_id: soda id
 	        api_key_secret: soda secret
-      ```
-	
-  
+    ```
  - **raw_usser.yml** : `cat include/soda/checks/register_tables/`
     
      ```shell
