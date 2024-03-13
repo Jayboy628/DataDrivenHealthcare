@@ -892,17 +892,25 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 ---
 
 <details>
- <summary>Click to Expand: Cosmoso and DBT </summary>
+ <summary>Click to Expand: Cosmos  </summary>
  
-#### Cosmoso and DBT
+#### Cosmos
 
+	- **Overview**:[Cosmos](https://www.astronomer.io/cosmos/), a powerful tool integration within the Airflow ecosystem, enables seamless orchestration of dbt (data build tool) jobs using Airflow workflows. By leveraging Cosmos, users can efficiently schedule, monitor, and manage dbt tasks directly from Airflow, thus streamlining the data transformation process within their data pipelines.
+	
+	- **Key Benefits of Using Cosmos for dbt and Airflow Integration**:
+		- `Centralized Workflow Management`: Cosmos allows teams to manage both dbt and Airflow tasks from a single platform, enhancing coordination and visibility across data operations.
+		- `Simplified Scheduling and Monitoring`: With Airflow's robust scheduling capabilities, teams can easily set up and monitor dbt runs as part of their routine data pipeline workflows, ensuring that data models are always refreshed based on the latest data.
+		- `Error Handling and Alerts`: Leverage Airflow's alerting mechanisms to notify teams of any issues in the dbt runs, allowing for quick resolution and minimal downtime.
+		- `Scalability`: As your data transformation needs grow, Cosmos and Airflow provide the scalability needed to handle increased workloads and more complex dbt models, without compromising performance.
+		- `Enhanced Collaboration`: By integrating dbt within the Airflow workflows, data teams can foster better collaboration between data engineers, analysts, and scientists, making it easier to implement changes and share insights across the organization.
 
 </details>
 
 <details>
  <summary>Click to Expand: DBT </summary>
  
-### Cosmoso and DBT
+### Cosmos and DBT
 </details>
 
 
