@@ -909,53 +909,50 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 #### Requirement: Install the following for DBT, SODA, and Cosmos
 
 - **Cosmos and DBT environment**
-					```docker_airflow
-						astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/
-						dbt_health  logs
-						
-						astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/dbt_health/
-						README.md  __pycache__  analyses  cosmos_config.py  dbt_packages  dbt_project.yml  logs  macros  models  package-lock.yml  packages.yml  profiles.yml  seeds  snapshots  target  tests
-						astro@cfabfee5ced1:/usr/local/airflow$
-					```
+		```bash
+		astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/
+		dbt_health  logs
+		
+		astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/dbt_health/
+		README.md  __pycache__  analyses  cosmos_config.py  dbt_packages  dbt_project.yml  logs  macros  models  package-lock.yml  packages.yml  profiles.yml  seeds  snapshots  target  tests
+		astro@cfabfee5ced1:/usr/local/airflow$
+			
 - **Requirement file***
-					```Requrement
-						astronomer-cosmos[dbt.snowflake]
-						apache-airflow-providers-snowflake==4.4.0
-						soda-core-snowflake==3.2.1
-					```
+		astronomer-cosmos[dbt.snowflake]
+		apache-airflow-providers-snowflake==4.4.0
+		soda-core-snowflake==3.2.1
 				
 ##### Separate Enviroment for Cosmos, DBT, and SODA(Dockerfile):
 - **SODA and DBT**: Enables running data quality checks externally.
-		```Dockerfile
-			# Install soda and dbt in separate virtual environments
-			RUN python -m venv soda_venv && . soda_venv/bin/activate && \
-			    pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
+		# Install soda and dbt in separate virtual environments
+		RUN python -m venv soda_venv && . soda_venv/bin/activate && \
+		    pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
 
-			RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
-			    pip install dbt-snowflake==1.7.0 pendulum 
-		```
+		RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
+		    pip install dbt-snowflake==1.7.0 pendulum
+			
 ##### Cosmos configuration: cosmos_config.yml
 - **cosmos_config**:
-		```config
-			# include/dbt/cosmos_config.py
+		# include/dbt/cosmos_config.py
 
-			from cosmos.config import ProfileConfig, ProjectConfig
-			from pathlib import Path
+		from cosmos.config import ProfileConfig, ProjectConfig
+		from pathlib import Path
 
-			DBT_CONFIG = ProfileConfig(
-			    profile_name='dbt_health',
-			    target_name='dev',
-			    profiles_yml_filepath=Path('/usr/local/airflow/include/dbt/dbt_health/profiles.yml')
+		DBT_CONFIG = ProfileConfig(
+		    profile_name='dbt_health',
+		    target_name='dev',
+		    profiles_yml_filepath=Path('/usr/local/airflow/include/dbt/dbt_health/profiles.yml')
 
-			)
+		)
 
-			DBT_PROJECT_CONFIG = ProjectConfig(
-			    dbt_project_path='/usr/local/airflow/include/dbt/dbt_health'
+		DBT_PROJECT_CONFIG = ProjectConfig(
+		    dbt_project_path='/usr/local/airflow/include/dbt/dbt_health'
 
-			)
-		```
-
+		)
+			
 </details>
+```
+	
 
 <details>
  <summary>Click to Expand: DBT </summary>
