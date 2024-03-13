@@ -910,6 +910,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 - **Cosmos and DBT environment**
 		```bash
+		
 		astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/
 		dbt_health  logs
 		
@@ -951,7 +952,6 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 		)
 			
 </details>
-```
 	
 
 <details>
