@@ -1031,7 +1031,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 <details>
 <summary>Click to Expand: Airflow Automate Transformation </summary>
-</details>
+
 
 ### DAG
 
