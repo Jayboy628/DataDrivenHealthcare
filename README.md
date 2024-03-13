@@ -1033,7 +1033,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 <summary>Click to Expand: Airflow Automate Transformation </summary>
 
 
-### DAG
+### DAG: healthcare_db
 
 - **Airflow Dag**:This Airflow DAG, healthcare_db, is designed for a healthcare data pipeline, integrating various tasks like data quality checks with Soda, data transformation with dbt, and data movement within a Snowflake environment. It demonstrates a complex, yet well-structured, approach to managing healthcare data workflows. 
 
@@ -1173,11 +1173,11 @@ Instantiate the DAG
 
 #### Dag Graph pipeline
 <br>
-<img src="images/Stage_register.png" alt="header" style="width: 1110px; height: 500px;">
+<img src="images/Stage_register.png" alt="header" style="width: 1180px; height: 550px;">
 
 #### Dag Graph pipeline
 <br>
-<img src="images/Dag_datawarehouse.png" alt="header" style="width: 1110px; height: 500px;">
+<img src="images/Dag_datawarehouse.png" alt="header" style="width: 1150px; height: 550px;">
 
 
 - **Tasks Overview**
