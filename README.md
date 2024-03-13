@@ -517,6 +517,8 @@ Our ingestion approach is meticulously designed to ensure all components of the 
         def send_slack_message(message):
             #... [rest of the code]
       ```
+      <br>
+      <img src="images/[Slack](images/slack.png)" alt="header" style="width: 1110px; height: 500px;">
 </details>
 
 ### 2. Aiflow(Astro) configuration
