@@ -209,6 +209,56 @@ The Configuration Approach ensures that all data pipeline components are appropr
         MUST_CHANGE_PASSWORD = FALSE;
      ```
 
+	 - **Show grants for a specific user on databases**: This command confirm what privilages you have
+	 SHOW GRANTS TO USER USERS;
+
+	 SHOW GRANTS TO ROLE ;
+
+  - **Create Stage***
+ 	```sql
+	 	// Step 1
+	 	USE ROLE YOUR ROLE NAME;
+	
+	 	// Step 2 create external stage
+	 	CREATE SCHEMA IF NOT EXISTS YOUR_MANAGE_DATABASE.SCHEMA;
+
+	 	// Step 3
+	 	CREATE OR REPLACE STAGE YOUR_MANAGE_DATABASE.SCHEMA.STAGE_NAME
+	     	URL='s3://snowflake-emr/raw_files'
+	     	CREDENTIALS=(AWS_KEY_ID='YOUR ID' AWS_SECRET_KEY='YOUR SECRET');
+
+	 	   // view stage
+	 	  DESC STAGE YOUR_MANAGE_DATABASE.SCHEMA.stage_name;
+
+	 	 LIST @YOUR_MANAGE_DATABASE.SCHEMA.stage_name;
+
+
+	 	// create file format
+	 	CREATE OR REPLACE FILE FORMAT YOUR_MANAGE_DATABASE.SCHEMA.my_csv_format
+	   	TYPE = 'CSV'
+	   	FIELD_DELIMITER = ','
+	   	SKIP_HEADER = 1
+	   	FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+	   	NULL_IF = ('NULL', 'null')
+	   	EMPTY_FIELD_AS_NULL = TRUE
+	   	TRIM_SPACE = TRUE
+	   	ERROR_ON_COLUMN_COUNT_MISMATCH = FALSE
+	   	ESCAPE = 'NONE'
+	   	ESCAPE_UNENCLOSED_FIELD = '\\';
+
+	 	SHOW FILE FORMATS IN SCHEMA YOUR_MANAGE_DATABASE.SCHEMA;
+	 	SHOW GRANTS ON FILE FORMAT YOUR_MANAGE_DATABASE.SCHEMA.my_csv_format;
+
+
+	 	SHOW FILE FORMATS;
+
+
+	 	COPY INTO HEALTHCARE_RAW.DATA_RAW.RAW_LOCATION
+	 	FROM '@YOUR_MANAGE_DATABASE.SCHEMA.stage_name/raw_Location.csv'
+	 	FILE_FORMAT = (FORMAT_NAME = 'MANAGE_DB.EXTERNAL_STAGES.MY_CSV_FORMAT');
+	```
+	 
+
 #### 3. Organize Data:
 
    - **Schemas**:
