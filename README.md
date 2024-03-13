@@ -926,34 +926,34 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 				
 ##### Separate Enviroment for Cosmos, DBT, and SODA(Dockerfile):
 - **SODA and DBT**: Enables running data quality checks externally.
-				```Dockerfile
-					# Install soda and dbt in separate virtual environments
-					RUN python -m venv soda_venv && . soda_venv/bin/activate && \
-					    pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
+		```Dockerfile
+			# Install soda and dbt in separate virtual environments
+			RUN python -m venv soda_venv && . soda_venv/bin/activate && \
+			    pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
 
-					RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
-					    pip install dbt-snowflake==1.7.0 pendulum 
-				```
+			RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
+			    pip install dbt-snowflake==1.7.0 pendulum 
+		```
 ##### Cosmos configuration: cosmos_config.yml
 - **cosmos_config**:
-				```config
-					# include/dbt/cosmos_config.py
+		```config
+			# include/dbt/cosmos_config.py
 
-					from cosmos.config import ProfileConfig, ProjectConfig
-					from pathlib import Path
+			from cosmos.config import ProfileConfig, ProjectConfig
+			from pathlib import Path
 
-					DBT_CONFIG = ProfileConfig(
-					    profile_name='dbt_health',
-					    target_name='dev',
-					    profiles_yml_filepath=Path('/usr/local/airflow/include/dbt/dbt_health/profiles.yml')
+			DBT_CONFIG = ProfileConfig(
+			    profile_name='dbt_health',
+			    target_name='dev',
+			    profiles_yml_filepath=Path('/usr/local/airflow/include/dbt/dbt_health/profiles.yml')
 
-					)
+			)
 
-					DBT_PROJECT_CONFIG = ProjectConfig(
-					    dbt_project_path='/usr/local/airflow/include/dbt/dbt_health'
+			DBT_PROJECT_CONFIG = ProjectConfig(
+			    dbt_project_path='/usr/local/airflow/include/dbt/dbt_health'
 
-					)
-				```		
+			)
+		```
 
 </details>
 
