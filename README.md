@@ -1035,9 +1035,9 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ### DAG
 
-- **Airflow Dag**:This Airflow DAG, healthcare_db, is designed for a healthcare data pipeline, integrating various tasks like data quality checks with Soda, data transformation with dbt, and data movement within a Snowflake environment. It demonstrates a complex, yet well-structured, approach to managing healthcare data workflows. Here's a detailed overview:
+- **Airflow Dag**:This Airflow DAG, healthcare_db, is designed for a healthcare data pipeline, integrating various tasks like data quality checks with Soda, data transformation with dbt, and data movement within a Snowflake environment. It demonstrates a complex, yet well-structured, approach to managing healthcare data workflows. 
 
-
+```bash
 
 	from airflow.decorators import dag, task
 	from airflow.models import Variable
@@ -1174,24 +1174,22 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 	    # If `marts_report` needs to be executed after `marts_warehouse`:
 	    # marts_warehouse >> marts_report
-
-
-	# Instantiate the DAG
-	healthcare_db()
+	      Instantiate the DAG
+	    healthcare_db()
+	```
 	
-	
-#### Dag Graph pipeline
-<br>
-<img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
---
-#### Dag Graph pipeline
-<br>
-<img src="![Stage Register](images/Stage_register.png)" alt="header" style="width: 1110px; height: 500px;">
---
-#### Dag Graph pipeline
-<br>
-<img src="![Dag Datawarehouse](images/Dag_datawarehouse.png)" alt="header" style="width: 1110px; height: 500px;">
---
+	#### Dag Graph pipeline
+	<br>
+	<img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
+	--
+	#### Dag Graph pipeline
+	<br>
+	<img src="images/Stage_register.png" alt="header" style="width: 1110px; height: 500px;">
+	--
+	#### Dag Graph pipeline
+	<br>
+	<img src="images/Dag_datawarehouse.png" alt="header" style="width: 1110px; height: 500px;">
+	--
 
 - **Tasks Overview**
 
