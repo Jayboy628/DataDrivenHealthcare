@@ -1176,10 +1176,10 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 	    # marts_warehouse >> marts_report
 	      Instantiate the DAG
 	    healthcare_db()
-	```
+
 	
-	#### Dag Graph pipeline
-	<br>
+#### Dag Graph pipeline
+<br>
 	<img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
 	--
 	#### Dag Graph pipeline
