@@ -54,7 +54,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
   
 ### Data Warehouse Architecture Approach
 
-The Configuration Approach ensures that all data pipeline components are appropriately set up.
+This Data Warehouse Approach by Ralph Kimball's methodology, which emphasizes the design of data warehouses built around the concept of dimensional modeling
 <br>
 <img src="images/ModernDataWarehouse2.png" alt="header" style="width: 1110px; height: 500px;">
 
@@ -1023,18 +1023,193 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 - ***DBT Model**: My docker DBT Model
 
 <br>
-<img src="images/dbt_model.png" alt="header" style="width: 900px; height: 400px;"><br>
+<img src="images/dbt_model.png" alt="header" style="width: 1100px; height: 500px;"><br>
 
 ---
 
- 
 </details>
 
-
 <details>
- <summary>Click to Expand: Dag </summary>
- 
-### Cosmoso and DBT
+<summary>Click to Expand: Airflow Automate Transformation </summary>
+</details>
+
+### DAG
+
+- **Airflow Dag**:This Airflow DAG, healthcare_db, is designed for a healthcare data pipeline, integrating various tasks like data quality checks with Soda, data transformation with dbt, and data movement within a Snowflake environment. It demonstrates a complex, yet well-structured, approach to managing healthcare data workflows. Here's a detailed overview:
+
+
+
+	from airflow.decorators import dag, task
+	from airflow.models import Variable
+	from datetime import datetime
+	from airflow.providers.snowflake.hooks.snowflake import SnowflakeHook
+	import logging
+	from typing import List
+	from airflow.models.baseoperator import chain
+
+	from include.soda.config import external_python_config, task_configs
+
+	from include.dbt.dbt_health.cosmos_config import DBT_PROJECT_CONFIG, DBT_CONFIG
+	from cosmos.airflow.task_group import DbtTaskGroup
+	from cosmos.constants import LoadMode
+	from cosmos.config import ProjectConfig, RenderConfig
+
+
+
+	# Try to fetch the variable at the beginning of your DAG file
+	# SNOWFLAKE_CONN_ID = "snowflake_default"
+	SNOWFLAKE_CONN_ID = Variable.get("SNOWFLAKE_CONN_ID")
+
+
+	try:
+	    REGISTER_TABLES = Variable.get("REGISTER_TABLES", deserialize_json=True)
+	    logging.info(f"REGISTER_TABLES: {REGISTER_TABLES}")
+	except KeyError as e:
+	    logging.error(f"Error retrieving variable: {e}")
+	    # Depending on your use case, you might set a default value or raise an exception
+	    # For example, setting REGISTER_TABLES to an empty list if not found
+	    REGISTER_TABLES = []
+    
+	try:
+	    CHART_TABLES = Variable.get("CHART_TABLES", deserialize_json=True)
+	    logging.info(f"CHART_TABLES: {CHART_TABLES}")
+	except KeyError as e:
+	    logging.error(f"Error retrieving variable: {e}")
+	    # Depending on your use case, you might set a default value or raise an exception
+	    # For example, setting CHART_TABLES to an empty list if not found
+	    CHART_TABLES = []   
+
+	try:
+	    BILL_TABLES = Variable.get("BILL_TABLES", deserialize_json=True)
+	    logging.info(f"BILL_TABLES: {BILL_TABLES}")
+	except KeyError as e:
+	    logging.error(f"Error retrieving variable: {e}")
+	    # Depending on your use case, you might set a default value or raise an exception
+	    # For example, setting BILL_TABLES to an empty list if not found
+	    BILL_TABLES = []
+
+
+
+
+	# DBT TABLES
+	def create_dbt_task_group(group_id: str, select_paths: list) -> DbtTaskGroup:
+	    return DbtTaskGroup(
+	        group_id=group_id,
+	        project_config=DBT_PROJECT_CONFIG,
+	        profile_config=DBT_CONFIG,
+	        render_config=RenderConfig(
+	            load_method=LoadMode.DBT_LS,
+	            select=select_paths
+	        )
+	    )
+
+
+	@dag(start_date=datetime(2023, 1, 1), schedule=None, catchup=False, tags=['healthcare'])
+	def healthcare_db():
+	    # Define tasks for performing quality checks using Soda for different table types
+	    for table_type, config in task_configs.items():
+	        @task.external_python(**external_python_config, task_id=f'check_load_{table_type}')
+	        def check_load(scan_name: str, config_suffix: str, checks_subpath: str):
+	            """Perform quality checks using Soda based on table type."""
+	            from include.soda.check_function import check
+	            return check(scan_name, config_suffix, checks_subpath)
+        
+	        # Dynamically create and assign tasks based on the configuration
+	        globals()[f'check_load_{table_type}'] = check_load(**config)
+
+   
+	    @task
+	    def truncate_and_insert(schema: str, tables: list):
+	        """
+	        Truncate and insert data into specified schema and tables with error handling.
+	        """
+	        hook = SnowflakeHook(snowflake_conn_id=SNOWFLAKE_CONN_ID)
+	        for table in tables:
+	            try:
+	                # Attempt to truncate table if exists
+	                truncate_cmd = f"TRUNCATE TABLE IF EXISTS {schema}.{table};"
+	                hook.run(truncate_cmd)
+	                logging.info(f"Successfully truncated table: {schema}.{table}")
+	            except Exception as e:
+	                logging.error(f"Failed to truncate table {schema}.{table}: {str(e)}")
+
+	            try:
+	                # Attempt to insert data from PUBLIC schema to target schema
+	                insert_cmd = f"INSERT INTO {schema}.{table} SELECT *,current_date() FROM data_raw.{table};"
+	                hook.run(insert_cmd)
+	                logging.info(f"Successfully inserted data into table: {schema}.{table}")
+	            except Exception as e:
+	                logging.error(f"Failed to insert data into table {schema}.{table}: {str(e)}")
+                
+                
+	    @task.external_python(python='/usr/local/airflow/soda_venv/bin/python')
+	    def check_transform(scan_name='check_transform', checks_subpath='transform'):
+	        from include.soda.check_transform import inspector
+
+	        return inspector(scan_name, checks_subpath)
+    
+	    check_transform = check_transform()
+
+                
+
+	    # DBT task groups for staging transformations
+	    staging_register = create_dbt_task_group('stage_register', ['path:models/staging/register'])
+	    staging_chart = create_dbt_task_group('stage_chart', ['path:models/staging/chart'])
+	    staging_bill = create_dbt_task_group('stage_bill', ['path:models/staging/bill'])
+    
+	    # DBT task group for warehouse transformations
+	    marts_warehouse = create_dbt_task_group('transform_warehouse', ['path:models/marts/warehouse'])
+    
+	    # Data movement tasks![Fileconfig](images/fileconfig.png)
+	    move_data_register = truncate_and_insert(schema='register', tables=REGISTER_TABLES)
+	    move_data_chart = truncate_and_insert(schema='chart', tables=CHART_TABLES)
+	    move_data_bill = truncate_and_insert(schema='bill', tables=BILL_TABLES)
+    
+   
+    
+	    # Task dependencies for data movement and transformations using chain
+	    chain(check_load_register, move_data_register, staging_register, check_transform, marts_warehouse)
+	    chain(check_load_chart, move_data_chart, staging_chart, check_transform,  marts_warehouse)
+	    chain(check_load_bill, move_data_bill, staging_bill, check_transform, marts_warehouse)
+
+	    # If `marts_report` needs to be executed after `marts_warehouse`:
+	    # marts_warehouse >> marts_report
+
+
+	# Instantiate the DAG
+	healthcare_db()
+	
+	
+#### Dag Graph pipeline
+<br>
+<img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
+--
+#### Dag Graph pipeline
+<br>
+<img src="![Stage Register](images/Stage_register.png)" alt="header" style="width: 1110px; height: 500px;">
+--
+#### Dag Graph pipeline
+<br>
+<img src="![Dag Datawarehouse](images/Dag_datawarehouse.png)" alt="header" style="width: 1110px; height: 500px;">
+--
+
+- **Tasks Overview**
+
+	- `Quality Checks (Soda)`: Executes quality checks for different table types `(REGISTER_TABLES, CHART_TABLES, BILL_TABLES)` using Soda. It utilizes an external Python task to perform these checks based on predefined configurations.
+	- `Truncate and Insert (Snowflake)`: For each specified schema and table list, this task truncates existing tables and inserts new data from a PUBLIC schema. It showcases error handling for both truncation and insertion operations.
+	- `Check Transform (Soda)`: Performs additional transformation checks using Soda, specifically targeting the transformation processes to ensure data integrity post-transformation.
+	- `DBT Task Groups for Staging Transformations`: Creates DBT task groups for staging transformations for register, chart, and bill data models. This modular approach allows for focused transformations within specific domains of the healthcare data model.
+	- `DBT Task Group for Warehouse Transformations`: Similar to staging transformations, this task group focuses on transformations within the warehouse layer, preparing the data for analytical purposes.
+	- `Data Movement Tasks`: These tasks move data for register, chart, and bill schemas by truncating existing tables and inserting new data. It's a critical step to refresh the data in preparation for transformation and analysis.
+
+- **Features**
+
+	- `Modular Task Groups`: Utilizes dbt task groups to modularly structure data transformations, improving maintainability and scalability.
+	- `External Python Execution`: Employs external Python execution for Soda tasks, allowing for isolated environment management and dependency handling.
+	- `Dynamic Task Creation`: Dynamically creates quality check tasks based on predefined configurations, demonstrating Airflow's flexibility in task management.
+	- `Error Handling`: Implements robust error handling for data movement tasks, ensuring reliability and traceability of the data pipeline operations.
+	- `Chain Dependencies`: Organizes task dependencies using chain for clarity and readability, streamlining the execution flow from quality checks to data movement and transformations.
+
 </details>
 
 ## Report Approach
@@ -1042,10 +1217,11 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 ---
 
 <details>
- <summary>Click to Expand: Tableau </summary>
- 
-#### Cosmoso and DBT
+<summary>Click to Expand: Clinical Reports, Revenue Cycle, and Dashboards </summary>
 
+### Tableau
+### Tableau
+### Tableau
 
 </details>
 
