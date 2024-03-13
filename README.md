@@ -703,6 +703,10 @@ Our ingestion approach is meticulously designed to ensure all components of the 
 	
 	etl_dag = load_file_s3_etl()
     ```
+	
+    <br>
+    <img src="images/load_s3.png" alt="header" style="width: 1110px; height: 500px;">
+	
     #### Task
 	1. `upload_csv_files_to_s3`:
 	   - Scans a specified local directory for CSV files.
@@ -854,6 +858,9 @@ Our ingestion approach is meticulously designed to ensure all components of the 
 	
 	dynamic_s3_to_snowflake_etl_dag = dynamic_s3_to_snowflake_etl()
   ```
+  <br>
+  <img src="images/snowflakeLoad.png" alt="header" style="width: 1110px; height: 500px;">
+  
  #### Tasks:
   
    1. `check_s3_for_file (S3KeySensor)`: Monitors the S3 bucket for files matching a specific pattern, ensuring that the DAG proceeds only when the expected files are present. This sensor plays a crucial role in managing workflow execution based on data availability.
