@@ -518,7 +518,7 @@ Our ingestion approach is meticulously designed to ensure all components of the 
             #... [rest of the code]
       ```
       <br>
-      <img src="[Slack]images/slack.png" alt="header" style="width: 1110px; height: 500px;">
+      <img src="images/slack.png" alt="header" style="width: 1110px; height: 500px;">
 </details>
 
 ### 2. Aiflow(Astro) configuration
