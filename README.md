@@ -1180,16 +1180,16 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 	
 #### Dag Graph pipeline
 <br>
-	<img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
-	--
-	#### Dag Graph pipeline
-	<br>
-	<img src="images/Stage_register.png" alt="header" style="width: 1110px; height: 500px;">
-	--
-	#### Dag Graph pipeline
-	<br>
-	<img src="images/Dag_datawarehouse.png" alt="header" style="width: 1110px; height: 500px;">
-	--
+<img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
+
+#### Dag Graph pipeline
+<br>
+<img src="images/Stage_register.png" alt="header" style="width: 1110px; height: 500px;">
+
+#### Dag Graph pipeline
+<br>
+<img src="images/Dag_datawarehouse.png" alt="header" style="width: 1110px; height: 500px;">
+
 
 - **Tasks Overview**
 
@@ -1209,7 +1209,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 	- `Chain Dependencies`: Organizes task dependencies using chain for clarity and readability, streamlining the execution flow from quality checks to data movement and transformations.
 
 </details>
-
+```
 ## Report Approach
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 ---
