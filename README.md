@@ -1,6 +1,6 @@
 <!-- ABOUT THE PROJECT -->
 
-$${\color{red}Still \space working \space on \space project}$$
+
 
 ## <center>$${\color{blue}Overcoming \space EMR \space Challenges \space with \space Cloud-Based \space Solutions:}$$</center>
 <br>
@@ -1167,15 +1167,15 @@ Instantiate the DAG
 
 ```	
 
-#### Dag Graph pipeline
+#### Dag Graph pipeline: linage pipline
 <br>
 <img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
 
-#### Dag Graph pipeline
+#### Dag Graph pipeline: Stage Register 
 <br>
 <img src="images/Stage_register.png" alt="header" style="width: 1180px; height: 550px;">
 
-#### Dag Graph pipeline
+#### Dag Graph pipeline: Data Models
 <br>
 <img src="images/Dag_datawarehouse.png" alt="header" style="width: 1150px; height: 550px;">
 
