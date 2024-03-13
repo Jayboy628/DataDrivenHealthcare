@@ -894,23 +894,21 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 <details>
 <summary>Click to Expand: Cosmos and DBT Integration</summary>
-	
- 
-	#### Cosmos
 
-		- **Overview**: [Cosmos](https://www.astronomer.io/cosmos/), integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
+### Cosmos
 
-		- **Key Benefits**:
-			- `Centralized Workflow Management`: Manage both dbt and Airflow tasks from a unified platform, enhancing coordination and visibility.
-			- `Simplified Scheduling and Monitoring`: Utilize Airflow's scheduling capabilities to manage dbt runs, ensuring data models are updated timely.
-			- `Error Handling and Alerts`: Benefit from Airflow's alerting mechanisms for prompt issue resolution in dbt runs.
-			- `Scalability`: Meet growing data transformation needs with the scalable solutions provided by Cosmos and Airflow.
-			- `Enhanced Collaboration`: Foster better collaboration across data teams by integrating dbt into Airflow workflows, facilitating seamless changes and insight sharing.
-		
-		##### Requirement: Install the following for DBT, SODA, and Cosmos
-				
-				- **Cosmos and DBT environment**
-				
+- **Overview**: [Cosmos](https://www.astronomer.io/cosmos/), integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
+
+- **Key Benefits**:
+  - **Centralized Workflow Management**: Manage both dbt and Airflow tasks from a unified platform, enhancing coordination and visibility.
+  - **Simplified Scheduling and Monitoring**: Utilize Airflow's scheduling capabilities to manage dbt runs, ensuring data models are updated timely.
+  - **Error Handling and Alerts**: Benefit from Airflow's alerting mechanisms for prompt issue resolution in dbt runs.
+  - **Scalability**: Meet growing data transformation needs with the scalable solutions provided by Cosmos and Airflow.
+  - **Enhanced Collaboration**: Foster better collaboration across data teams by integrating dbt into Airflow workflows, facilitating seamless changes and insight sharing.
+
+#### Requirement: Install the following for DBT, SODA, and Cosmos
+
+- **Cosmos and DBT environment**
 					```docker_airflow
 						astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/
 						dbt_health  logs
@@ -919,15 +917,15 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 						README.md  __pycache__  analyses  cosmos_config.py  dbt_packages  dbt_project.yml  logs  macros  models  package-lock.yml  packages.yml  profiles.yml  seeds  snapshots  target  tests
 						astro@cfabfee5ced1:/usr/local/airflow$
 					```
-				- **Requirement file***
+- **Requirement file***
 					```Requrement
 						astronomer-cosmos[dbt.snowflake]
 						apache-airflow-providers-snowflake==4.4.0
 						soda-core-snowflake==3.2.1
 					```
 				
-		##### Separate Enviroment for Cosmos, DBT, and SODA(Dockerfile):
-			- **SODA and DBT**: Enables running data quality checks externally.
+##### Separate Enviroment for Cosmos, DBT, and SODA(Dockerfile):
+- **SODA and DBT**: Enables running data quality checks externally.
 				```Dockerfile
 					# Install soda and dbt in separate virtual environments
 					RUN python -m venv soda_venv && . soda_venv/bin/activate && \
@@ -936,8 +934,8 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 					RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
 					    pip install dbt-snowflake==1.7.0 pendulum 
 				```
-		##### Cosmos configuration: cosmos_config.yml
-			- **cosmos_config**:
+##### Cosmos configuration: cosmos_config.yml
+- **cosmos_config**:
 				```config
 					# include/dbt/cosmos_config.py
 
@@ -955,8 +953,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 					    dbt_project_path='/usr/local/airflow/include/dbt/dbt_health'
 
 					)
-				```
-		
+				```		
 
 </details>
 
