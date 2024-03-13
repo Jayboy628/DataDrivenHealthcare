@@ -888,91 +888,48 @@ Our ingestion approach is meticulously designed to ensure all components of the 
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
 ---
-- **Dockerfile**:
-    **Best Practice Recommendations**:
-      - **Error Handling**: Incorporate try-except blocks for robust error handling.
-      - **Logging**: Utilize Python's logging library over simple print statements.
-      - **Parameterization**: Make the script versatile to handle any DataFrame and path.
-      - **Efficient Data Handling**: Stream data in chunks instead of splitting the dataframe in-memory.
-<br>
-<img src="images/Dag.png" alt="header" style="width: 900px; height: 400px;"><br>
 
-#### Dags process:
+<details>
+ <summary>Click to Expand: Cosmoso and DBT </summary>
+ 
+#### Cosmoso and DBT
 
-- Design DAGs for different workflows – `data ingestion`, `transformation`, and `reporting`.
-  - Best practise: Have different Dags for each work flow. `I created one Dag for this project`
-  - Set up troubleshooting script:
-    - Create `Test Script` before creating your Dags, this ave troubleshooting time: `list A few`
-      - **Test python version** `_00_python_version_dag.py`: 
-      - **Validate path S3-bucket** `_04_s3_path.py`                   
-      - **Connect to Snowflake and validate Snowflake version** `_01_snowflake_connect_connect.py`        
-      - **Validate AWS Service Manager Parameter**`_02_snowflake-connector_.py`                           
-      - **Validate Create Table in Snowflake**`_03_create_tables_snowflake.py`                   
-    - Set up error handling mechanisms in Airflow to handle failures or inconsistencies.
-      - ** Error Handling: try and except**
-          ```python
-          # Copy the file to the new location
-          try:
-              print(f"Copying from {source_bucket}/{source_key} to {destination_bucket}/{destination_key}")  # Logging
-              s3.copy_object(Bucket=destination_bucket, CopySource={'Bucket': source_bucket, 'Key': source_key}, Key=destination_key)
-          except Exception as e:
-              print(f"Error copying object: {e}")
-              return  # Exit the function if copying fails
-          ```
-  - Implement logging and monitoring to keep track of DAG runs:`Did not implement however used slack for alert`
-  - Implement retries and alert mechanisms in case of DAG failures:`Did not implement however used slack for alert`
-  - Ensure there's a solid connection setup between Airflow and Snowflake.
-    - `docker-compose.yml`:Ensure that your local devlopment matches the airflow(AWS,DBT):`opt/airflow`
-    ```python
-        airflow:
-          build: ./docker/airflow
-          restart: always
-          container_name: airflow
-          volumes:
-            - ./mnt/airflow/airflow.cfg:/opt/airflow/airflow.cfg
-            - ./mnt/airflow/dags:/opt/airflow/dags
-            - ~/.aws:/opt/airflow/.aws
-            - /home/yourpath/.dbt:/opt/airflow/.dbt
-            - /home/yourpath/projects/repo/DataDrivenHealthcare:/app
-    ```
-  - **Dag has a list of Task**:`DataDriven_Healthcare:`
-      - **start_task**:`Airflow.operators.dummy_operator:Its like placeholder can be use to start task`:This module is deprecated. Please use `airflow.operators.empty`
-          ```python
-              start_task = DummyOperator(task_id='start_task')
-          ```
-      - **list_files_in_raw_files**:
-          ```python
-              s3_list = S3ListOperator(
-              task_id='list_files_in_raw_files',
-              bucket='snowflake-emr',
-              prefix='raw_files/',
-              aws_conn_id='aws_default'
-              )
-          ```
-      - **branch_check_raw_files**: When the `BranchPythonOperator` is executed, it will run the provided Python callable. The callable should return the task_id of the next task to run. After the `BranchPythonOperator` task completes, the task with the task_id returned by the Python callable will be executed, while all other downstream tasks are skipped.
-          ```python
-                branch = BranchPythonOperator(
-                task_id='branch_check_raw_files',
-                python_callable=branch_based_on_files_existence,
-                provide_context=True,
-                op_args=[],
-                op_kwargs={'bucket_name': 'snowflake-emr', 'prefix': 'raw_files/'})
-          ```
-      - **load_to_snowflake**: `from airflow.operators.python_operator import PythonOperator`:The PythonOperator is a specific type of operator used to execute a Python callable (a function) within a DAG
-          ```python
-                start_task = DummyOperator(task_id='start_task')
-          ```
-      - **run_stage_models**: The `S3ListOperator` is an operator in Apache Airflow that's used to get a list of keys from an S3 bucket.
-          ```python
-                run_stage_models = BashOperator(
-                task_id='run_stage_models',
-                bash_command='/app/Developer/dbt-env/bin/dbt run --model tag:"DIMENSION" --project-dir /app/Developer/dbt_health --profile dbt_health --target dev')
-          ```
-      - **slack_success_alert**: 
-          ```python
-                slack_success_alert=task_success_slack_alert(dag=dag)
-          ```
-      - **end_task**
-          ```python
-                end_task = DummyOperator(task_id='end_task')
-          ```
+
+</details>
+
+<details>
+ <summary>Click to Expand: DBT </summary>
+ 
+### Cosmoso and DBT
+</details>
+
+
+<details>
+ <summary>Click to Expand: Dag </summary>
+ 
+### Cosmoso and DBT
+</details>
+
+## Report Approach
+Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
+---
+
+<details>
+ <summary>Click to Expand: Tableau </summary>
+ 
+#### Cosmoso and DBT
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
