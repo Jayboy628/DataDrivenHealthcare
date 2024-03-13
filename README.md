@@ -1165,7 +1165,8 @@ chain(check_load_bill, move_data_bill, staging_bill, check_transform, marts_ware
 Instantiate the DAG
 	    healthcare_db()
 
-	
+```	
+
 #### Dag Graph pipeline
 <br>
 <img src="images/Dag_flow.png" alt="header" style="width: 1110px; height: 500px;">
@@ -1197,7 +1198,7 @@ Instantiate the DAG
 	- `Chain Dependencies`: Organizes task dependencies using chain for clarity and readability, streamlining the execution flow from quality checks to data movement and transformations.
 
 </details>
-```
+
 
 ## Report Approach
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
