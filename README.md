@@ -891,19 +891,72 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ---
 
-<details>
- <summary>Click to Expand: Cosmos  </summary>
- 
-#### Cosmos
 
-	- **Overview**:[Cosmos](https://www.astronomer.io/cosmos/), a powerful tool integration within the Airflow ecosystem, enables seamless orchestration of dbt (data build tool) jobs using Airflow workflows. By leveraging Cosmos, users can efficiently schedule, monitor, and manage dbt tasks directly from Airflow, thus streamlining the data transformation process within their data pipelines.
+<details>
+<summary>Click to Expand: Cosmos and DBT Integration</summary>
 	
-	- **Key Benefits of Using Cosmos for dbt and Airflow Integration**:
-		- `Centralized Workflow Management`: Cosmos allows teams to manage both dbt and Airflow tasks from a single platform, enhancing coordination and visibility across data operations.
-		- `Simplified Scheduling and Monitoring`: With Airflow's robust scheduling capabilities, teams can easily set up and monitor dbt runs as part of their routine data pipeline workflows, ensuring that data models are always refreshed based on the latest data.
-		- `Error Handling and Alerts`: Leverage Airflow's alerting mechanisms to notify teams of any issues in the dbt runs, allowing for quick resolution and minimal downtime.
-		- `Scalability`: As your data transformation needs grow, Cosmos and Airflow provide the scalability needed to handle increased workloads and more complex dbt models, without compromising performance.
-		- `Enhanced Collaboration`: By integrating dbt within the Airflow workflows, data teams can foster better collaboration between data engineers, analysts, and scientists, making it easier to implement changes and share insights across the organization.
+ 
+	#### Cosmos
+
+		- **Overview**: [Cosmos](https://www.astronomer.io/cosmos/), integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
+
+		- **Key Benefits**:
+			- `Centralized Workflow Management`: Manage both dbt and Airflow tasks from a unified platform, enhancing coordination and visibility.
+			- `Simplified Scheduling and Monitoring`: Utilize Airflow's scheduling capabilities to manage dbt runs, ensuring data models are updated timely.
+			- `Error Handling and Alerts`: Benefit from Airflow's alerting mechanisms for prompt issue resolution in dbt runs.
+			- `Scalability`: Meet growing data transformation needs with the scalable solutions provided by Cosmos and Airflow.
+			- `Enhanced Collaboration`: Foster better collaboration across data teams by integrating dbt into Airflow workflows, facilitating seamless changes and insight sharing.
+		
+		##### Requirement: Install the following for DBT, SODA, and Cosmos
+				
+				- **Cosmos and DBT environment**
+				
+					```docker_airflow
+						astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/
+						dbt_health  logs
+						
+						astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/dbt_health/
+						README.md  __pycache__  analyses  cosmos_config.py  dbt_packages  dbt_project.yml  logs  macros  models  package-lock.yml  packages.yml  profiles.yml  seeds  snapshots  target  tests
+						astro@cfabfee5ced1:/usr/local/airflow$
+					```
+				- **Requirement file***
+					```Requrement
+						astronomer-cosmos[dbt.snowflake]
+						apache-airflow-providers-snowflake==4.4.0
+						soda-core-snowflake==3.2.1
+					```
+				
+		##### Separate Enviroment for Cosmos, DBT, and SODA(Dockerfile):
+			- **SODA and DBT**: Enables running data quality checks externally.
+				```Dockerfile
+					# Install soda and dbt in separate virtual environments
+					RUN python -m venv soda_venv && . soda_venv/bin/activate && \
+					    pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
+
+					RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
+					    pip install dbt-snowflake==1.7.0 pendulum 
+				```
+		##### Cosmos configuration: cosmos_config.yml
+			- **cosmos_config**:
+				```config
+					# include/dbt/cosmos_config.py
+
+					from cosmos.config import ProfileConfig, ProjectConfig
+					from pathlib import Path
+
+					DBT_CONFIG = ProfileConfig(
+					    profile_name='dbt_health',
+					    target_name='dev',
+					    profiles_yml_filepath=Path('/usr/local/airflow/include/dbt/dbt_health/profiles.yml')
+
+					)
+
+					DBT_PROJECT_CONFIG = ProjectConfig(
+					    dbt_project_path='/usr/local/airflow/include/dbt/dbt_health'
+
+					)
+				```
+		
 
 </details>
 
