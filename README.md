@@ -1164,7 +1164,7 @@ chain(check_load_bill, move_data_bill, staging_bill, check_transform, marts_ware
 
 Instantiate the DAG
 	    healthcare_db()
-```
+
 	
 #### Dag Graph pipeline
 <br>
@@ -1198,16 +1198,17 @@ Instantiate the DAG
 
 </details>
 ```
+
 ## Report Approach
 Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
----
+
 
 <details>
 <summary>Click to Expand: Clinical Reports, Revenue Cycle, and Dashboards </summary>
 
-### Tableau
-### Tableau
-### Tableau
+### Clinical Report (DBT)
+### Revenue Cycle(Tableau)
+### Dashboard (Tableau)
 
 </details>
 
