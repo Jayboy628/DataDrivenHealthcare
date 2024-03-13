@@ -7,7 +7,7 @@
 <img src="images/main.png" alt="header" style="width: 900px; height: 400px;"><br>
 
 #### <font color="blue"><em><center>Harnessing Cloud Technology for an Efficient Data Warehouse Solution</em></center></font>
-I worked for a health company that encountered a major issue with their EMR system because it did not align with their business process. In turn, this caused the system to be buggy, as too many custom builds were implemented. The company decided to move away from their current system and instead implemented eClinicalWorks. The EMR company owned the database, so my company had to arrange an amendment to the contract that enables them to extend their usage agreement. The EMR company also agreed to FTP the live data files before work begins at 2:00 am and after work ends at 7:00 pm.
+I worked for a health company that encountered a major issue with their EMR system because it did not align with their business process. In turn, this caused the system to be buggy, as too many custom builds were implemented. The company decided to move away from their current system and instead implemented eClinicalWorks. The EMR company owned the database, so my company had to arrange an amendment to the contract that enabled them to extend their usage agreement. The EMR company also agreed to FTP the live data files before work begins at 2:00 am and after work ends at 7:00 pm.
 <br><br>
 My job was to design and implement a data warehouse from these files. The requirements included creating various production reports and KPI’s that matched with the EMR system. The business owners would compare eClinicalWorks integrated reports with my reports and if aligned, they would be flagged to be used for production. In the company’s view, this was critical for data migration because it guaranteed that all operational reports would be correct and more importantly, would prove that eClinicalWorks was configured based on the company’s business requirements.
 <br><br>
@@ -68,7 +68,7 @@ This Data Warehouse Approach by Ralph Kimball's methodology, which emphasizes th
 - **COSMOS**: Integrate with DBT allow airflow to run
 - **DBT**: Handles data transformations.
 - **Slack**: Delivers process notifications.
-- **Tableau**: Deliver reports and Dashboard
+- **Tableau**: Delivers reports and Dashboard
 
 
 ---
@@ -82,7 +82,7 @@ This Data Warehouse Approach by Ralph Kimball's methodology, which emphasizes th
 
 - **Overview**: The data model approach we will use is based on Ralph Kimball's methodology, which emphasizes the design of data warehouses built around the concept of dimensional modeling. This approach is highly focused on making databases understandable and accessible to business users and is particularly well-suited for data analytics and business intelligence purposes.
 
-- **Star Schema**:n this structure, data is organized into fact tables and dimension tables. Fact tables contain the quantitative metrics of the business process, while dimension tables contain descriptive attributes related to the measurements in the fact tables.
+- **Star Schema**:In this structure data is organized into fact tables and dimension tables. Fact tables contain the quantitative metrics of the business process, while dimension tables contain descriptive attributes related to the measurements in the fact tables.
 
 #### Below is a simplified example of a healthcare star schema model
 
@@ -348,7 +348,7 @@ This Data Warehouse Approach by Ralph Kimball's methodology, which emphasizes th
 <details>
 <summary>Click to Expand</summary>
 
-**Note**: Along with `Data Quality Check` we should implement data [observability](https://www.montecarlodata.com/blog-what-is-data-observability/). `Barr Moses CEO and CO-founder of Monte Carlo` coind "Data observability" She explaind that Data observability provides full visibility into the health of your data AND data systems so you are the first to know when the data is wrong, what broke, and how to fix it.
+**Note**: Along with `data quality check` we should implement data observability. `Barr Moses CEO and CO-founder of Monte Carlo` coined "[Data observability](https://www.montecarlodata.com/blog-what-is-data-observability/)." She explaind that Data observability provides full visibility into the health of your data AND data systems so you are the first to know when the data is wrong, what broke, and how to fix it.
 - **The five pillars of data observability:** 
   - Freshness
   - Quality 
