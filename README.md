@@ -266,6 +266,26 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 <summary>Click to Expand: Tool Configuration</summary>
 
 #### 1. Airflow (Astro)
+
+-**Overview** In This project I am Installing Apache Airflow using the Astronomer CLI (Astro CLI) on Docker in a Mac environment. Before proceeding, ensure Docker Desktop is installed on your Mac. If it's not installed, download it from [Docker Hub](https://hub.docker.com/) and follow the installation instructions.
+
+   - **Step 1: Install the Astro CLI**: The Astro CLI is a command-line tool that makes it easier to run Airflow on your machine. To install the Astro CLI, open your terminal and run the following command:
+     ```sql
+	 curl -sSL https://install.astronomer.io | sudo bash -s -- v0.25.0
+     ```	
+
+   - **Step 2: Initialize an Airflow Project**:Once the Astro CLI is installed, create a new directory for your Airflow project and navigate into it:
+     ```sql
+	 mkdir your-airflow-project && cd your-airflow-project
+     ```	
+   	- Initialize a new Airflow project using the Astro CLI
+     	```sql
+     	GRANT ROLE my_role TO USER jay;
+     	GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     	GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     	GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     	GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```	
    - **Assign Roles and Grant Privileges**:
      ```sql
      GRANT ROLE my_role TO USER jay;
@@ -273,8 +293,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
      GRANT USAGE ON SCHEMA chart TO ROLE my_role;
      GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```	
-	
+     ```		
 #### 2. Slack
    - **Assign Roles and Grant Privileges**:
      ```sql
