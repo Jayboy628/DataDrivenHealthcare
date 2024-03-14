@@ -19,35 +19,24 @@ My intention with this project is to replicate some of the more important aspect
 ## Cloud Technology Project
 
 A comprehensive guide on setting up a data pipeline leveraging key cloud technologies: 
-[Apache Airflow](https://airflow.apache.org/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/),[SODA](https://www.soda.com/),[Snowflake](https://www.snowflake.com/en/), [COSMOS](https://www.astronomer.io/cosmos/), [DBT](https://www.getdbt.com/) and [Tableau](https://www.tableau.com/).
+[Apache Airflow](https://airflow.apache.org/), [Docker](https://www.docker.com/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/),[SODA](https://www.soda.com/),[Snowflake](https://www.snowflake.com/en/), [COSMOS](https://www.astronomer.io/cosmos/), [DBT](https://www.getdbt.com/) and [Tableau](https://www.tableau.com/).
 
 ---
 ### AGENDA
 1. Setup Environment
 	- AWS Environment Setup (Optional: AWS CLI)
-		- User creation, admin group creation, S3 bucket creation, and Systems Manager Parameter setup (optional).
 	- Snowflake Setup
-		- Database creation, role creation, and privilege granting.
 	- Tool Configuration
-		- DBT profile creation.
-		- SODA installation and configuration.
-		- Cosmos setup within Airflow.
 2. Design and Planning
 	- Data Modeling
-		- Introduction to Star Schema.
 	- Data Quality Planning
-		- Strategies for ensuring data quality, including examples of checks for null values, volume, numeric distribution, uniqueness, referential integrity, and freshness.
 3. Operational Tasks
 	- Data Ingestion and Notification
-		- Utilizing AWS S3 for data storage, Airflow for workflow automation, and Slack for notifications.
 	- Data Transformation with DBT
-		- Managing staging and transformation processes using DBT within the Airflow ecosystem, facilitated by Cosmos.
 	- Data Quality Checks with SODA
-		- Implementing data quality checks operationally on ingested and transformed data, incorporating Soda tests into Airflow workflows.
 	- Reporting and Visualization
-		- Developing reports and dashboards in Tableau based on transformed and quality-checked data.
 	- Workflow Automation and Communication
-		- Leveraging Airflow for pipeline orchestration and Slack for team communication and alerts throughout the data pipeline process.  
+ 
   
   
 ### Data Warehouse Architecture Approach
@@ -56,7 +45,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 #### Components:
 
-- **Airflow**: Manages ETL workflows.
+- **Airflow**: Orchestrates and manages ETL workflows.
 - **AWS S3**: Acts as data storage.
 - **AWS Systems Manager Parameter Store**: Secures configurations.`optional`
 - **SODA**:Data Quality.
