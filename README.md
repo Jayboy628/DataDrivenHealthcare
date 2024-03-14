@@ -426,10 +426,10 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
   
 
 #### 6. DBT profile creation
-   - **DBT**:Installing dbt (data build tool) on a Mac and configuring it to work with Snowflake, especially within the context of an Astronomer project (`astro`), involves a few steps. Below is a comprehensive guide that includes installing dbt on your Mac, configuring it for Snowflake, and ensuring it runs within a Docker container managed by Astronomer's CLI tool when you execute astro dev start.
+- **DBT**:Installing dbt (data build tool) on a Mac and configuring it to work with Snowflake, especially within the context of an Astronomer project (`astro`), involves a few steps. Below is a comprehensive guide that includes installing dbt on your Mac, configuring it for Snowflake, and ensuring it runs within a Docker container managed by Astronomer's CLI tool when you execute astro dev start.
 
 
-	**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
+	- **Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
 
 	   - **Step 1: Install dbt on Mac**: To get started with DBT, you first need to install it
 	   
