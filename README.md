@@ -403,25 +403,65 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 
 #### 5. Slack
-   - **Assign Roles and Grant Privileges**:
-     ```sql
-     GRANT ROLE my_role TO USER jay;
-     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```
+
+   - **Slack**: To use the `SlackAPIPostOperator` in Apache Airflow for sending notifications to a Slack channel, you'll need to set up a Slack App, configure a Slack Connection in Airflow, and then use the operator in your DAG. Here's a step-by-step guide
+   
+   - **Step1: Create a Slack APP**
+    1. Go to the Slack API: Navigate to Your Apps on the Slack API site and click "Create New App".
+	2. Name Your App & Choose Workspace: Provide a name for your app and select the Slack workspace where you want to install the app.
+	3. Permissions: In the "OAuth & Permissions" section, scroll down to "Scopes" and add the chat:write scope under "Bot Token Scopes". This permission allows your app to send messages as itself.
+	4. Install App to Workspace: Click "Install App to Workspace" and authorize the permissions.
+	5. Copy Bot User OAuth Token: After installing the app, you'll see a "Bot User OAuth Token" in the "OAuth & Permissions" page. Copy this token; you'll use it to configure the Airflow connection.
+	
+   - **Step 2: Configure a Slack Connection in Airflow**
+    1. Airflow UI: Go to the Airflow web interface.
+	2. Connections: Navigate to "Admin" > "Connections", and click on the "+" button to add a new connection.
+	3. Connection Details:
+		- Conn Id: Enter a unique identifier for this connection, such as slack_default.
+		- Conn Type: Select "HTTP".
+		- Host: Enter https://slack.com/api/chat.postMessage (Slack's method for sending messages).
+		- Password: Paste the "Bot User OAuth Token" you copied earlier.
+	4. Save: Click the "Save" button to create the connection
+		
+  
 
 #### 6. DBT profile creation
    - **Assign Roles and Grant Privileges**:
-     ```sql
-     GRANT ROLE my_role TO USER jay;
-     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```
+	**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
 
+	   - **Installation**: To get started with DBT, you first need to install it 
+
+	     ```shell
+	      pip install dbt
+	     ```
+
+	   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
+
+	     ```shell
+	     dbt init your_project_name
+	     ```
+
+	   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
+	     ```shell
+	        your_project_name:
+	      target: dev
+	      outputs:
+	        dev:
+	          type: snowflake
+	          account: your_account
+	          user: your_username
+	          password: your_password
+	          role: your_role
+	          database: your_database
+	          warehouse: your_warehouse
+	          schema: your_schema
+	          threads: [desired_number_of_threads]
+	     ```
+	     - **Running and Testing:
+
+	     ```shell
+	     dbt debug
+	     ```
 #### 7. SODA installation and configuration
    - **Assign Roles and Grant Privileges**:
      ```sql
@@ -454,48 +494,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 </details>
 
 
-### 4. DBT (Data Build Tool) Setup
 
-
-<details>
-<summary>Click to Expand</summary>
-
-**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
-
-   - **Installation**: To get started with DBT, you first need to install it 
-
-     ```shell
-      pip install dbt
-     ```
-
-   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
-
-     ```shell
-     dbt init your_project_name
-     ```
-
-   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
-     ```shell
-        your_project_name:
-      target: dev
-      outputs:
-        dev:
-          type: snowflake
-          account: your_account
-          user: your_username
-          password: your_password
-          role: your_role
-          database: your_database
-          warehouse: your_warehouse
-          schema: your_schema
-          threads: [desired_number_of_threads]
-     ```
-     - **Running and Testing:
-
-     ```shell
-     dbt debug
-     ```
-</details>
 
 ### 5. Data Quality (SodaCL) 
 
