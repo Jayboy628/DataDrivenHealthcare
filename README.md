@@ -587,15 +587,19 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	             USERTYPE: VARCHAR
 	             UPDATE_AT: TIMESTAMP_NTZ
 				 ```
-#### 8. Cosmos setup within Airflow
-   - **Assign Roles and Grant Privileges**:
-     ```sql
-     GRANT ROLE my_role TO USER jay;
-     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```
+#### 8. Cosmos setup within Airflow: include/dbt/dbt_health/cosmos_config.py
+
+- **cosmos_config**:
+	```sql
+	from cosmos.config import ProfileConfig, ProjectConfig
+	from pathlib import Path
+	DBT_CONFIG = ProfileConfig(
+	profile_name='dbt_health',
+	target_name='dev',
+	profiles_yml_filepath=Path('/usr/local/airflow/include/dbt/dbt_health/profiles.yml')
+	)
+	DBT_PROJECT_CONFIG = ProjectConfig(
+	dbt_project_path='/usr/local/airflow/include/dbt/dbt_health')
 
 </details>
 
@@ -666,55 +670,51 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 </details>
 
 
-## Ingestion Approach for Data Lake
-Our ingestion approach is meticulously designed to ensure all components of the data pipeline are properly established and operational.
-
-
-### Airflow: Orcahstrate the following:
-  - **Sources**: ingest data into `raw_files` folder (S3 buckets) and issue an `alert`.
-    - **Folder Management and Notification**:
-      - errors: error files stored in the `error_folder` with a `Slack alert`.
-      - processed: processed data is ingested into snowflake with a`Slack alert`
-  
-  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
-     
-      ```shell
-        PRE error_files/
-        PRE processed/
-        PRE raw_files/
-    ```
-#### a. Naming Conventions:
-  
-  - Timestamps are used for file naming:
-  
-      ```python
-        timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
-      ```
-  #### a. Slack Notifications:
-  
-  - Slack webhook integration for notifications on success or failure: **Please ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
-  
-      ```python
-        SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
-    
-        def send_slack_message(message):
-            #... [rest of the code]
-      ```
-      <br>
-      <img src="images/slack.png" alt="header" style="width: 1110px; height: 500px;">
-</details>
-
-
-
-## Transform Approach
-Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
 
 ---
 
-### 4. Aiflow(Astro) dag
+### 3. Operational Tasks
+
+
 
 <details>
- <summary>Click to Expand: Load data into data lake </summary>
+ <summary>Click to Expand: Data Ingestion and Notification into Data Lake </summary>
+ 
+#### Utilizing AWS S3 for data storage, Airflow for workflow automation, and Slack for notifications.
+
+   - **Sources**: ingest data into `raw_files` folder (S3 buckets) and issue an `alert`.
+     - **Folder Management and Notification**:
+       - errors: error files stored in the `error_folder` with a `Slack alert`.
+       - processed: processed data is ingested into snowflake with a`Slack alert`
+  
+   - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
+     
+       ```shell
+         PRE error_files/
+         PRE processed/
+         PRE raw_files/
+     ```
+##### a. Naming Conventions:
+  
+   - Timestamps are used for file naming:
+  
+       ```python
+         timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
+       ```
+##### a. Slack Notifications:
+  
+   - Slack webhook integration for notifications on success or failure: **Please ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
+  
+       ```python
+         SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
+    
+         def send_slack_message(message):
+             #... [rest of the code]
+       ```
+       <br>
+       <img src="images/slack.png" alt="header" style="width: 1110px; height: 500px;">
+	   
+##### Aiflow(Astro) dag
 	
 - **Overview**: The DAG defined in your script, `load_file_s3_etl`, is designed to automate the process of uploading CSV files from a local directory to an Amazon S3 bucket, notify a Slack channel about the upload status, and subsequently trigger another DAG for processing the uploaded data. It's structured to run daily without catching up on past executions. Here's an overview of its components and workflow:
 - **Configuration**
@@ -976,67 +976,6 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 </details>
 
-<details>
-<summary>Click to Expand: Cosmos and DBT Integration</summary>
-
-### Cosmos
-
-- **Overview**: [Cosmos](https://www.astronomer.io/cosmos/) integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
-
-- **Key Benefits**:
-  - **Centralized Workflow Management**: Manage both dbt and Airflow tasks from a unified platform, enhancing coordination and visibility.
-  - **Simplified Scheduling and Monitoring**: Utilize Airflow's scheduling capabilities to manage dbt runs, ensuring data models are updated timely.
-  - **Error Handling and Alerts**: Benefit from Airflow's alerting mechanisms for prompt issue resolution in dbt runs.
-  - **Scalability**: Meet growing data transformation needs with the scalable solutions provided by Cosmos and Airflow.
-  - **Enhanced Collaboration**: Foster better collaboration across data teams by integrating dbt into Airflow workflows, facilitating seamless changes and insight sharing.
-
-#### Requirement: Install the following for DBT, SODA, and Cosmos
-
-- **Cosmos and DBT environment**
-
-		```bash
-		astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/
-		dbt_health  logs
-		
-		astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/dbt_health/
-		README.md  __pycache__  analyses  cosmos_config.py  dbt_packages  dbt_project.yml  logs  macros  models  package-lock.yml  packages.yml  profiles.yml  seeds  snapshots  target  tests
-		astro@cfabfee5ced1:/usr/local/airflow$
-			
-- **Requirement file***
-		astronomer-cosmos[dbt.snowflake]
-		apache-airflow-providers-snowflake==4.4.0
-		soda-core-snowflake==3.2.1
-				
-##### Separate Enviroment for Cosmos, DBT, and SODA(Dockerfile):
-- **SODA and DBT**: Enables running data quality checks externally.
-		# Install soda and dbt in separate virtual environments
-		RUN python -m venv soda_venv && . soda_venv/bin/activate && \
-		    pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
-
-		RUN python -m venv dbt_venv && . dbt_venv/bin/activate && \
-		    pip install dbt-snowflake==1.7.0 pendulum
-			
-##### Cosmos configuration: include/dbt/dbt_health/cosmos_config.py
-- **cosmos_config**:
-	
-
-		from cosmos.config import ProfileConfig, ProjectConfig
-		from pathlib import Path
-
-		DBT_CONFIG = ProfileConfig(
-		    profile_name='dbt_health',
-		    target_name='dev',
-		    profiles_yml_filepath=Path('/usr/local/airflow/include/dbt/dbt_health/profiles.yml')
-
-		)
-
-		DBT_PROJECT_CONFIG = ProjectConfig(
-		    dbt_project_path='/usr/local/airflow/include/dbt/dbt_health'
-
-		)
-			
-</details>
-	
 
 <details>
 <summary>Click to Expand: DBT Transform</summary>
