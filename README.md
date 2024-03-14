@@ -426,42 +426,97 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
   
 
 #### 6. DBT profile creation
-   - **Assign Roles and Grant Privileges**:
+   - **DBT**:Installing dbt (data build tool) on a Mac and configuring it to work with Snowflake, especially within the context of an Astronomer project (`astro`), involves a few steps. Below is a comprehensive guide that includes installing dbt on your Mac, configuring it for Snowflake, and ensuring it runs within a Docker container managed by Astronomer's CLI tool when you execute astro dev start.
+
+
 	**Note**: DBT (Data Build Tool) provides a means to transform data inside your data warehouse. With it, analytics and data teams can produce reliable and structured data sets for analytics.
 
-	   - **Installation**: To get started with DBT, you first need to install it 
+	   - **Step 1: Install dbt on Mac**: To get started with DBT, you first need to install it
+	   
+	   	 1. Install Homebrew (if not already installed): Open a terminal and run
 
 	     ```shell
-	      pip install dbt
+		  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	     ```
+		 2. `Install Python` (if not already installed or if you need a different version):It's recommended to use `pyenv` for managing multiple Python versions:
+		 
+		 ```shell
+		 brew install pyenv
+		 pyenv install 3.8.5
+		 pyenv global 3.8.5
+		 
+		 ```
+		 3. Install dbt: You can install dbt for Snowflake using pip. It’s a good practice to use a virtual environment
+		 
+		 ```shell
+		 python -m venv dbt_env
+		 source dbt_env/bin/activate
+		 pip install dbt-snowflake
+		 
+		 ```
+	  - **Step 2: Configure dbt for Snowflake**:
+	   
+	   	 1. Initialize a dbt Project: Navigate to your project directory and run
+		 
+		 ```shell
+		 dbt init my_dbt_project
+		 ```
+		 2. Configure profiles.yml: dbt uses a file named profiles.yml for connection configurations. This file is typically located at ~/.dbt/. Edit this file to include your Snowflake credentials:
+		 
+		 ```shell
+		 my_dbt_project:
+		   target: dev
+		   outputs:
+		     dev:
+		       type: snowflake
+		       account: <your_snowflake_account>
+		       user: <your_snowflake_user>
+		       password: <your_snowflake_password>
+		       role: <your_snowflake_role>
+		       database: <your_snowflake_database>
+		       warehouse: <your_snowflake_warehouse>
+		       schema: <your_snowflake_schema>
+		       threads: 1
+		       client_session_keep_alive: False
+		 
+		 ```
+	- **Step 3: Use dbt with Astronomer and Docker**:
+	
+		1. Modify the Dockerfile: Navigate to your Astronomer project directory. You will modify the `Dockerfile` to include the installation commands for dbt and Soda. If the Dockerfile does not exist, the `astro dev init` command should generate it.
+	 
+	 	```shell
+			# Use the official Astronomer Inc. Airflow image as a parent image
+			FROM astronomerinc/ap-airflow:2.1.0-buster-onbuild
 
-	   - **Initialize a New DBT Project**: Navigate to your directory of choice and initiate a new project
+			# Install soda and dbt in separate virtual environments
+			RUN python -m venv soda_venv && . soda_venv/bin/activate && \
+			    pip install soda-core-snowflake==3.2.1 soda-core-scientific==3.2.1 pendulum && deactivate
 
-	     ```shell
-	     dbt init your_project_name
-	     ```
-
-	   - ** Configuration**: Modify the ~/.dbt/profiles.yml to set up your Snowflake connection. This file will contain details such as account name, user, password, role, database, and warehouse.
-	     ```shell
-	        your_project_name:
-	      target: dev
-	      outputs:
-	        dev:
-	          type: snowflake
-	          account: your_account
-	          user: your_username
-	          password: your_password
-	          role: your_role
-	          database: your_database
-	          warehouse: your_warehouse
-	          schema: your_schema
-	          threads: [desired_number_of_threads]
-	     ```
-	     - **Running and Testing:
-
-	     ```shell
-	     dbt debug
-	     ```
+			# Assuming you want dbt in its own environment
+			RUN python -m venv dbt_env && . dbt_env/bin/activate && \
+			    pip install dbt-snowflake && deactivate
+	 		
+	 	```
+	 2. Configure profiles.yml: dbt uses a file named profiles.yml for connection configurations. This file is typically located at ~/.dbt/. Edit this file to include your Snowflake credentials:
+	 
+	 ```shell
+	 my_dbt_project:
+	   target: dev
+	   outputs:
+	     dev:
+	       type: snowflake
+	       account: <your_snowflake_account>
+	       user: <your_snowflake_user>
+	       password: <your_snowflake_password>
+	       role: <your_snowflake_role>
+	       database: <your_snowflake_database>
+	       warehouse: <your_snowflake_warehouse>
+	       schema: <your_snowflake_schema>
+	       threads: 1
+	       client_session_keep_alive: False
+	 
+	 ```	 
+		 
 #### 7. SODA installation and configuration
    - **Assign Roles and Grant Privileges**:
      ```sql
