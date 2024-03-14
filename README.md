@@ -43,6 +43,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 ### Data Warehouse Architecture Approach
 <br>
 <img src="images/ModernDataWarehouse2.png" alt="header" style="width: 1110px; height: 500px;">
+
 #### Components:
 
 - **Airflow**: Orchestrates and manages ETL workflows.
