@@ -61,7 +61,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 ### 1. Setup Environment
 
 <details>
-<summary>Click to Expand</summary>
+<summary>Click to Expand:AWS Environment Setup (Optional: AWS CLI)</summary>
 
 #### 1. Introduction:
 
@@ -151,6 +151,12 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      aws ssm put-parameter --name "SnowflakeRole" --type "String" --value "YourRole"
      ```
 
+</details>
+<details>
+<summary>Click to Expand:Snowflake Setup</summary>
+</details>
+<details>
+<summary>Click to Expand:Tools Configuration</summary>
 </details>
 
 ### 3. Snowflake Setup
