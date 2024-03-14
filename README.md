@@ -262,11 +262,56 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 <details>
 <summary>Click to Expand: Tool Configuration</summary>
+
 #### 1. Airflow (Astro)
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```	
+	
 #### 2. Slack
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```
+
 #### 3. DBT profile creation
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```
+
 #### 4. SODA installation and configuration
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```
+
 #### 5. Cosmos setup within Airflow
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```
 
 </details>
 ### 2. Design and Planning
