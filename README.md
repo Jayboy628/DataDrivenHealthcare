@@ -675,12 +675,6 @@ Our ingestion approach is meticulously designed to ensure all components of the 
     - **Folder Management and Notification**:
       - errors: error files stored in the `error_folder` with a `Slack alert`.
       - processed: processed data is ingested into snowflake with a`Slack alert`
-
-
-### 3. Project Environment
-
-<details>
-  <summary>Click to Expand: AWS S3 environment</summary>
   
   - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
      
@@ -696,15 +690,6 @@ Our ingestion approach is meticulously designed to ensure all components of the 
       ```python
         timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
       ```
-</details>
-<details>
-  <summary>Click to Expand: Data Quality checks environment (SODA)</summary>
-  
- 
-</details>
-<details>
-  <summary>Click to Expand: Slack Notification </summary>
-  
   #### a. Slack Notifications:
   
   - Slack webhook integration for notifications on success or failure: **Please ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
