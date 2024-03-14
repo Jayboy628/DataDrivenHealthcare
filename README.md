@@ -704,6 +704,13 @@ Our ingestion approach is meticulously designed to ensure all components of the 
       <img src="images/slack.png" alt="header" style="width: 1110px; height: 500px;">
 </details>
 
+
+
+## Transform Approach
+Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
+
+---
+
 ### 4. Aiflow(Astro) dag
 
 <details>
@@ -968,12 +975,6 @@ Our ingestion approach is meticulously designed to ensure all components of the 
   - **Expandable Tasks**: Utilizes the .expand method for the `load_to_snowflake` and `notify_and_move_file` tasks, enabling parallel processing of multiple files. This feature optimizes performance and scalability.
 
 </details>
-
-## Transform Approach
-Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
-
----
-
 
 <details>
 <summary>Click to Expand: Cosmos and DBT Integration</summary>
