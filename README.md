@@ -267,7 +267,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 #### 1. Airflow (Astro)
 
--**Overview** In This project I am Installing Apache Airflow using the Astronomer CLI (Astro CLI) on Docker in a Mac environment. Before proceeding, ensure Docker Desktop is installed on your Mac. If it's not installed, download it from [Docker Hub](https://hub.docker.com/) and follow the installation instructions.
+- **Overview** In This project I am Installing Apache Airflow using the Astronomer CLI (Astro CLI) on Docker in a Mac environment. Before proceeding, ensure Docker Desktop is installed on your Mac. If it's not installed, download it from [Docker Hub](https://hub.docker.com/) and follow the installation instructions.
 
    - **Step 1: Install the Astro CLI**: The Astro CLI is a command-line tool that makes it easier to run Airflow on your machine. To install the Astro CLI, open your terminal and run the following command:
      ```sql
@@ -278,22 +278,36 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      ```sql
 	 mkdir your-airflow-project && cd your-airflow-project
      ```	
-   	- Initialize a new Airflow project using the Astro CLI
-     	```sql
-     	GRANT ROLE my_role TO USER jay;
-     	GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     	GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     	GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     	GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```	
-   - **Assign Roles and Grant Privileges**:
+   - Initialize a new Airflow project using the Astro CLI:This command generates a new Airflow project with a sample DAG file and the necessary configuration files.
      ```sql
-     GRANT ROLE my_role TO USER jay;
-     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```		
+	 astro dev init  
+     ```	
+   - **Step 3: Start Airflow**: This command starts Airflow within a Docker container. It might take a few minutes to pull the required Docker images and start the containers.
+     ```sql
+	 astro dev start
+     ```	
+   - **Step 4: Access the Airflow Web Interface**: Once Airflow is running, you can access the Airflow web interface by opening a web browser and navigating to
+     ```sql
+	 http://localhost:8080/
+
+     ```
+	 - Airflow Credential: When you initialize Apache Airflow using the Astronomer CLI (Astro CLI) in a local Docker environment, it automatically configures Airflow with default credentials for you to use when accessing the Airflow web UI. As of Airflow 2.x, the default username and password set by the Astronomer CLI are:U
+	 	- Username:`admin` Password `admin`
+		- Changing default credentials is a good practise, especially in a production environment.Here's how you can change the default credentials: first -> `astro dev stop`
+			1. Locate the `docker-compose.yml` File: This file is in the root of your Airflow project directory created by the `astro dev init` command.
+			2. Edit the Environment Variables: Open `docker-compose.yml` in a text editor and look for the environment variables under the `airflow-webserver` service. You'll add or modify the `_AIRFLOW_WWW_USER_USERNAME` and `_AIRFLOW_WWW_USER_PASSWORD` environment variables to set a new username and password.
+			```sql
+			environment:
+			  - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+			  - AIRFLOW__WEBSERVER__SECRET_KEY=secret_key
+			  - AIRFLOW__WEBSERVER__BASE_URL=http://localhost:8080
+			  - _AIRFLOW_WWW_USER_USERNAME=your_new_username
+			  - _AIRFLOW_WWW_USER_PASSWORD=your_new_password
+			```
+			3. Then `astro dev start`**Log in Using New Credentials**: Now, you can use the new username and password you set to log into the Airflow web UI.
+  
+  
+  		
 #### 2. Slack
    - **Assign Roles and Grant Privileges**:
      ```sql
