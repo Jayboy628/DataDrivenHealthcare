@@ -610,7 +610,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 - **Demonstrate Data Archetecture**
 <br>
-<img src="images/DataModeling.psdb" alt="header" style="width: 1100px; height: 500px;"><br>
+<img src="images/DataModeling.png" alt="header" style="width: 1100px; height: 500px;"><br>
 
 ---
 
