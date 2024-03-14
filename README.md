@@ -305,10 +305,104 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 			  - _AIRFLOW_WWW_USER_PASSWORD=your_new_password
 			```
 			3. Then `astro dev start`**Log in Using New Credentials**: Now, you can use the new username and password you set to log into the Airflow web UI.
-  
-  
-  		
-#### 2. Slack
+
+#### 2. airflow_setting:
+
+- **Overview**:  Automate your Airflow configuration to avoid repetitive setup tasks each time Airflow is initiated. This approach enables configuring Airflow Connections, Pools, and Variables all in one place, specifically tailored for local development environments.
+- **Variables to consider**
+  - AWS login credentials
+  - Snowflake login credentials
+  - Slack connection details
+  - S3 bucket specifics (name, key, prefix, processed, error paths)
+  - Snowflake configurations (tables, schema, databases, stage)
+  - Slack notifications (channel, token)
+  - Local file path for datasets
+
+- **Configuration in `airflow_setting.yaml`**: This YAML snippet defines essential Airflow configurations for seamless integration with AWS, Snowflake, and Slack, alongside managing S3 buckets and local datasets. Note: Ensure sensitive information like login credentials is securely managed and not hard-coded.
+
+    ```python
+      airflow:
+        connections:
+          - conn_id: aws_default
+            conn_type: aws
+            login: <aws_access_key_id>
+            password: <aws_secret_access_key>
+            extra:
+              region_name: us-east-1
+      
+          - conn_id: snowflake_default
+            conn_type: snowflake
+            login: <your_snowflake_username>
+            password: <your_snowflake_password>
+            schema: DATA_RAW
+            extra:
+              account: <your_snowflake_account>
+              warehouse: <your_snowflake_warehouse>
+              database: <your_snowflake_database>
+              role: <your_snowflake_role>
+              region: us-east-1
+      
+          - conn_id: slack_default
+            conn_type: slack
+            password: <your_slack_bot_token>
+      
+        variables:
+          # Snowflake and S3 configurations
+          - variable_name: S3_BUCKET
+            variable_value: "your_s3_bucket_name"
+      
+          # Additional configurations...
+      
+          # Slack notifications
+          - variable_name: SLACK_CHANNEL
+            variable_value: "#your_slack_channel"
+      
+          # Local dataset configurations
+          - variable_name: LOCAL_DIRECTORY
+            variable_value: "/path/to/your/local/dataset/"
+    ```
+
+
+#### 3. Dockerfile Configuration:
+
+- **Overview**: Customize the Dockerfile to include necessary installations for your Airflow environment.
+- **Dockerfile Content**: This Dockerfile extends the Astronomer Astro Runtime image, incorporating additional packages and tools required for your workflows, such as AWS CLI, specific Airflow providers, and the Slack SDK.
+
+    ```python
+        FROM quay.io/astronomer/astro-runtime:10.4.0
+
+        USER root
+        
+        # Install AWS CLI
+        RUN apt-get update && \
+            apt-get install -y awscli && \
+            rm -rf /var/lib/apt/lists/*
+        
+        USER astro
+        
+        # Install Airflow providers and the Slack SDK
+        RUN pip install --no-cache-dir apache-airflow-providers-slack apache-airflow-providers-amazon==8.11.0 slack_sdk
+        
+        # Configure environment variables for sensitive information
+        ENV AIRFLOW__CORE__ENABLE_XCOM_PICKLING=True
+        
+        # Additional configuration...
+    ```
+
+#### 4. Requirements :
+
+- **Overview**: Define additional dependencies and packages required for your Airflow setup.
+    ```python
+      # Astro Runtime includes the following pre-installed providers packages: https://docs.astronomer.io/astro/runtime-image-architecture#provider-packages
+      astro-sdk-python[amazon, snowflake] >= 1.1.0
+      astronomer-cosmos[dbt.snowflake]
+      apache-airflow-providers-snowflake==4.4.0
+      soda-core-snowflake==3.2.1
+      protobuf==3.20.0
+    ```
+
+
+#### 5. Slack
    - **Assign Roles and Grant Privileges**:
      ```sql
      GRANT ROLE my_role TO USER jay;
@@ -318,7 +412,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
      ```
 
-#### 3. DBT profile creation
+#### 6. DBT profile creation
    - **Assign Roles and Grant Privileges**:
      ```sql
      GRANT ROLE my_role TO USER jay;
@@ -328,7 +422,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
      ```
 
-#### 4. SODA installation and configuration
+#### 7. SODA installation and configuration
    - **Assign Roles and Grant Privileges**:
      ```sql
      GRANT ROLE my_role TO USER jay;
@@ -338,7 +432,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
      ```
 
-#### 5. Cosmos setup within Airflow
+#### 8. Cosmos setup within Airflow
    - **Assign Roles and Grant Privileges**:
      ```sql
      GRANT ROLE my_role TO USER jay;
@@ -580,107 +674,6 @@ Our ingestion approach is meticulously designed to ensure all components of the 
       ```
       <br>
       <img src="images/slack.png" alt="header" style="width: 1110px; height: 500px;">
-</details>
-
-### 2. Aiflow(Astro) configuration
-
-<details>
-<summary>Click to Expand</summary>
-
-#### a. airflow_setting:
-
-- **Overview**:  Automate your Airflow configuration to avoid repetitive setup tasks each time Airflow is initiated. This approach enables configuring Airflow Connections, Pools, and Variables all in one place, specifically tailored for local development environments.
-- **Variables to consider**
-  - AWS login credentials
-  - Snowflake login credentials
-  - Slack connection details
-  - S3 bucket specifics (name, key, prefix, processed, error paths)
-  - Snowflake configurations (tables, schema, databases, stage)
-  - Slack notifications (channel, token)
-  - Local file path for datasets
-
-- **Configuration in `airflow_setting.yaml`**: This YAML snippet defines essential Airflow configurations for seamless integration with AWS, Snowflake, and Slack, alongside managing S3 buckets and local datasets. Note: Ensure sensitive information like login credentials is securely managed and not hard-coded.
-
-    ```python
-      airflow:
-        connections:
-          - conn_id: aws_default
-            conn_type: aws
-            login: <aws_access_key_id>
-            password: <aws_secret_access_key>
-            extra:
-              region_name: us-east-1
-      
-          - conn_id: snowflake_default
-            conn_type: snowflake
-            login: <your_snowflake_username>
-            password: <your_snowflake_password>
-            schema: DATA_RAW
-            extra:
-              account: <your_snowflake_account>
-              warehouse: <your_snowflake_warehouse>
-              database: <your_snowflake_database>
-              role: <your_snowflake_role>
-              region: us-east-1
-      
-          - conn_id: slack_default
-            conn_type: slack
-            password: <your_slack_bot_token>
-      
-        variables:
-          # Snowflake and S3 configurations
-          - variable_name: S3_BUCKET
-            variable_value: "your_s3_bucket_name"
-      
-          # Additional configurations...
-      
-          # Slack notifications
-          - variable_name: SLACK_CHANNEL
-            variable_value: "#your_slack_channel"
-      
-          # Local dataset configurations
-          - variable_name: LOCAL_DIRECTORY
-            variable_value: "/path/to/your/local/dataset/"
-    ```
-
-
-#### b. Dockerfile Configuration:
-
-- **Overview**: Customize the Dockerfile to include necessary installations for your Airflow environment.
-- **Dockerfile Content**: This Dockerfile extends the Astronomer Astro Runtime image, incorporating additional packages and tools required for your workflows, such as AWS CLI, specific Airflow providers, and the Slack SDK.
-
-    ```python
-        FROM quay.io/astronomer/astro-runtime:10.4.0
-
-        USER root
-        
-        # Install AWS CLI
-        RUN apt-get update && \
-            apt-get install -y awscli && \
-            rm -rf /var/lib/apt/lists/*
-        
-        USER astro
-        
-        # Install Airflow providers and the Slack SDK
-        RUN pip install --no-cache-dir apache-airflow-providers-slack apache-airflow-providers-amazon==8.11.0 slack_sdk
-        
-        # Configure environment variables for sensitive information
-        ENV AIRFLOW__CORE__ENABLE_XCOM_PICKLING=True
-        
-        # Additional configuration...
-    ```
-
-#### c. Requirements :
-
-- **Overview**: Define additional dependencies and packages required for your Airflow setup.
-    ```python
-      # Astro Runtime includes the following pre-installed providers packages: https://docs.astronomer.io/astro/runtime-image-architecture#provider-packages
-      astro-sdk-python[amazon, snowflake] >= 1.1.0
-      astronomer-cosmos[dbt.snowflake]
-      apache-airflow-providers-snowflake==4.4.0
-      soda-core-snowflake==3.2.1
-      protobuf==3.20.0
-    ```
 </details>
 
 ### 3. Aiflow(Astro) dag
