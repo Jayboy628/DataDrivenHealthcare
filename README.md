@@ -63,26 +63,6 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 <details>
 <summary>Click to Expand:AWS Environment Setup (Optional: AWS CLI)</summary>
 
-#### 1. Introduction:
-
-- **Overview**: The data model approach we will use is based on Ralph Kimball's methodology, which emphasizes the design of data warehouses built around the concept of dimensional modeling. This approach is highly focused on making databases understandable and accessible to business users and is particularly well-suited for data analytics and business intelligence purposes.
-
-- **Star Schema**:In this structure data is organized into fact tables and dimension tables. Fact tables contain the quantitative metrics of the business process, while dimension tables contain descriptive attributes related to the measurements in the fact tables.
-
-#### Below is a simplified example of a healthcare star schema model
-
-<br>
-<img src="images/DataModel.png" alt="header" style="width: 1100px; height: 900px;"><br>
-
-
-</details>
-
-
-### 2. AWS Environment Setup
-
-<details>
-<summary>Click to Expand</summary>
-
 #### 1. Basic Environment Configuration:
 
    - **S3 Bucket**: 
@@ -149,21 +129,11 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      aws ssm put-parameter --name "SnowflakePassword" --type "SecureString" --value "YourPassword"
      aws ssm put-parameter --name "SnowflakeAccount" --type "String" --value "YourAccount"
      aws ssm put-parameter --name "SnowflakeRole" --type "String" --value "YourRole"
-     ```
 
 </details>
-<details>
-<summary>Click to Expand:Snowflake Setup</summary>
-</details>
-<details>
-<summary>Click to Expand:Tools Configuration</summary>
-</details>
-
-### 3. Snowflake Setup
 
 <details>
-<summary>Click to Expand</summary>
-
+<summary>Click to Expand: Snowflake Setup</summary>
 #### 1. Starting with Snowflake:
 
    - Snowflake offers a cloud-native data platform.
@@ -289,6 +259,24 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 **Note**: Replace placeholders (like `<YourSecurePassword>`) with actual values.
 
 </details>
+
+<details>
+<summary>Click to Expand: Tool Configuration</summary>
+#### 1. Airflow (Astro)
+#### 2. Slack
+#### 3. DBT profile creation
+#### 4. SODA installation and configuration
+#### 5. Cosmos setup within Airflow
+
+</details>
+### 2. Design and Planning
+<details>
+<summary>Click to Expand: Data Modeling</summary>
+</details>
+<details>
+<summary>Click to Expand: Data Quality Planning</summary>
+</details>
+
 
 ### 4. DBT (Data Build Tool) Setup
 
