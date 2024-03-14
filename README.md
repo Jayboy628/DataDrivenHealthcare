@@ -607,6 +607,13 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 <details>
 <summary>Click to Expand: Data Modeling</summary>
+
+- **Demonstrate Data Archetecture**
+<br>
+<img src="images/DataModeling.psdb" alt="header" style="width: 1100px; height: 500px;"><br>
+
+---
+
 </details>
 <details>
 <summary>Click to Expand: Data Quality Planning</summary>
@@ -980,7 +987,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 <details>
 <summary>Click to Expand: DBT Transform</summary>
 
-### DBT
+####  Managing staging and transformation processes using DBT within the Airflow ecosystem, facilitated by Cosmos
 
 - **Overview**: [dbt](https://www.astronomer.io/cosmos/) integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
 
