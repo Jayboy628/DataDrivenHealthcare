@@ -134,7 +134,8 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 <details>
 <summary>Click to Expand: Snowflake Setup</summary>
-#### 1. Starting with Snowflake:
+
+#### 1. Starting with Snowflake
 
    - Snowflake offers a cloud-native data platform.
       - [Register on Snowflake](https://www.snowflake.com/)
@@ -142,7 +143,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
       - Complete the registration.
       - Use credentials to access Snowflake's UI.
 
-#### 2. Structure Configuration:
+#### 2. Structure Configuration
 
    - **Data Warehouse**:
      ```sql
@@ -220,7 +221,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	```
 	 
 
-#### 3. Organize Data:
+#### 3. Organize Data
 
    - **Schemas**:
      ```sql
@@ -245,7 +246,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      );
      ```
 
-#### 4. Permissions:
+#### 4. Permissions
 
    - **Assign Roles and Grant Privileges**:
      ```sql
