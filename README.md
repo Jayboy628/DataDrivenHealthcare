@@ -518,132 +518,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	 ```	 
 		 
 #### 7. SODA installation and configuration
-   - **Assign Roles and Grant Privileges**:
-     ```sql
-     GRANT ROLE my_role TO USER jay;
-     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```
 
-#### 8. Cosmos setup within Airflow
-   - **Assign Roles and Grant Privileges**:
-     ```sql
-     GRANT ROLE my_role TO USER jay;
-     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
-     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
-     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
-     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
-     ```
-
-</details>
-
-### 2. Design and Planning
-
-<details>
-<summary>Click to Expand: Data Modeling</summary>
-</details>
-<details>
-<summary>Click to Expand: Data Quality Planning</summary>
-</details>
-
-
-
-
-### 5. Data Quality (SodaCL) 
-
-
-<details>
-<summary>Click to Expand</summary>
-
-**Note**: Along with `data quality check` we should implement data observability. `Barr Moses CEO and CO-founder of Monte Carlo` coined "[Data observability](https://www.montecarlodata.com/blog-what-is-data-observability/)." She explaind that Data observability provides full visibility into the health of your data AND data systems so you are the first to know when the data is wrong, what broke, and how to fix it.
-- **The five pillars of data observability:** 
-  - Freshness
-  - Quality 
-  - Volume 
-  - Schema
-  - Lineage
-    
-### Data Quality Checks
- - **1) Null Values Tests**: These checks ensure that essential columns do not contain null values. For the `dim_provider` table, it's crucial that primary key, NPI, first and last names, specialty, and email don't have nulls as they are essential for identifying and contacting the provider.
-   ```shell
-    checks for dim_provider:
-      - missing_count(PROVIDER_PK) = 0
-      - missing_count(PROVIDER_NPI) = 0
-      - missing_count(FIRST_NAME) = 0
-      - missing_count(LAST_NAME) = 0
-      - missing_count(PROVIDER_SPECIALTY) = 0
-      - missing_count(EMAIL) = 0
-   ```
- - **2) Volume Tests**: Volume tests ensure the table contains a reasonable number of records, which can indicate whether the data loading process worked correctly.
-     ```shell
-      checks for dim_provider:
-        - row_count between 100 and 10000
-     ```
- - **3) Numeric Distribution Tests**: These tests can validate that numeric columns like `AGE` have values within expected ranges and distributions.
-     ```shell
-      checks for dim_provider:
-        - invalid_percent(AGE) < 5%:
-            valid min: 25
-            valid max: 100
-     ```
- - **4) Uniqueness Tests**: Uniqueness tests verify that columns that should be unique, such as `PROVIDER_NPI` and `EMAIL`, do not have duplicate values.
-     ```shell
-      checks for dim_provider:
-        - duplicate_count(PROVIDER_NPI) = 0
-        - duplicate_count(EMAIL) = 0
-     ```     
-- **5) Referential Integrity Test**: These tests ensure that values in a column match values in a column in another table, for example, ensuring that the `PROVIDER_SPECIALTY` exists in a `dim_specialty` table.
-   ```shell
-    checks for dim_provider:
-      - duplicate_count(PROVIDER_NPI) = 0
-      - duplicate_count(EMAIL) = 0
-   ```
-
-- **6) Freshness Checks**: Freshness checks are useful for tables that are expected to be updated regularly. If your table includes a timestamp column (not shown in your schema), you could implement a check like:
-    ```shell
-      checks for dim_provider:
-        - freshness (LAST_UPDATE_TIMESTAMP) < 2d
-    ``` 
-
-</details>
-
-
-## Ingestion Approach for Data Lake
-Our ingestion approach is meticulously designed to ensure all components of the data pipeline are properly established and operational.
-
-
-### Airflow: Orcahstrate the following:
-  - **Sources**: ingest data into `raw_files` folder (S3 buckets) and issue an `alert`.
-    - **Folder Management and Notification**:
-      - errors: error files stored in the `error_folder` with a `Slack alert`.
-      - processed: processed data is ingested into snowflake with a`Slack alert`
-
-
-### 1. Project Environment
-
-<details>
-  <summary>Click to Expand: AWS S3 environment</summary>
-  
-  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
-     
-      ```shell
-        PRE error_files/
-        PRE processed/
-        PRE raw_files/
-    ```
-#### a. Naming Conventions:
-  
-  - Timestamps are used for file naming:
-  
-      ```python
-        timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
-      ```
-</details>
-<details>
-  <summary>Click to Expand: Data Quality checks environment (SODA)</summary>
-  
   - **Command to list** : `ls include/soda/` and `ls include/soda/checks/`
      
       ```shell
@@ -712,6 +587,120 @@ Our ingestion approach is meticulously designed to ensure all components of the 
 	             USERTYPE: VARCHAR
 	             UPDATE_AT: TIMESTAMP_NTZ
 				 ```
+#### 8. Cosmos setup within Airflow
+   - **Assign Roles and Grant Privileges**:
+     ```sql
+     GRANT ROLE my_role TO USER jay;
+     GRANT USAGE ON DATABASE my_database TO ROLE my_role;
+     GRANT USAGE ON WAREHOUSE my_warehouse TO ROLE my_role;
+     GRANT USAGE ON SCHEMA chart TO ROLE my_role;
+     GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA chart TO ROLE my_role;
+     ```
+
+</details>
+
+### 2. Design and Planning
+
+<details>
+<summary>Click to Expand: Data Modeling</summary>
+</details>
+<details>
+<summary>Click to Expand: Data Quality Planning</summary>
+
+
+
+#### 1. Data Quality (SodaCL) 
+
+
+**Note**: Along with `data quality check` we should implement data observability. `Barr Moses CEO and CO-founder of Monte Carlo` coined "[Data observability](https://www.montecarlodata.com/blog-what-is-data-observability/)." She explaind that Data observability provides full visibility into the health of your data AND data systems so you are the first to know when the data is wrong, what broke, and how to fix it.
+- **The five pillars of data observability:** 
+  - Freshness
+  - Quality 
+  - Volume 
+  - Schema
+  - Lineage
+    
+#### 2. Data Quality Checks
+
+ - **1) Null Values Tests**: These checks ensure that essential columns do not contain null values. For the `dim_provider` table, it's crucial that primary key, NPI, first and last names, specialty, and email don't have nulls as they are essential for identifying and contacting the provider.
+   ```shell
+    checks for dim_provider:
+      - missing_count(PROVIDER_PK) = 0
+      - missing_count(PROVIDER_NPI) = 0
+      - missing_count(FIRST_NAME) = 0
+      - missing_count(LAST_NAME) = 0
+      - missing_count(PROVIDER_SPECIALTY) = 0
+      - missing_count(EMAIL) = 0
+   ```
+ - **2) Volume Tests**: Volume tests ensure the table contains a reasonable number of records, which can indicate whether the data loading process worked correctly.
+     ```shell
+      checks for dim_provider:
+        - row_count between 100 and 10000
+     ```
+ - **3) Numeric Distribution Tests**: These tests can validate that numeric columns like `AGE` have values within expected ranges and distributions.
+     ```shell
+      checks for dim_provider:
+        - invalid_percent(AGE) < 5%:
+            valid min: 25
+            valid max: 100
+     ```
+ - **4) Uniqueness Tests**: Uniqueness tests verify that columns that should be unique, such as `PROVIDER_NPI` and `EMAIL`, do not have duplicate values.
+     ```shell
+      checks for dim_provider:
+        - duplicate_count(PROVIDER_NPI) = 0
+        - duplicate_count(EMAIL) = 0
+     ```     
+- **5) Referential Integrity Test**: These tests ensure that values in a column match values in a column in another table, for example, ensuring that the `PROVIDER_SPECIALTY` exists in a `dim_specialty` table.
+   ```shell
+    checks for dim_provider:
+      - duplicate_count(PROVIDER_NPI) = 0
+      - duplicate_count(EMAIL) = 0
+   ```
+
+- **6) Freshness Checks**: Freshness checks are useful for tables that are expected to be updated regularly. If your table includes a timestamp column (not shown in your schema), you could implement a check like:
+    ```shell
+      checks for dim_provider:
+        - freshness (LAST_UPDATE_TIMESTAMP) < 2d
+    ``` 
+
+</details>
+
+
+## Ingestion Approach for Data Lake
+Our ingestion approach is meticulously designed to ensure all components of the data pipeline are properly established and operational.
+
+
+### Airflow: Orcahstrate the following:
+  - **Sources**: ingest data into `raw_files` folder (S3 buckets) and issue an `alert`.
+    - **Folder Management and Notification**:
+      - errors: error files stored in the `error_folder` with a `Slack alert`.
+      - processed: processed data is ingested into snowflake with a`Slack alert`
+
+
+### 3. Project Environment
+
+<details>
+  <summary>Click to Expand: AWS S3 environment</summary>
+  
+  - Command to list S3 folders: `aws s3 ls s3://snowflake-emr`
+     
+      ```shell
+        PRE error_files/
+        PRE processed/
+        PRE raw_files/
+    ```
+#### a. Naming Conventions:
+  
+  - Timestamps are used for file naming:
+  
+      ```python
+        timestamp_str = datetime.now().strftime('%Y%m%d%H%M%S')
+      ```
+</details>
+<details>
+  <summary>Click to Expand: Data Quality checks environment (SODA)</summary>
+  
+ 
 </details>
 <details>
   <summary>Click to Expand: Slack Notification </summary>
@@ -730,7 +719,7 @@ Our ingestion approach is meticulously designed to ensure all components of the 
       <img src="images/slack.png" alt="header" style="width: 1110px; height: 500px;">
 </details>
 
-### 3. Aiflow(Astro) dag
+### 4. Aiflow(Astro) dag
 
 <details>
  <summary>Click to Expand: Load data into data lake </summary>
