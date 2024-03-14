@@ -23,38 +23,34 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 ---
 ### AGENDA
-- [Data Modeling](https://towardsdatascience.com/data-modelling-for-data-engineers-93d058efa302)
-  - Star Schema
-- AWS Environment Setup:`Optional AWS CLI`
-  - Create user
-  - Create admin group
-  - Create S3 bucket
-  - Systems Manager Parameter: Optinal
-- Snowflake Setup
-  - Create Databases
-  - Create Roles
-  - Privilages
-- DBT Setup:
-  - Create Profile
-- [Data Quality](https://www.montecarlodata.com/blog-data-quality-checks-in-etl/): example
-  - Null values tests
-  - Volume tests
-  - Numeric distribution tests
-  - Uniqueness tests
-  - Referential integrity test
-  - Freshness checks
-- Ingestion Approach for Data Lake
-  - Ingest and Notification
-    - Files and Database
-      - Raw
-- Transformation Approach
-  - Stage
-  - Transform
-- Reporting Approach
+1. Setup Environment
+	- AWS Environment Setup (Optional: AWS CLI)
+		- User creation, admin group creation, S3 bucket creation, and Systems Manager Parameter setup (optional).
+	- Snowflake Setup
+		- Database creation, role creation, and privilege granting.
+	- Tool Configuration
+		- DBT profile creation.
+		- SODA installation and configuration.
+		- Cosmos setup within Airflow.
+2. Design and Planning
+	- Data Modeling
+		- Introduction to Star Schema.
+	- Data Quality Planning
+		- Strategies for ensuring data quality, including examples of checks for null values, volume, numeric distribution, uniqueness, referential integrity, and freshness.
+3. Operational Tasks
+	- Data Ingestion and Notification
+		- Utilizing AWS S3 for data storage, Airflow for workflow automation, and Slack for notifications.
+	- Data Transformation with DBT
+		- Managing staging and transformation processes using DBT within the Airflow ecosystem, facilitated by Cosmos.
+	- Data Quality Checks with SODA
+		- Implementing data quality checks operationally on ingested and transformed data, incorporating Soda tests into Airflow workflows.
+	- Reporting and Visualization
+		- Developing reports and dashboards in Tableau based on transformed and quality-checked data.
+	- Workflow Automation and Communication
+		- Leveraging Airflow for pipeline orchestration and Slack for team communication and alerts throughout the data pipeline process.  
+  
   
 ### Data Warehouse Architecture Approach
-
-This Data Warehouse Approach by Ralph Kimball's methodology, which emphasizes the design of data warehouses built around the concept of dimensional modeling
 <br>
 <img src="images/ModernDataWarehouse2.png" alt="header" style="width: 1110px; height: 500px;">
 
@@ -73,7 +69,7 @@ This Data Warehouse Approach by Ralph Kimball's methodology, which emphasizes th
 
 ---
 
-### 1. Modern Data Moderling
+### 1. Setup Environment
 
 <details>
 <summary>Click to Expand</summary>
@@ -342,7 +338,7 @@ This Data Warehouse Approach by Ralph Kimball's methodology, which emphasizes th
      ```
 </details>
 
-### 5. Data Quality (SodaCL ) 
+### 5. Data Quality (SodaCL) 
 
 
 <details>
@@ -509,7 +505,7 @@ Our ingestion approach is meticulously designed to ensure all components of the 
   
   #### a. Slack Notifications:
   
-  - Slack webhook integration for notifications on success or failure: **lease ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
+  - Slack webhook integration for notifications on success or failure: **Please ensure you've taken care of the security considerations (like not hardcoding AWS access keys or Slack Webhook URLs) when using these scripts in a real-world scenario. Use environment variables or secrets management tools instead**
   
       ```python
         SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXX'  # Replace with your webhook URL
@@ -632,7 +628,7 @@ Our ingestion approach is meticulously designed to ensure all components of the 
 	- Utilizes Airflow's Variable feature to dynamically set the S3 connection ID, bucket name, key, local directory, and Slack channel.
 	- Employs Amazon AWS S3 and Slack providers for interactions with S3 and Slack, respectively.
     ```python
-      	from airflow.decorators import dag, task
+    from airflow.decorators import dag, task
 	from datetime import datetime
 	from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 	from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
@@ -733,8 +729,9 @@ Our ingestion approach is meticulously designed to ensure all components of the 
   	- The DAG includes modern Airflow features, such as the use of the `@dag` and `@task` decorators for simplified DAG and task definitions.
   	- It showcases interaction with external systems (S3 and Slack) and the chaining of workflows via DAG triggering, making it a practical example of a data pipeline that incorporates data uploading, notification, and further data processing steps.
 
-- **Overview**: This DAG, `dynamic_s3_to_snowflake_etl`, is an advanced data pipeline designed for automating data flows from AWS S3 to Snowflake and involves Slack for notifications. Let's review its tasks, workflow, and features:
+- **Overview**: This DAG, `dynamic_s3_to_snowflake_etl`, is an advanced data pipeline designed for automating data flows from AWS S3 to Snowflake, and involves Slack for notifications. Let's review its tasks, workflow, and features:
   ```python
+ 
   	from datetime import datetime
 	import pendulum
 	from airflow.decorators import dag, task
@@ -882,7 +879,7 @@ Our ingestion approach is meticulously designed to ensure all components of the 
   - **Dynamic File Handling**: The DAG is designed to dynamically handle multiple files, determining actions based on file names and processing outcomes. This flexibility is crucial for workflows dealing with variable data inputs.
   - **Integration with External Services**: Demonstrates robust integration with AWS S3 for data storage, Snowflake for data warehousing, and Slack for notifications, providing a comprehensive approach to data pipeline management.
   - **Error Handling and Notifications**: Includes sophisticated error handling mechanisms, such as moving files to an error directory and notifying team members via Slack, enhancing the pipeline's reliability and maintainability.
-  - **Expandable Tasks**: Utilizes the .expand method for the load_to_snowflake and notify_and_move_file tasks, enabling parallel processing of multiple files. This feature optimizes performance and scalability.
+  - **Expandable Tasks**: Utilizes the .expand method for the `load_to_snowflake` and `notify_and_move_file` tasks, enabling parallel processing of multiple files. This feature optimizes performance and scalability.
 
 </details>
 
@@ -897,7 +894,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ### Cosmos
 
-- **Overview**: [Cosmos](https://www.astronomer.io/cosmos/), integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
+- **Overview**: [Cosmos](https://www.astronomer.io/cosmos/) integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
 
 - **Key Benefits**:
   - **Centralized Workflow Management**: Manage both dbt and Airflow tasks from a unified platform, enhancing coordination and visibility.
@@ -911,7 +908,6 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 - **Cosmos and DBT environment**
 
 		```bash
-		
 		astro@cfabfee5ced1:/usr/local/airflow$ ls include/dbt/
 		dbt_health  logs
 		
@@ -960,7 +956,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 ### DBT
 
-- **Overview**: [dbt](https://www.astronomer.io/cosmos/), integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
+- **Overview**: [dbt](https://www.astronomer.io/cosmos/) integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
 
 - **Key Benefits**:
   - **Centralized Workflow Management**: Manage both dbt and Airflow tasks from a unified platform, enhancing coordination and visibility.
@@ -1020,7 +1016,7 @@ Our Ingestion Approach is designed to ensure that all data pipeline components a
 
 	- `tests`: Contains custom data tests written in SQL. dbt tests are used to ensure the data in your models meets specified validation criteria.
 	
-- ***DBT Model**: My docker DBT Model
+- ***Docker**: My docker DBT in local machine
 
 <br>
 <img src="images/dbt_model.png" alt="header" style="width: 1100px; height: 500px;"><br>
