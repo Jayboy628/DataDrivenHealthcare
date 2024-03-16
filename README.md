@@ -22,7 +22,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 [Apache Airflow](https://airflow.apache.org/), [Docker](https://www.docker.com/), [Slack](https://slack.com/), [AWS S3](https://aws.amazon.com/),[SODA](https://www.soda.com/),[Snowflake](https://www.snowflake.com/en/), [COSMOS](https://www.astronomer.io/cosmos/), [DBT](https://www.getdbt.com/) and [Tableau](https://www.tableau.com/).
 
 ---
-### AGENDA
+### AGendA
 1. Setup Environment
 	- AWS Environment Setup (Optional: AWS CLI)
 	- Snowflake Setup
@@ -150,9 +150,9 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
      ```sql
      CREATE WAREHOUSE IF NOT EXISTS my_warehouse 
         WITH WAREHOUSE_SIZE = 'XSMALL' 
-        AUTO_SUSPEND = 60 
-        AUTO_RESUME = TRUE 
-        INITIALLY_SUSPENDED = TRUE;
+        AUTO_SUSPend = 60 
+        AUTO_REsumE = TRUE 
+        INITIALLY_SUSPendED = TRUE;
      ```
 
    - **Database**:
@@ -575,14 +575,14 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	   checks for raw_user:
 	     - schema:
 	         fail:
-	           when required column missing: [UIDPK, UID, UFNAME, ULNAME, EMAIL, GENDER, AGE, USERTYPE, UPDATE_AT]
+	           when required column missing: [UIDPK, UID, UFNAME, ULNAME, EMAIL, GendER, AGE, USERTYPE, UPDATE_AT]
 	           when wrong column type:
 	             UIDPK: NUMBER
 	             UID: NUMBER
 	             UFNAME: VARCHAR
 	             ULNAME: VARCHAR
 	             EMAIL: VARCHAR
-	             GENDER: VARCHAR
+	             GendER: VARCHAR
 	             AGE: NUMBER
 	             USERTYPE: VARCHAR
 	             UPDATE_AT: TIMESTAMP_NTZ
@@ -987,7 +987,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 <details>
 <summary>Click to Expand: DBT Transform</summary>
 
-####  Managing staging and transformation processes using DBT within the Airflow ecosystem, facilitated by Cosmos
+####  Managing staging and transformation processes using DBT (SQL+Jinja) within the Airflow ecosystem, facilitated by Cosmos
 
 - **Overview**: [dbt](https://www.astronomer.io/cosmos/) integrates seamlessly within the Airflow ecosystem to enable the efficient orchestration of dbt (data build tool) jobs via Airflow workflows. It allows users to schedule, monitor, and manage dbt tasks directly from Airflow, streamlining the data transformation process within their data pipelines.
 
@@ -1000,7 +1000,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 
 
-- **DBT Environment**: This is my docker environment
+- **DBT Environment**: This is my docker environment for DBT
 
 		```bash
 		
@@ -1049,8 +1049,39 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 	- `tests`: Contains custom data tests written in SQL. dbt tests are used to ensure the data in your models meets specified validation criteria.
 	
-- ***Docker**: My docker DBT in local machine
+- ***SQL+Jinja**: My docker DBT in local machine
+- SQL
 
+	```sql
+	SELECT
+		transaction_ar_fk,
+         sum(case when trans_type == 'charge' then amount end)AS trans_charge_amount,
+         sum(case when trans_type == 'payment' then amount end) AS trans_payment_ amount_,
+         sum(case when trans_type == 'adjustment' then amount end)AS trans_adjustment_amount,
+		 sum( amount) AS total_amount
+	FROM int_transaction_detail
+	GROUP BY 1
+	```
+- Jinja
+
+	```sql
+	{% set trans_types = ['gross_charge','payment','adjustment'] %}
+	SELECT
+		transaction_ar_fk,
+		{% for trans_type in trans_types%}
+         sum(case when trans_type == '{{trans_type}}' then amount end)AS {{payment_methon}}_amount
+		 {%endfor%}
+		 sum(amount) AS total_amount
+	FROM int_transaction_detail
+	GROUP BY 1
+	```
+- **Sourcs vs Models**
+	
+	| Concept    | FileType    													                | Jinja Function    |
+	|------------|--------------------------------------------------------------------------|--------------------------|
+	| Source     | Pointers to raw data tables already loaded in your database.             | .yml | {{source()}}
+	| Model      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}          |
+	
 <br>
 <img src="images/dbt_model.png" alt="header" style="width: 1100px; height: 500px;"><br>
 
@@ -1228,20 +1259,21 @@ Instantiate the DAG
 
 </details>
 
+---
 
-## Report Approach
-Our Ingestion Approach is designed to ensure that all data pipeline components are appropriately set up and functioning as intended.
+### 4.  Report Task
+
 
 
 <details>
 <summary>Click to Expand: Clinical Reports, Revenue Cycle, and Dashboards </summary>
 
-### Clinical Report (DBT)
-### Revenue Cycle(Tableau)
-### Dashboard (Tableau)
+#### Clinical Report (DBT)
+#### Revenue Cycle(Tableau)
+#### Dashboard (Tableau)
 
 </details>
-
+---
 
 
 
