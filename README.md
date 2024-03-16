@@ -998,6 +998,11 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
   - **Scalability**: Meet growing data transformation needs with the scalable solutions provided by Cosmos and Airflow.
   - **Enhanced Collaboration**: Foster better collaboration across data teams by integrating dbt into Airflow workflows, facilitating seamless changes and insight sharing.
 
+- **DBT Data Warehouse**
+<br>
+<img src="images/DBT-ARCHITECTURE.png" alt="header" style="width: 1230px; height: 600px;"><br>
+
+---
 
 
 - **DBT Environment**: This is my docker environment for DBT
@@ -1165,12 +1170,12 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 - **Materialization**:
 
 	
-	| Type           | Output    													            | Description.             |
-	|----------------|--------------------------------------------------------------------------|--------------------------|
-	| View           | Pointers to raw data tables already loaded in your database.             | .yml | {{source()}}
-	| Table          | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}         |
-	| Increment      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}         |
-	| Ephemeral      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}         |
+	| Type           | Output  | Description                                                                                                |
+	|----------------|---------|------------------------------------------------------------------------------------------------------------|
+	| View           | View      | Default setting. Creates a view based on the model SQL query. Fast to deploy but potentially slow to query. |
+	| Table          | Table     | Creates a table and inserts data based on the model SQL query. Will rebuild and reload all data every time. Fast to query but potentially slow to deploy.   |
+	| Increment      | Table     | Creates a table and inserts only newly updated data based on the model SQL query and specific column. Fast to query and deploy but more complex configuration.|
+	| Ephemeral      | Common Table Expression (CTE) | No database object is created. The model SQL query will be wrapped in a CTE can be reused in othermodel queries. |
 	
 	
 <br>
@@ -1187,12 +1192,12 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	- Create a schema.yml file for each directory (or model)
 	- Be explicit (new lines are cheap, brain power is expensive)
 	- Align dbt directories with your database
-	
-- **DBT Data Warehouse**
-<br>
-<img src="images/DBT-ARCHITECTURE.png" alt="header" style="width: 1200px; height: 550px;"><br>
 
----
+- **Macros**: Consistent naming conventions. For example:
+
+- **Seed**: Consistent naming conventions. For example:
+
+- **Test and Documention**: Consistent naming conventions. For example:	
 
 </details>
 
