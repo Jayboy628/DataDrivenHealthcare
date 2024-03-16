@@ -1053,6 +1053,18 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	- `target`: The directory where dbt stores the artifacts it generates during a run, including compiled SQL code and documentation.
 
 	- `tests`: Contains custom data tests written in SQL. dbt tests are used to ensure the data in your models meets specified validation criteria.
+
+
+- **Best Practices**: Consistent naming conventions. For example:
+	- src_[schema].yml
+	- stg_[schema]__[table].sql
+	- dim_/fct_[table].sql
+	- rpt_[table].sql
+	- Create a staging layer
+	- Create a schema.yml file for each directory (or model)
+	- Be explicit (new lines are cheap, brain power is expensive)
+	- Align dbt directories with your database
+
 	
 - ***SQL+Jinja**: Example how to refactor `SQL` into `SQL+Jinja`
 
@@ -1084,8 +1096,8 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 - **Sources vs Models**
 	
 	| Concept    | Purpose   													           |  FileType  |  Jinja Function   |
-	|------------|--------------------------------------------------------------------------|--------------------------------|
-	| Source     | Pointers to raw data tables already loaded in your database.             | .yml       | {{source()}}
+	|------------|--------------------------------------------------------------------------|------------|-------------------|
+	| Source     | Pointers to raw data tables already loaded in your database.             | .yml       | {{source()}}      |
 	| Model      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql       | {{ref()}}         |
 	
 
@@ -1183,15 +1195,6 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 ---
 
-- **Best Practices**: Consistent naming conventions. For example:
-	- src_[schema].yml
-	- stg_[schema]__[table].sql
-	- dim_/fct_[table].sql
-	- rpt_[table].sql
-	- Create a staging layer
-	- Create a schema.yml file for each directory (or model)
-	- Be explicit (new lines are cheap, brain power is expensive)
-	- Align dbt directories with your database
 
 - **Macros**: Consistent naming conventions. For example:
 
