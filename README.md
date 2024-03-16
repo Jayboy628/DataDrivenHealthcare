@@ -1087,6 +1087,22 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 ---
 
+- **Best Practices**: Consistent naming conventions. For example:
+	- src_[schema].yml
+	- stg_[schema]__[table].sql
+	- dim_/fct_[table].sql
+	- rpt_[table].sql
+	- Create a staging layer
+	- Create a schema.yml file for each directory (or model)
+	- Be explicit (new lines are cheap, brain power is expensive)
+	- Align dbt directories with your database
+	
+- **DBT Data Warehouse**
+<br>
+<img src="images/DBT-ARCHITECTURE.png" alt="header" style="width: 1100px; height: 500px;"><br>
+
+---
+
 </details>
 
 <details>
