@@ -1049,7 +1049,8 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 	- `tests`: Contains custom data tests written in SQL. dbt tests are used to ensure the data in your models meets specified validation criteria.
 	
-- ***SQL+Jinja**: My docker DBT in local machine
+- ***SQL+Jinja**: Example how to refactor `SQL` into `SQL+Jinja`
+
 - SQL
 
 	```sql
@@ -1075,12 +1076,102 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	FROM int_transaction_detail
 	GROUP BY 1
 	```
-- **Sourcs vs Models**
+- **Sources vs Models**
 	
-	| Concept    | FileType    													                | Jinja Function    |
-	|------------|--------------------------------------------------------------------------|--------------------------|
-	| Source     | Pointers to raw data tables already loaded in your database.             | .yml | {{source()}}
-	| Model      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}          |
+	| Concept    | Purpose   													           |  FileType  |  Jinja Function   |
+	|------------|--------------------------------------------------------------------------|--------------------------------|
+	| Source     | Pointers to raw data tables already loaded in your database.             | .yml       | {{source()}}
+	| Model      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql       | {{ref()}}         |
+	
+
+- **Sources (CTE)**: Example of a source query
+
+	```sql
+	
+	WITH  
+
+	user AS (
+
+		SELECT * FROM {{source('register','raw_user')}}
+	),
+
+	final as (
+
+			SELECT
+				UIDPK AS USER_PK,
+				UID AS USER_ID,
+				UFNAME AS FIRST_NAME,
+				ULNAME AS LAST_NAME,
+				EMAIL,
+				GENDER,
+				AGE,
+				USERTYPE,
+				UPDATE_AT 
+
+			FROM user 
+
+	)
+
+	SELECT * FROM final
+	
+	```
+
+- **Moldels (CTE)**: Example of a Data Mart query	
+
+	```sql
+	
+		WITH
+
+		    patient AS (
+
+		        SELECT * FROM {{ref('stg_register__user')}}
+		        WHERE USERTYPE = 'Patient'
+		    ),
+
+		     address AS (
+
+		        SELECT * FROM {{ref('stg_register__address')}}
+        
+		    ),
+
+		    final AS (
+
+			SELECT
+				p.USER_PK AS PATIENT_PK,
+				p.USER_ID AS PATIENT_NUMBER,
+				FIRST_NAME,
+				LAST_NAME,
+				EMAIL,
+				GENDER,
+				AGE,
+		        STREET,
+		        CITY,
+		        STATE,
+		        ZIP_CODE
+
+			FROM patient p
+		            LEFT JOIN address a
+		                ON p.USER_PK = a.USER_ID
+
+		)
+
+		SELECT * FROM final
+		
+		
+	```
+
+
+
+- **Materialization**:
+
+	
+	| Type           | Output    													            | Description.             |
+	|----------------|--------------------------------------------------------------------------|--------------------------|
+	| View           | Pointers to raw data tables already loaded in your database.             | .yml | {{source()}}
+	| Table          | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}         |
+	| Increment      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}         |
+	| Ephemeral      | SQL scripts created in dbt that are compiled to build new tables/views.  | .sql | {{ref()}}         |
+	
 	
 <br>
 <img src="images/dbt_model.png" alt="header" style="width: 1100px; height: 500px;"><br>
@@ -1099,7 +1190,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 	
 - **DBT Data Warehouse**
 <br>
-<img src="images/DBT-ARCHITECTURE.png" alt="header" style="width: 1100px; height: 500px;"><br>
+<img src="images/DBT-ARCHITECTURE.png" alt="header" style="width: 1200px; height: 550px;"><br>
 
 ---
 
