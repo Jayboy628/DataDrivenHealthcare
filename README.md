@@ -1278,7 +1278,7 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 		---
 	4. Step3: Verify the Seed Data after running `dbt seed`
 		<br>
-		<img src="images/verify_seed.png" alt="header" style="width: 1000px; height: 500px;"><br>
+		<img src="images/verify_seed.png" alt="header" style="width: 800px; height: 400px;"><br>
 		0
 
 - **Test and Documention**: Consistent naming conventions. For example:	
