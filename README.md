@@ -1198,7 +1198,88 @@ A comprehensive guide on setting up a data pipeline leveraging key cloud technol
 
 - **Macros**: Consistent naming conventions. For example:
 
-- **Seed**: Consistent naming conventions. For example:
+	- `Creating a Macro`:
+	
+	```sql
+	{% macro cent_to_dollar(column_name) %}
+	    {{ column_name }} / 100
+	{% endmacro %}
+	
+	```
+	
+	
+	- `Using a Macro`: The usage of {{ cent_to_dollar('column_name') }}
+	
+	```sql
+	
+
+
+	WITH adjustment AS (
+	    SELECT * FROM {{ ref('stg_bill__adjustment') }}
+	),
+	grosscharge AS (
+	    SELECT * FROM {{ ref('stg_bill__grosscharge') }}
+	),
+	payment AS (
+	    SELECT * FROM {{ ref('stg_bill__payment') }}
+	),
+	consolidated_transactions AS (
+	    SELECT adjustment.ADJUSTMENT_PK AS TRANSACTION_PK, adjustment.AR_FK AS TRANSACTION_ARFK FROM adjustment
+	    UNION ALL
+	    SELECT grosscharge.CHARGE_PK AS TRANSACTION_PK, grosscharge.AR_FK AS TRANSACTION_ARFK FROM grosscharge
+	    UNION ALL
+	    SELECT payment.PAYMENT_PK AS TRANSACTION_PK, payment.AR_FK AS TRANSACTION_ARFK FROM payment
+	),
+
+	transaction_detail AS (
+	    SELECT
+	        ct.TRANSACTION_PK, 
+	        ct.TRANSACTION_ARFK,
+	        g.cpt_units,
+	        {{ cent_to_dollar('g.amount') AS gross_charge,
+	        {{ cent_to_dollar('p.amount') }} AS payment,
+	        {{ cent_to_dollar('a.amount') }} AS adjustment
+	    FROM consolidated_transactions ct
+	    LEFT JOIN adjustment a ON ct.TRANSACTION_ARFK = a.AR_FK
+	    LEFT JOIN payment p ON ct.TRANSACTION_ARFK = p.AR_FK
+	    LEFT JOIN grosscharge g ON ct.TRANSACTION_ARFK = g.AR_FK
+	)
+	SELECT * FROM transaction_detail
+	
+	```
+
+- **Seed**: 
+
+	1. `Step 1: Create a CSV File`: Open a spreadsheet program like Excel or Google Sheets, or a plain text editor, and create your CPT codes table. For example, your cpt_code.csv might start like this:
+	```sql
+	cpt_code,description
+	99213,Office or other outpatient visit for the evaluation and management of an established patient
+	99214,Office or other outpatient visit for the evaluation and management of an established patient, requiring at least two of these three key components
+	99215,Office or other outpatient visit for the evaluation and management of an established patient, which requires at least 2 of these 3 key components
+	
+	```
+
+	2. `Save the File`: Save this file as `cpt_code.csv`. Place it in your dbt project under the `seed` directory. If this directory does not exist, you should create it at the root of your dbt project:
+	```sql
+	your-dbt-project/
+	├── seed/
+	│   └── cpt_code.csv
+	├── dbt_project.yml
+	├── models/
+	└── ...
+	
+	```
+	3. `Step2: Run dbt seed`
+		- Open Your Terminal: Navigate to the root of your dbt project.
+		- Execute dbt Seed: Run the following command to load your CSV file into your data warehouse: `dbt seed`
+		<br>
+		<img src="images/seed.png" alt="header" style="width: 1100px; height: 500px;"><br>
+
+		---
+	4. Step3: Verify the Seed Data after running `dbt seed`
+		<br>
+		<img src="images/verify_seed.png" alt="header" style="width: 1100px; height: 500px;"><br>
+		
 
 - **Test and Documention**: Consistent naming conventions. For example:	
 
