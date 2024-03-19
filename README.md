@@ -1462,7 +1462,7 @@ Instantiate the DAG
 
 
 <details>
-<summary>Click to Expand: Clinical Reports, Revenue Cycle, and Dashboards </summary>
+<summary>Click to Expand: Clinical Finance (DBT) </summary>
 
 #### Clinical Finance (DBT)
 - **Common Report question for healthcare**:
@@ -1621,7 +1621,10 @@ Instantiate the DAG
 	- GrossCharge
 	- AverageChargeperPatients 
 
+</details>
 
+<details>
+<summary>Click to Expand: Revenue Cycle(Jupyter Lab) </summary>
 
 #### Revenue Cycle(Jupyter Lab)
 
@@ -1629,18 +1632,22 @@ Instantiate the DAG
 	- [Data Exploration Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/exploring.ipynb)
 
 - **Write off Analysis**
-	- [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/Writeoff_Analysis.ipynb)
+	- [Write-off Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/Writeoff_Analysis.ipynb)
 	
 - **Denial Analysis**
 	- [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/Denial_Analysis.ipynb)
 	
 - **Relative Value Units (RVUs) Analysis**
-	- [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/RVU_Analysis.ipynb)
+	- [RVU Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/RVU_Analysis.ipynb)
+	
+</details>
 
-#### Dashboard (Tableau)
+<details>
+<summary>Click to Expand: Clinical Dashboard (Tableau) </summary>
+####Clinical Dashboard (Tableau)
 
 </details>
----
+
 
 
 
