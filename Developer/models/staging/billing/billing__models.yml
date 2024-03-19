@@ -1,7 +1,0 @@
-version: 2
-
-models:
-  - name: stg_billing__transactiondetails
-  - name: stg_billing__transactiontypes
-  - name: stg_billing__payers
-

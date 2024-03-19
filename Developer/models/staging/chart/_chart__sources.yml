@@ -1,8 +1,0 @@
-version: 2
-
-sources:
-  - name: chart
-    database: healthcare_raw
-    schema: chart
-    tables:
-      - name: code

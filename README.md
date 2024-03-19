@@ -1625,18 +1625,17 @@ Instantiate the DAG
 
 #### Revenue Cycle(Jupyter Lab)
 
-- **Exploring DataSet**
-
-- [Introduction](#introduction)
-- [Data Preparation](#data-preparation)
-- [Analysis](#analysis)
-  - [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/Denial_Analysis.ipynb)
-
-
+- **Exploring Analysis**
+	- [Data Exploration Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/exploring.ipynb)
 
 - **Write off Analysis**
+	- [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/Writeoff_Analysis.ipynb)
+	
 - **Denial Analysis**
-- **Relative Value Units (RVUs)**
+	- [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/Denial_Analysis.ipynb)
+	
+- **Relative Value Units (RVUs) Analysis**
+	- [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/RVU_Analysis.ipynb)
 
 #### Dashboard (Tableau)
 
