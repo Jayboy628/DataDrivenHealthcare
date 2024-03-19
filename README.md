@@ -1644,7 +1644,22 @@ Instantiate the DAG
 
 <details>
 <summary>Click to Expand: Clinical Dashboard (Tableau) </summary>
+
 ####Clinical Dashboard (Tableau)
+
+##### Explore our interactive Tableau dashboards for more in-depth analysis:
+
+- **Clinical Demographics**
+	- [Dashboard 1: Emergency Department Throughput](https://public.tableau.com/app/profile/shaunjay.brown/viz/EDThroughput_17084866657770/EDThroughput)
+
+	- [Dashboard 2: Length of Stay](https://public.tableau.com/app/profile/shaunjay.brown/viz/LengthofStay_17080888461950/LengthofStay)
+
+	- [Dashboard 3: Readmission Rate By Diagnosis and Demographics](https://public.tableau.com/app/profile/shaunjay.brown/viz/ReadmissionRate_17080887147200/Readmission)
+
+- **Extra Dashboards**
+- [Dashboard 1: Insurance](https://public.tableau.com/app/profile/shaunjay.brown/viz/InsuranceStatusofTotalAqusitionCost/InsuranceStatusofTotalAqusitionCost)
+
+- [Dashboard 2: Sales By Region](https://public.tableau.com/app/profile/shaunjay.brown/viz/KPISalesbyRegion/KPI-SalesvsProfit)
 
 </details>
 
