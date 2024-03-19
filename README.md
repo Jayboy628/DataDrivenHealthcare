@@ -1645,7 +1645,8 @@ Instantiate the DAG
 <details>
 <summary>Click to Expand: Clinical Dashboard (Tableau) </summary>
 
-####Clinical Dashboard (Tableau)
+
+#### Clinical Dashboard (Tableau)
 
 ##### Explore our interactive Tableau dashboards for more in-depth analysis:
 
