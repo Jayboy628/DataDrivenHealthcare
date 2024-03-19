@@ -23,6 +23,7 @@ transaction AS (
     SELECT * FROM {{ ref('dim_transaction') }}
 ),
 transaction_detail AS (
+    
     SELECT * FROM {{ ref('int_transaction_detail') }}
 ),
 ar AS (
@@ -41,7 +42,7 @@ ar AS (
         Amount AS AR
     FROM {{ ref('stg_bill__ar') }}
 ),
-fact AS (
+fact_table AS (
     SELECT
         AR_PK AS FACT_PK,
         pa.PATIENT_PK,
@@ -58,7 +59,7 @@ fact AS (
         td.PAYMENT,
         td.ADJUSTMENT,
         ar.AR
-    FROM ar
+    FROM ar 
         LEFT JOIN patient pa ON ar.PATIENT_FK = pa.PATIENT_PK
         LEFT JOIN provider prp ON ar.PROVIDER_FK = prp.PROVIDER_PK
         LEFT JOIN date dt ON ar.DATE_POST_FK = dt.DATE_POST_PK 
@@ -66,7 +67,7 @@ fact AS (
         LEFT JOIN payer py ON ar.PAYER_FK = py.PAYER_PK
         LEFT JOIN location ln ON ar.LOCATION_FK = ln.LOCATION_PK
         LEFT JOIN diagnosiscode dc ON ar.DIAGNOSIS_CODE_FK = dc.DIAGNOSIS_CODE_PK
-        LEFT JOIN transaction_detail td ON TRANSACTION_ARFK = AR_PK 
+        LEFT JOIN transaction_detail td ON td.TRANSACTION_ARFK = ar.AR_PK 
         LEFT JOIN transaction t ON ar.TRANSACTION_FK = t.TRANSACTION_PK )
 
-SELECT * FROM fact
+SELECT * FROM fact_table
