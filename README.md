@@ -1499,18 +1499,49 @@ Instantiate the DAG
 	
 5. Calculate the Gross Collection Rate (GCR) for each LocationName - See Below  GCR = Payments divided GrossCharge Which LocationName has the highest GCR?
 	```sql
+	WITH fact_data AS (
+
+	  SELECT
+	    l.Location_Name,
+	    -SUM(ft.Payment) AS Payment,
+	    SUM(ft.GrossCharge) AS GrossCharge
+	  FROM {{ ref('FactTable') }} ft
+	  JOIN {{ ref('dimLocation') }} l ON l.dimLocationPK = ft.dimLocationPK
+	  GROUP BY l.Location_Name
+	)
+
+	SELECT
+	  Location_Name,
+	  TO_CHAR((Payment / NULLIF(GrossCharge, 0)), 'FM999999990.00%') AS GCR
+	FROM fact_data
+	ORDER BY GCR DESC
 	```
 	
 6. How many CptCodes have more than 100 units?
 	```sql
-    WITH greater_count AS (
-        SELECT DISTINCT cd.CptCode, cd.CptDesc, SUM(ft.CPTUnits) OVER(PARTITION BY cd.CptCode ORDER BY cd.CptCode DESC) as count_cpt
-        FROM FactTable ft 
-        JOIN dimCptCode cd ON ft.dimCPTCodePK = cd.dimCPTCodePK
-    )
-    SELECT CptCode, CptDesc, count_cpt
-    FROM greater_count
-    WHERE count_cpt > 100;
+	WITH greater_count AS (
+	    SELECT
+	        cd.CptCode,
+	        cd.CptDesc,
+	        SUM(ft.CPTUnits) OVER (PARTITION BY cd.CptCode) AS count_cpt
+	    FROM 
+	        {{ ref('FCT_TRANSACTION') }} ft
+	    JOIN 
+	        {{ ref('dim_CptCode') }} cd 
+	    ON 
+	        ft.dimCPTCodePK = cd.dimCPTCodePK
+	    GROUP BY
+	        cd.CptCode, cd.CptDesc
+	)
+
+	SELECT 
+	    CptCode,
+	    CptDesc,
+	    count_cpt
+	FROM 
+	    greater_count
+	WHERE 
+	    count_cpt > 100
 	```
 	
 7. Find the physician specialty that has received the highest amount of payments. Then show the payments by month for this group of physicians. 
@@ -1520,6 +1551,22 @@ Instantiate the DAG
 	
 8. How many CptUnits by DiagnosisCodeGroup are assigned to a "J code" Diagnosis (these are diagnosis codes with the letter J in the code)?
 	```sql
+	{{ config(materialized='view') }}
+
+	SELECT
+	    dc.diagnosis_code,
+	    SUM(ft.cpt_units) AS total_cpt_units
+	FROM 
+	    {{ ref('FCT_TRANSACTION') }} ft
+	JOIN 
+	    {{ ref('dim_diagnosiscode') }} dc 
+	ON 
+	    ft.diagnosis_code_pk = dc.diagnosis_code_pk
+	WHERE 
+	    dc.diagnosis_code LIKE 'J%'
+	GROUP BY 
+	    dc.diagnosis_code
+	
 	```
 	
 9. You've been asked to put together a report that details Patient demographics. The report should group patients into three buckets- Under 18, between 18-65, & over 65 Please include the following
@@ -1529,13 +1576,19 @@ Instantiate the DAG
 		- Patient Age
 		- City and State in the same column
 		```sql
-	    SELECT pt.FirstName + ' ' + pt.LastName AS Name, pt.Email, pt.PatientAge AS Age, pt.City + ', ' + pt.State AS "City and State",
-	    CASE
-	        WHEN pt.PatientAge < 18 THEN 'UNDER 18' 
-	        WHEN pt.PatientAge >= 18 AND pt.PatientAge <= 65 THEN 'BETWEEN 18-65' 
-	        WHEN pt.PatientAge > 65 THEN 'OVER 65' 
-	    END AS "AGE RANGE"
-	    FROM dimPatient pt;
+		SELECT 
+		    pt.FirstName || ' ' || pt.LastName AS "Name", 
+		    pt.Email, 
+		    pt.PatientAge AS "Age", 
+		    pt.City || ', ' || pt.State AS "City and State",
+		    CASE
+		        WHEN pt.PatientAge < 18 THEN 'UNDER 18' 
+		        WHEN pt.PatientAge BETWEEN 18 AND 65 THEN 'BETWEEN 18-65' 
+		        WHEN pt.PatientAge > 65 THEN 'OVER 65' 
+		    END AS "AGE RANGE"
+		FROM 
+		    {{ ref('dimPatient') }} pt;
+	    
 		```
 		
 10. How many dollars have been written off (adjustments) due to credentialing (AdjustmentReason)? Which location has the highest number of credentialing adjustments? How many physicians at this locatio have been impacted by credentialing adjustments? What does this mean?
