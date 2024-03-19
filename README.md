@@ -1615,15 +1615,29 @@ Instantiate the DAG
 	```
 	
 15. Build a Table that includes the following elements:
-		- LocationName
-		- CountofPhysicians
-		- CountofPatients
-		- GrossCharge
-		- AverageChargeperPatients 
+	- LocationName
+	- CountofPhysicians
+	- CountofPatients
+	- GrossCharge
+	- AverageChargeperPatients 
 
 
 
-#### Revenue Cycle(Tableau)
+#### Revenue Cycle(Jupyter Lab)
+
+- **Exploring DataSet**
+
+- [Introduction](#introduction)
+- [Data Preparation](#data-preparation)
+- [Analysis](#analysis)
+  - [Denial Analysis Notebook](https://github.com/Jayboy628/DataDrivenHealthcare/blob/main/revenue_cycle/Denial_Analysis.ipynb)
+
+
+
+- **Write off Analysis**
+- **Denial Analysis**
+- **Relative Value Units (RVUs)**
+
 #### Dashboard (Tableau)
 
 </details>
